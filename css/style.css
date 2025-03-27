@@ -1,0 +1,174 @@
+/* Réinitialisation des paramètres CSS du navigateur */
+
+*{
+    padding: 0;
+    margin:0;
+    box-sizing :border-box;
+    line-height:inherit;
+    color:inherit;
+    font:inherit;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+
+} 
+a {
+  cursor: pointer;
+  text-decoration: none!important;
+  color: black!important;
+}
+ul, ol {
+    list-style: none;
+  }
+li{
+    padding:0px;
+    margin:0px;
+}
+
+ /* body{
+    display:flex;
+    flex-direction: column;
+    min-height: 80vh;
+}  */
+/* Stylisation du header */
+.header_content{
+    /* background-color: rgb(61, 114, 228); */
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    margin : 10px;
+    padding :10px;
+    justify-content: space-between;
+}
+
+.header_content .logo p{
+    font-size: 2.5em;
+    padding: 0;
+    margin: 0;
+    font-family: permanent Marker;
+    background: linear-gradient(to right, rgb(40, 226, 33), rgb(59, 182, 125));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color : transparent
+    
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap:20px
+
+}
+
+.menu{
+    display: flex;
+    align-items: center;
+    gap:30px;
+    font-size : 0.8em;
+    margin: 10px;
+    padding: 10px;
+    
+}
+.menu a{
+    color: black!important;
+}
+
+.button{
+    background-color:  rgb(59, 182, 125);
+    /* font-weight: bolder; */
+    /* padding: 10px 20px; */
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    padding : 10px 25px;
+    color:white;
+}
+.button a{
+    color: white!important;
+
+}
+
+
+/* Stylisation container 1 page d'acceuil index.html */
+
+.container1{
+    display: flex;
+    gap: 40px;
+    margin:10px;
+}
+
+/* Dimensionnement des images et de la div du carousel */
+.imgcaroussel{
+width: 110%;
+height: auto;
+}
+
+.carousel{
+    width: 130vw;
+}
+
+.presentation h1{
+    color:rgb(59, 182, 125);
+    font-size :3em;
+    text-align: center;
+}
+
+.presentation h2{
+    color:black;
+    font-size :1.3em;
+}
+
+.presentation p{
+    font-size: 1 em;
+}
+
+
+/* Stylisation Barrerecherche */
+.Barrerecherche{
+    display:flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+
+input, select{
+border-style: solid;
+border-color: rgb(59, 182, 125);
+border-radius: 20px;
+padding: 5px 20px;
+box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Stylisation footer */
+
+footer{
+    /* position:fixed;
+    bottom:0;
+    left:0;
+    right:0; */
+    display: flex;
+    justify-content: center;
+    gap:100px;
+    margin-top: 20px;
+    padding:20px;
+    background-color:rgb(59, 182, 125) ;
+}
+
+footer div p, a{
+    color: white!important;
+}
+
+
+
+/* Stylisation Page Vue Covoiturage */
+/* Stylisation du filtre */
+.filtre{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .label{
+    margin-left: 20px;
+} */
