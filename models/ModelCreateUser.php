@@ -89,7 +89,7 @@ class ModelCreateUser
         $this->photo = $photo;
     }
 
-    public function createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_de_naissance, $pseudo) //$photo manquante
+    public function createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_naissance, $pseudo) //$photo manquante
     
     {
         $stmt = $this->db->prepare("INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse,date_naissance, pseudo) VALUES (:nom, :prenom, :email, :password, :telephone, :adresse, :date_naissance, :pseudo)"); // photo is not included in the query
@@ -99,7 +99,7 @@ class ModelCreateUser
         $stmt->bindValue(':password', $password);
         $stmt->bindValue(':telephone', $telephone);
         $stmt->bindValue(':adresse', $adresse);
-        $stmt->bindValue(':date_naissance', $date_de_naissance); 
+        $stmt->bindValue(':date_naissance', $date_naissance); 
         $stmt->bindValue(':pseudo', $pseudo);
     
         // $stmt->bindValue(':photo', $this->photo);

@@ -29,8 +29,8 @@
         <label for="adresse">Adresse :</label>
         <input type="text" name="adresse" required>
         <br>
-        <label for="date_de_naissance">Date de date_de_naissance :</label>
-        <input type="date" name="date_de_naissance" required>
+        <label for="date_naissance">Date de date_de_naissance :</label>
+        <input type="date" name="date_naissance" required>
         <br>
         <label for="pseudo">Pseudo :</label>
         <input type="text" name="pseudo" required>
