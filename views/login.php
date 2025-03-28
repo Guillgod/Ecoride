@@ -11,6 +11,7 @@
     <h1>Connexion</h1>
  
     <form method="POST" action="../index.php">
+    <input type="hidden" name="form_type" value="login.php">
         <label for="email">Nom d'utilisateur:</label>
         <input type="text" name="email" required>
         <br>

@@ -11,6 +11,8 @@
     <h1>Connexion</h1>
  
     <form method="POST" action="../index.php">
+
+    <input type="hidden" name="form_type" value="creation_user.php">
         <label for="nom">Nom :</label>
         <input type="text" name="nom" required>
         <br>

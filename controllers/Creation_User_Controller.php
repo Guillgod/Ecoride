@@ -30,7 +30,7 @@ class Creation_user_controller
 
             // Call the model method to create the user
             $usercreated = $this->modelCreateUser->createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_naissance, $pseudo); 
-            echo "Compte créé avec succès";
+            header("Location: ../Ecoride/views/Page_accueil.php");
         } else {
             echo "échec à la création du compte";
         }

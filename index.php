@@ -1,19 +1,34 @@
 <?php
 
 
-require 'Models/ModelUser.php';
+require 'models/ModelUser.php';
 require 'controllers/UserController.php';
-require 'Models/ModelCreateUser.php';
+require 'models/ModelCreateUser.php';
 require 'controllers/Creation_User_controller.php';
-
-
-$model= new ModelUser();
-$controller = new UserController($model);
-$controller->login();
-
-$modelCreateUser = new ModelCreateUser();
-$controllerCreateUser = new Creation_user_controller($modelCreateUser);
-$controllerCreateUser->createUserInDatabase();
+require 'models/ModelCreateCar.php';
+require 'controllers/Creation_Car_Controller.php';
 
 
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['form_type'])) {
+        switch ($_POST['form_type']) {
+            case 'login.php':
+                $modelUser = new ModelUser();
+                $controllerUser = new UserController($modelUser);
+                $controllerUser->login();
+                break;
+            case 'creation_user.php':
+                $modelCreateUser = new ModelCreateUser();
+                $controllerCreateUser = new Creation_user_controller($modelCreateUser);
+                $controllerCreateUser->createUserInDatabase();
+                break;
+            case 'creation_car.php':
+                $modelCreateCar = new ModelCreateCar();
+                $controllerCreateCar = new Creation_Car_Controller($modelCreateCar);
+                $controllerCreateCar->createCarInDatabase();
+                break;
+            // Ajoutez d'autres cas si nécessaire
+        }
+    }
+}
