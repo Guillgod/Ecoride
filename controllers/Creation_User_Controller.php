@@ -8,7 +8,7 @@ class Creation_user_controller
     {
         $this->modelCreateUser = $modelCreateUser;
     }
-   
+
 
     public function createUserInDatabase()
     {
@@ -23,16 +23,28 @@ class Creation_user_controller
             $adresse = $_POST['adresse'];
             $date_naissance = $_POST['date_naissance'];
             $pseudo = $_POST['pseudo'];
-            // $photo = $_FILES['photo']['name'];
+            
+            // Gestion du téléchargement de la photo
+            $photo = $_FILES['photo']['name'];
+            $target_dir = 'uploads/'; // Répertoire cible pour les photos
+            $target_file = $target_dir . basename($photo);
 
-            // Upload the photo
-            // move_uploaded_file($_FILES['photo']['tmp_name'], 'uploads/' . $photo);
-
-            // Call the model method to create the user
-            $usercreated = $this->modelCreateUser->createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_naissance, $pseudo); 
-            header("Location: ../Ecoride/views/Page_accueil.php");
-        } else {
-            echo "échec à la création du compte";
+        // Vérifiez si le répertoire existe, sinon créez-le
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0755, true);
         }
+
+        // Déplacez le fichier téléchargé
+        if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
+            
+            $usercreated = $this->modelCreateUser->createUser($nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo);
+            header("Location: ../Ecoride/views/Page_accueil.php");
+            exit;
+        } else {
+            echo "Erreur lors du téléchargement de la photo";
+        }
+    } else {
+        echo "Échec à la création du compte.";
+    }
     }
 }

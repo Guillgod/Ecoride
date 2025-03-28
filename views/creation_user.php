@@ -10,7 +10,7 @@
  
     <h1>Connexion</h1>
  
-    <form method="POST" action="../index.php">
+    <form method="POST" action="../index.php" enctype="multipart/form-data">
 
     <input type="hidden" name="form_type" value="creation_user.php">
         <label for="nom">Nom :</label>
