@@ -29,6 +29,9 @@
         <label for="date_premiere_immatriculation">Date premiere immatriculation :</label>
         <input type="date" name="date_premiere_immatriculation" required>
         <br>
+        <label for="marque">Marque :</label>
+        <input type="text" name="marque" required>
+        <br>
         <input type="submit" value="Créer la voiture">
     </form>
 </body>
