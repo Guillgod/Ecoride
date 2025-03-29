@@ -39,7 +39,7 @@
         <br>
         <label for="photo">Photo :</label>
         <input type="file" name="photo" required>
-        <input type="submit" value="Se connecter">
+        <input type="submit" value="Créer le compte">
     </form>
 </body>
 </html>
