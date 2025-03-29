@@ -12,9 +12,11 @@ class ModelCreateUser
 
     private string $date_de_naissance;
     private string $pseudo;
-    private int $parameter;
+    
     private string $gere;
     private string $photo;
+
+    private $credit;
 
     public function __construct()
     {
