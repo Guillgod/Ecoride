@@ -50,7 +50,7 @@
         <input type="time" name="heure_arrivee" required>
         <br>
 
-        <p>Fixez votre prix. Considérez que 2 crédits seront prélevé sur votre prix pour garantir le donctionnement de la plate-forme Ecoride.</p>
+        <p>Fixez votre prix. Considérez que 2 crédits seront prélevé sur votre prix pour garantir le donctionnement de la plate-forme Ecoride &#x1F609;</p>
         <label for="prix_personne">Prix du trajet par passager :</label>
         <input type="int" name="prix_personne" required>
         <br>
