@@ -37,9 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'Barre_de_recherche.php':
                 $modelCreateCarpool = new ModelCreateCarpool();
                 $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
-                $controllerCreateCarpool->displayCarpool();
-                break;
-            // Ajoutez d'autres cas si nécessaire
+                $controllerCreateCarpool->displayCarpool(); 
+                
+            
         }
     }
 }

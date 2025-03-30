@@ -65,8 +65,9 @@ class Creation_Carpool_Controller
                 echo '<p>' . htmlspecialchars($ligne['heure_depart']) . '</p>'; 
                 echo '<p>' . htmlspecialchars($ligne['heure_arrivee']) . '</p>'; 
                 echo '<p>' . htmlspecialchars($ligne['energie']) . '</p>'; 
-                echo '<button class="button"><a href="carpool_detail.php">Connexion</a></button>';
+                echo '<button class="button"><a href="views/carpool_detail.php">Détail</a></button>';
                 echo '</div>';
+                
             }
             
         } else {

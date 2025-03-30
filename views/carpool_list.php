@@ -11,6 +11,7 @@
     <?php 
     require_once 'header.php';
     require_once 'Barre_de_recherche.php';
+    
     ?>
 
     
