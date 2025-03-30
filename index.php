@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $_SESSION['resultats'] = $resultats; // Stocker les résultats dans la session
                 header('Location: views/carpool_list.php'); // Rediriger vers carpool_list.php
-                exit; // Assurez-vous de sortir après la redirection
+                // exit; // Assurez-vous de sortir après la redirection
                 
             
         }

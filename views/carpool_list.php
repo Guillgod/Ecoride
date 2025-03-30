@@ -40,8 +40,8 @@
             }
         }
 
-            // Une fois les résultats affichés, vous pouvez les supprimer de la session
-            unset($_SESSION['resultats']);
+            // Une fois les résultats affichés, je les supprime de la session pour éviter de les afficher à nouveau lors du rechargement de la page
+            // unset($_SESSION['resultats']);
         
 
     ?>
