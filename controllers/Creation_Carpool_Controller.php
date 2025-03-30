@@ -33,4 +33,45 @@ class Creation_Carpool_Controller
             echo "échec à la création du trajet";
         }
     }
-}
+
+
+    public function displayCarpool(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $lieu_depart = $_POST['lieu_depart'];
+            $lieu_arrivee = $_POST['lieu_arrivee'];
+            $date_depart = $_POST['date_depart'];
+
+            $displayedCarpool = $this->modelCreateCarpool->getCarpools($lieu_depart, $lieu_arrivee, $date_depart); 
+            $resultats = $displayedCarpool; // Appel de la méthode pour récupérer les trajets
+
+            foreach ($resultats as $ligne) {
+                echo '<div">'; // Ajoute une classe CSS si nécessaire
+                // Affiche les données de la ligne, par exemple :
+                echo '<p>'. htmlspecialchars($ligne['photo']).'</p>'; // Remplace 'nom' par le nom de ta colonne
+                echo '<p>' . htmlspecialchars($ligne['pseudo']) . '</p>'; // Remplace 'nom' par le nom de ta colonne
+                echo '<p>' . htmlspecialchars($ligne['note']) . '</p>'; // Remplace 'description' par une autre colonne si besoin
+                echo '<p>' . htmlspecialchars($ligne['nb_place']) . '</p>'; // Remplace 'description' par une autre colonne si besoin
+                echo '<p>' . htmlspecialchars($ligne['prix_personne']) . '</p>'; // Remplace 'description' par une autre colonne si besoin
+                echo '<p>' . htmlspecialchars($ligne['date_depart']) . '</p>'; // Remplace 'description' par une autre colonne si besoin
+                echo '<p>' . htmlspecialchars($ligne['heure_depart']) . '</p>'; // Remplace 'description' par une autre colonne si besoin
+                echo '<p>' . htmlspecialchars($ligne['heure_arrivee']) . '</p>'; // Remplace 'description' par une autre colonne si besoin
+                echo '<p>' . htmlspecialchars($ligne['energie']) . '</p>'; // Remplace 'description' par une autre colonne si besoin
+                echo '<button class="button"><a href="carpool_detail.php">Connexion</a></button>';
+                echo '</div>';
+
+            }
+        } else {
+            echo "Erreur lors de la récupération des données.";
+            
+        }
+
+        
+        }
+
+
+
+
+
+
+
+    }

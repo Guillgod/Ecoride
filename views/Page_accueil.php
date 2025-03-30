@@ -13,28 +13,10 @@
 
 
     <body>
-        <header>
-            <div class="header_content">
-                
-                    <div class="logo">
-                        <a href="Page_accueil.php"><img src="img/Logo.png"  alt="voiture roulant dans une forêt" width="100" height="100"></a>
-                        <p>Ecoride</p>
-                    </div>
-                    <div>
-                        <nav>
-                            <ul class="menu">
-                                <li><a  href="Page_accueil.php">Accueil</a></li>
-                                <li><a  href="vue_covoiturages.html">Covoiturage</a></li>
-                                <li><a  href="">Utilisateurs</a></li>
-                                <li><a  href="">Contact</a></li>
-                                <button class="button"><a href="login.php">Connexion</a></button>
-                            </ul>
-                        </nav>
-                    </div>
-                
-            </div>
-        </header>
-
+    
+        <?php
+        require_once 'header.php';
+        ?>
 
     <section class="container1">
         
@@ -87,34 +69,17 @@
     
     </section>
 
-    <section class="Barrerecherche">
-        <form action="" method="post">
-            <ul class="menu">
-                <li><input type="text" id="depart" name="depart" required minlength="1" maxlength="50" size="30" placeholder="Départ"/></li>
-                    
-                <li><input type="text" id="destination" name="destination" required minlength="1" maxlength="50" size="30" placeholder="Destination"/></li>
-                    
-                <li><input type="date" id="date" name="date" required minlength="4" maxlength="8" size="10"/></li>
-                    
 
-
-                <button class="button" type="submit">Rechercher</button>
-            </ul>
-        </form>
-
-
+    <?php
+    require_once 'Barre_de_recherche.php';
+    ?>
 
     </section>
+    
+    <?php
+    require_once 'footer.php';
+    ?>
 
-    <footer>
-        <div>
-            <a href="" rel="">Informations légales</a> 
-        </div>
-        <div>
-            <p>© 2025 Ecoride - Tous droits réservés</p>
-        </div>
-
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

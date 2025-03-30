@@ -1,4 +1,4 @@
-<?php
+p<?php
 
 class ModelCreateCarpool
 {
@@ -29,4 +29,21 @@ class ModelCreateCarpool
         return $stmt->execute();
     }
 
+
+    public function getCarpools($lieu_depart, $lieu_arrivee, $date_depart)
+    {
+        $stmt = $this->db->query("SELECT Utilisateur.*, Voiture.*, Covoiturage.* FROM Utilisateur
+        JOIN Voiture ON Utilisateur.voiture_id = Voiture.voiture_id
+        JOIN Covoiturage ON Voiture.covoiturage_id = Covoiturage.covoiturage_id
+        WHERE Covoiturage.lieu_depart = :lieu_depart 
+          AND Covoiturage.lieu_arrivee = :lieu_arrivee 
+          AND Covoiturage.date_depart = :date_depart");
+        $stmt->bindValue(':lieu_depart', $lieu_depart);
+        $stmt->bindValue(':lieu_arrivee', $lieu_arrivee);
+        $stmt->bindValue(':date_depart', $date_depart);
+        $stmt->execute();
+        return $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        }
 }
