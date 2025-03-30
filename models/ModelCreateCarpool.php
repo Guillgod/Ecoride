@@ -1,4 +1,4 @@
-p<?php
+<?php
 
 class ModelCreateCarpool
 {
@@ -32,12 +32,12 @@ class ModelCreateCarpool
 
     public function getCarpools($lieu_depart, $lieu_arrivee, $date_depart)
     {
-        $stmt = $this->db->query("SELECT Utilisateur.*, Voiture.*, Covoiturage.* FROM Utilisateur
-        JOIN Voiture ON Utilisateur.voiture_id = Voiture.voiture_id
-        JOIN Covoiturage ON Voiture.covoiturage_id = Covoiturage.covoiturage_id
-        WHERE Covoiturage.lieu_depart = :lieu_depart 
-          AND Covoiturage.lieu_arrivee = :lieu_arrivee 
-          AND Covoiturage.date_depart = :date_depart");
+        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM utilisateur
+        JOIN voiture ON utilisateur.gere = voiture.voiture_id
+        JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
+        WHERE covoiturage.lieu_depart = :lieu_depart 
+          AND covoiturage.lieu_arrivee = :lieu_arrivee 
+          AND covoiturage.date_depart = :date_depart");
         $stmt->bindValue(':lieu_depart', $lieu_depart);
         $stmt->bindValue(':lieu_arrivee', $lieu_arrivee);
         $stmt->bindValue(':date_depart', $date_depart);

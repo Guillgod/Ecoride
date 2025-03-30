@@ -16,14 +16,14 @@
 
 
     <section class="Barrerecherche">
-        <form action="" method="post">
+        <form action="../index.php" method="post">
             <input type="hidden" name="form_type" value="Barre_de_recherche.php">
             <ul class="menu">
-                <li><input type="text" id="depart" name="depart" required minlength="1" maxlength="50" size="30" placeholder="Départ"/></li>
+                <li><input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="30" placeholder="Départ"/></li>
                     
-                <li><input type="text" id="destination" name="destination" required minlength="1" maxlength="50" size="30" placeholder="Destination"/></li>
+                <li><input type="text" id="lieu_arrivee" name="lieu_arrivee" required minlength="1" maxlength="50" size="30" placeholder="Destination"/></li>
                     
-                <li><input type="date" id="date" name="date" required minlength="4" maxlength="8" size="10"/></li>
+                <li><input type="date" id="date_depart" name="date_depart" required minlength="4" maxlength="8" size="10"/></li>
                     
 
 
