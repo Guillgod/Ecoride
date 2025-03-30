@@ -42,41 +42,14 @@ class Creation_Carpool_Controller
             $lieu_arrivee = $_POST['lieu_arrivee'];
             $date_depart = $_POST['date_depart'];
 
+
             $displayedCarpool = $this->modelCreateCarpool->getCarpools($lieu_depart, $lieu_arrivee, $date_depart); 
-            $resultats = $displayedCarpool; // Appel de la méthode pour récupérer les trajets
-
-            if ($resultats == null) {
-                
-                echo "Aucun trajet trouvé.";
-                return;
-            }
+            return $displayedCarpool; // Appel de la méthode pour récupérer les trajets
 
 
-            foreach ($resultats as $ligne) {
-                $chemin_image='uploads/';
-                echo '<div>'; // Ajoute une classe CSS si nécessaire
-                // Affiche les données de la ligne, par exemple :
-                echo '<img src="' . htmlspecialchars($chemin_image.$ligne['photo']).'"alt="photo du conducteur" >'; 
-                echo '<p>' . htmlspecialchars($ligne['pseudo']) . '</p>'; 
-                echo '<p>' . htmlspecialchars($ligne['note']) . '</p>'; 
-                echo '<p>' . htmlspecialchars($ligne['nb_place']) . '</p>'; 
-                echo '<p>' . htmlspecialchars($ligne['prix_personne']) . '</p>'; 
-                echo '<p>' . htmlspecialchars($ligne['date_depart']) . '</p>'; 
-                echo '<p>' . htmlspecialchars($ligne['heure_depart']) . '</p>'; 
-                echo '<p>' . htmlspecialchars($ligne['heure_arrivee']) . '</p>'; 
-                echo '<p>' . htmlspecialchars($ligne['energie']) . '</p>'; 
-                echo '<button class="button"><a href="views/carpool_detail.php">Détail</a></button>';
-                echo '</div>';
-                
-            }
-            
-        } else {
-            echo "Erreur lors de la récupération des données.";
-            
         }
-
-        
-        }
+        return null; // Retournez null si la méthode n'est pas appelée par POST
+    }
 
 
 
