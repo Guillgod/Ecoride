@@ -46,4 +46,15 @@ class ModelCreateCarpool
 
 
         }
+
+    public function getCarpoolDetails($covoiturage_id)
+    {
+        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM utilisateur
+        JOIN voiture ON utilisateur.gere = voiture.voiture_id
+        JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
+        WHERE covoiturage.covoiturage_id = :covoiturage_id");
+        $stmt->bindValue(':covoiturage_id', $covoiturage_id);
+        $stmt->execute();
+        return $detailcovoiturage_id=$stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

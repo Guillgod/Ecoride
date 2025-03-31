@@ -32,7 +32,8 @@
                     echo '<p>' . htmlspecialchars($ligne['heure_depart']) . '</p>';
                     echo '<p>' . htmlspecialchars($ligne['heure_arrivee']) . '</p>';
                     echo '<p>' . htmlspecialchars($ligne['energie']) . '</p>';
-                    echo '<button class="button"><a href="carpool_detail.php">Participer</a></button>';
+                    echo '<p>' . htmlspecialchars($ligne['covoiturage_id']) . '</p>';
+                    echo '<button class="button"><a href="carpool_detail.php?covoiturage_id=' . urlencode($ligne['covoiturage_id']) . '">Détails</a></button>';
                     echo '</div>';
                 }
             } else {

@@ -45,12 +45,15 @@ class Creation_Carpool_Controller
 
             $displayedCarpool = $this->modelCreateCarpool->getCarpools($lieu_depart, $lieu_arrivee, $date_depart); 
             return $displayedCarpool; // Appel de la méthode pour récupérer les trajets
-
-
         }
         return null; // Retournez null si la méthode n'est pas appelée par POST
     }
-
+    
+    public function getCarpoolDetailsResult($covoiturage_id)
+    {        
+        $covoiturage_id = $_GET['covoiturage_id'];
+        return $this->modelCreateCarpool->getCarpoolDetails($covoiturage_id); // Appel de la méthode pour récupérer les détails du covoiturage
+    }
 
 
 
