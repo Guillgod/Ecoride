@@ -1,5 +1,5 @@
 <?php
-
+//Model de création d'utilisateur
 class ModelCreateUser
 {
     private PDO $db;

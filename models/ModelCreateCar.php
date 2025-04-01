@@ -1,5 +1,5 @@
 <?php
-
+//Modèle de création de voiture
 class ModelCreateCar
 {
     private PDO $db;

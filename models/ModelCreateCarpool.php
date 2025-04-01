@@ -1,5 +1,5 @@
 <?php
-
+/// Modèle de création de covoiturage
 class ModelCreateCarpool
 {
     private PDO $db;

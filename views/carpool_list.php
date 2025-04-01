@@ -32,8 +32,7 @@
                     echo '<p>' . htmlspecialchars($ligne['heure_depart']) . '</p>';
                     echo '<p>' . htmlspecialchars($ligne['heure_arrivee']) . '</p>';
                     echo '<p>' . htmlspecialchars($ligne['energie']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['covoiturage_id']) . '</p>';
-                    echo '<button class="button"><a href="carpool_detail.php?covoiturage_id=' . urlencode($ligne['covoiturage_id']) . '">Détails</a></button>';
+                    echo '<button class="button"><a href="carpool_detail.php?covoiturage_id=' . $ligne['covoiturage_id'] . '">Détails</a></button>';
                     echo '</div>';
                 }
             } else {
@@ -42,7 +41,7 @@
         }
 
             // Une fois les résultats affichés, je les supprime de la session pour éviter de les afficher à nouveau lors du rechargement de la page
-            // unset($_SESSION['resultats']);
+            unset($_SESSION['resultats']);
         
 
     ?>

@@ -10,7 +10,7 @@
     
     
     <?php
- 
+
 
     session_start(); // Démarrage de la session
     require_once 'header.php';
@@ -20,13 +20,12 @@
     
     if (isset($_GET['covoiturage_id'])) {
         $covoiturage_id = $_GET['covoiturage_id'];
-
         $modelCreateCarpool = new ModelCreateCarpool();
         $controllerAffichageCarpoolDetail = new Creation_Carpool_Controller($modelCreateCarpool);
         $carpoolDetails = $controllerAffichageCarpoolDetail->getCarpoolDetailsResult($covoiturage_id);
 
         
-         
+        
 
         if ($carpoolDetails) {
             

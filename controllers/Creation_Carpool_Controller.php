@@ -1,5 +1,5 @@
 <?php
-
+//Gère la création du covoiturage, l'affichage des trajets et le détail d'un trajet
 class Creation_Carpool_Controller
 {
     private $modelCreateCarpool;
@@ -51,7 +51,6 @@ class Creation_Carpool_Controller
     
     public function getCarpoolDetailsResult($covoiturage_id)
     {        
-        $covoiturage_id = $_GET['covoiturage_id'];
         return $this->modelCreateCarpool->getCarpoolDetails($covoiturage_id); // Appel de la méthode pour récupérer les détails du covoiturage
     }
 

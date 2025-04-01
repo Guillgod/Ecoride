@@ -1,5 +1,5 @@
 <?php
-
+//Modèle de connexion d'utilisateur
 class ModelUser {
     private PDO $db;
 

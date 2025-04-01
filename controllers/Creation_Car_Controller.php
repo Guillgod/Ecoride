@@ -1,5 +1,5 @@
 <?php
-
+//Gère la création de voiture
 class Creation_Car_Controller
 {
     private $modelCreateCar;
