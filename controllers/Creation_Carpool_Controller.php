@@ -25,13 +25,18 @@ class Creation_Carpool_Controller
             $heure_arrivee = $_POST['heure_arrivee'];
             $prix_personne = $_POST['prix_personne'];
             
-
+            if (strtotime($date_arrivee)<strtotime($date_depart)){
+                echo "La date d'arrivée doit être supérieure à la date de départ";
+            }elseif (strtotime($date_arrivee)==strtotime($date_depart) && strtotime($heure_arrivee)<strtotime($heure_depart)){
+                echo "L'heure d'arrivée doit être supérieure à l'heure de départ";
+            }elseif (strtotime($date_arrivee) >= strtotime($date_depart)){
+                echo "L'heure d'arrivée doit être supérieure à l'heure de départ";
             // Call the model method to create the user
             $carpoolcreated = $this->modelCreateCarpool->createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne); 
             echo "Trajet créé avec succès";
         } else {
             echo "échec à la création du trajet";
-        }
+        }}
     }
 
 
