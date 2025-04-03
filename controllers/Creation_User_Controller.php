@@ -1,5 +1,5 @@
 <?php
-
+//Gère la création de l'utilisateur
 class Creation_user_controller
 {
     private $modelCreateUser;

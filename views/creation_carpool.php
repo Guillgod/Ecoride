@@ -12,7 +12,7 @@
  
     <h1>Renseignez votre trajet</h1>
  
-    <form method="POST" action="../index.php">
+    <form method="POST" action="creation_carpool.php">
     <input type="hidden" name="form_type" value="creation_carpool.php">
         <p>Renseignez votre adresse de départ :</p>
 
@@ -57,5 +57,46 @@
 
         <input type="submit" value="Créer le trajet">
     </form>
+
+    <?php
+    require_once '../controllers/creation_carpool_controller.php';
+    require_once '../models/ModelCreateCarpool.php';
+
+
+
+    $modelCreateCarpool = new ModelCreateCarpool();
+    $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
+
+    
+    
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type']) && $_POST['form_type'] === 'creation_carpool.php') {
+        $adresse_depart = $_POST['adresse_depart'];
+        $lieu_depart = $_POST['lieu_depart'];
+        $date_depart = $_POST['date_depart'];
+        $heure_depart = $_POST['heure_depart'];
+        $adresse_arrivee = $_POST['adresse_arrivee'];
+        $lieu_arrivee = $_POST['lieu_arrivee'];
+        $date_arrivee = $_POST['date_arrivee'];
+        $heure_arrivee = $_POST['heure_arrivee'];
+        $prix_personne = $_POST['prix_personne'];
+        
+        $result=$controllerCreateCarpool->createCarpoolInDatabase();
+
+        if($result) {
+            echo "<p>Trajet créé avec succès.</p>";
+        } else {
+            echo "<p>Le trajet n'a pas pu être créé.</p>";
+        }
+    }
+    
+    ?>
+
+
+
+
+
+
+
+
 </body>
 </html>

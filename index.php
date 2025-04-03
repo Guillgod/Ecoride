@@ -30,11 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $controllerCreateCar = new Creation_Car_Controller($modelCreateCar);
                 $controllerCreateCar->createCarInDatabase();
                 break;
-            case 'creation_carpool.php':                
-                $modelCreateCarpool = new ModelCreateCarpool();
-                $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
-                $controllerCreateCarpool->createCarpoolInDatabase();
-                break;
+            // case 'creation_carpool.php':                
+            //     $modelCreateCarpool = new ModelCreateCarpool();
+            //     $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
+            //     $controllerCreateCarpool->createCarpoolInDatabase();
+            //     break;
             case 'Barre_de_recherche.php':
                 $modelCreateCarpool = new ModelCreateCarpool();
                 $controllerAffichageCarpool = new Creation_Carpool_Controller($modelCreateCarpool);

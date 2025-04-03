@@ -1,4 +1,6 @@
 <?php
+
+//Gère la connexion de l'utilisateur
 class UserController {
     private $modeluser;
     

@@ -20,18 +20,21 @@
             $resultats = $_SESSION['resultats'];
 
             if (!empty($resultats)) {
+
+                print_r($resultats); // Debugging: afficher les résultats
+
                 foreach ($resultats as $ligne) {
                     $chemin_photo = '../uploads/';
                     echo '<div>';
                     echo '<img src="' . $chemin_photo . htmlspecialchars($ligne['photo']) . '" alt="Photo de ' . htmlspecialchars($ligne['pseudo']) . '">';
-                    echo '<p>' . htmlspecialchars($ligne['pseudo']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['note']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['nb_place']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['prix_personne']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['date_depart']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['heure_depart']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['heure_arrivee']) . '</p>';
-                    echo '<p>' . htmlspecialchars($ligne['energie']) . '</p>';
+                    echo '<p> Pseudo du chauffeur :' . htmlspecialchars($ligne['pseudo']) . '</p>';
+                    echo '<p> Note du chauffeur :' . htmlspecialchars($ligne['note']) . '</p>';
+                    echo '<p> Nb de place :' . htmlspecialchars($ligne['nb_place']) . '</p>';
+                    echo '<p> Prix par personne :' . htmlspecialchars($ligne['prix_personne']) . '</p>';
+                    echo '<p> Date de départ :' . htmlspecialchars($ligne['date_depart']) . '</p>';
+                    echo '<p> Heure de départ :' . htmlspecialchars($ligne['heure_depart']) . '</p>';
+                    echo '<p> Heure d\'arrivée :' . htmlspecialchars($ligne['heure_arrivee']) . '</p>';
+                    echo '<p> Energie du véhicule :' . htmlspecialchars($ligne['energie']) . '</p>';
                     echo '<button class="button"><a href="carpool_detail.php?covoiturage_id=' . $ligne['covoiturage_id'] . '">Détails</a></button>';
                     echo '</div>';
                 }
