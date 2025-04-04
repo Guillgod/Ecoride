@@ -43,10 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 session_start(); // Démarrer la session si ce n'est pas déjà fait
 
                 
-                $_SESSION['resultats'] = $resultats; // Stocker les résultats dans la session
+                $_SESSION['resultats'] = $resultats;
+                $_SESSION['date_depart_recherchee'] = $_POST['date_depart']; // Stocker les résultats dans la session
                 header('Location: views/carpool_list.php'); // Rediriger vers carpool_list.php
                 // exit; // Assurez-vous de sortir après la redirection
                 
+
             
         }
     }

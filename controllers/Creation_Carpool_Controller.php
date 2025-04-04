@@ -47,8 +47,9 @@ class Creation_Carpool_Controller
             $lieu_arrivee = $_POST['lieu_arrivee'];
             $date_depart = $_POST['date_depart'];
 
-
+            
             $displayedCarpool = $this->modelCreateCarpool->getCarpools($lieu_depart, $lieu_arrivee, $date_depart); 
+    
             return $displayedCarpool; // Appel de la méthode pour récupérer les trajets
         }
         return null; // Retournez null si la méthode n'est pas appelée par POST
