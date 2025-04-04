@@ -21,8 +21,9 @@
 
             if (!empty($resultats)) {
 
-                print_r($resultats); // Debugging: afficher les résultats
-
+                 
+                // Affichage des covoiturages disponibles
+                echo '<h2>Résultats de la recherche :</h2>';
                 foreach ($resultats as $ligne) {
                     $chemin_photo = '../uploads/';
                     echo '<div>';
