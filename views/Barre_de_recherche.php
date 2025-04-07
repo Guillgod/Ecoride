@@ -1,3 +1,9 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); 
+}
+?>
+
 <!DOCTYPE html5>
 <html lang="fr">
     <head>
@@ -16,7 +22,7 @@
 
 
     <section class="Barrerecherche">
-        <form action="../index.php" method="post">
+        <form action="../controllers/Handle_Search_Controller.php" method="post">
             <input type="hidden" name="form_type" value="Barre_de_recherche.php">
             <ul class="menu">
                 <li><input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="30" placeholder="Départ"/></li>
@@ -32,5 +38,8 @@
         </form>
     </section>
     
+
+            
+
     </body>
 </html>
