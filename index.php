@@ -15,11 +15,11 @@ require 'controllers/Creation_Carpool_Controller.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['form_type'])) {
         switch ($_POST['form_type']) {
-            case 'login.php':
-                $modelUser = new ModelUser();
-                $controllerUser = new UserController($modelUser);
-                $controllerUser->login();
-                break;
+            // case 'login.php':
+            //     $modelUser = new ModelUser();
+            //     $controllerUser = new UserController($modelUser);
+            //     $controllerUser->login();
+            //     break;
             case 'creation_user.php':
                 $modelCreateUser = new ModelCreateUser();
                 $controllerCreateUser = new Creation_user_controller($modelCreateUser);

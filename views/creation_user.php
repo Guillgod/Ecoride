@@ -7,7 +7,11 @@
         <link href="../css/style.css" rel="stylesheet">
     </head>
     <body>
- 
+
+    <?php
+    require_once 'header.php';
+    ?>
+    
     <h1>Connexion</h1>
  
     <form method="POST" action="../index.php" enctype="multipart/form-data">

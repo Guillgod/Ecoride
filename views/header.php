@@ -1,3 +1,10 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); // Démarre la session si elle n'est pas déjà démarrée
+}
+?>
+
+
 <!DOCTYPE html5>
 <html lang="fr">
     <head>
@@ -27,13 +34,24 @@
                                 <li><a  href="carpool_list.php">Covoiturage</a></li>
                                 <li><a  href="">Utilisateurs</a></li>
                                 <li><a  href="">Contact</a></li>
-                                <button class="button"><a href="login.php">Connexion</a></button>
+                                <li> 
+                                    <?php if(isset($_SESSION['user'])): ?>
+                                        <button  class="button"><a href="logout.php">Déconnexion</a></button>
+                                    <?php else: ?>
+                                        <button  class="button"><a href="login.php">Connexion</a></button>
+                                    <?php endif; ?>
+                                </li>
                             </ul>
                         </nav>
                     </div>
                 
             </div>
         </header>
+
+        
+
+
+        </script>
     </body>
 
 </html>

@@ -1,3 +1,8 @@
+<?php
+    session_start(); // Démarrage de la session
+    require_once 'header.php';
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,10 +12,13 @@
         <link href="../css/style.css" rel="stylesheet">
     </head>
     <body>
- 
+    
+    
+
+
     <h1>Connexion</h1>
  
-    <form method="POST" action="../index.php">
+    <form method="POST" action="login.php">
     <input type="hidden" name="form_type" value="login.php">
         <label for="email">Nom d'utilisateur:</label>
         <input type="text" name="email" required>
@@ -20,5 +28,21 @@
         <br>
         <input type="submit" value="Se connecter">
     </form>
+
+    <?php
+    require_once '../models/ModelUser.php';
+    require_once '../controllers/UserController.php';
+    
+    
+    $modelUser = new ModelUser();
+    $controllerUser = new UserController($modelUser);
+    $controllerUser->login();
+?>
+
+    <p>Pas encore inscrit ? <a href="creation_user.php">Inscrivez-vous ici</a></p>
+    <p><a href="Page_accueil.php" !color="green">Retour à l'accueil</a></p>
+
+    </form>
+
 </body>
 </html>
