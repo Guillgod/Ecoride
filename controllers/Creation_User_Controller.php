@@ -38,8 +38,8 @@ class Creation_user_controller
         if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
             
             $usercreated = $this->modelCreateUser->createUser($nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo);
-            header("Location: ../Ecoride/views/Page_accueil.php");
-            exit;
+            echo "Votre compte utilisateur a été créé avec succès !";
+              // Redirige vers la page de création de voiture
         } else {
             echo "Erreur lors du téléchargement de la photo";
         }

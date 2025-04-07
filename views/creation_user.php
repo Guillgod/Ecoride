@@ -14,7 +14,7 @@
     
     <h1>Connexion</h1>
  
-    <form method="POST" action="../index.php" enctype="multipart/form-data">
+    <form method="POST" action="creation_user.php" enctype="multipart/form-data">
 
     <input type="hidden" name="form_type" value="creation_user.php">
         <label for="nom">Nom :</label>
@@ -47,3 +47,13 @@
     </form>
 </body>
 </html>
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST'  && isset($_POST['form_type']) && $_POST['form_type'] === 'creation_user.php') {
+    require '../models/ModelCreateUser.php';
+    require '../controllers/Creation_User_controller.php';
+    $modelCreateUser = new ModelCreateUser();
+    $controllerCreateUser = new Creation_user_controller($modelCreateUser);
+    $controllerCreateUser->createUserInDatabase();
+    }
+    ?>
