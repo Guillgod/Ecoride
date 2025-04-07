@@ -19,7 +19,7 @@ class UserController {
             if($user) {
                 $_SESSION['user']=$user; //Enregistre l'utilisateur connecté dans la session
                 header('Location: Page_accueil.php');
-                
+                exit();
                 
             } else {
                 echo 'Email ou mot de passe incorrect';
