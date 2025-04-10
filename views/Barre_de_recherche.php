@@ -21,15 +21,15 @@ if (session_status() == PHP_SESSION_NONE) {
     <body>
 
 
-    <section class="Barrerecherche">
+   <section class="Barrerecherche">    <!--  Avec maintien de l'affichage des champs rentrés par l'utilisateur -->
         <form action="../controllers/Handle_Search_Controller.php" method="post">
             <input type="hidden" name="form_type" value="Barre_de_recherche.php">
             <ul class="menu">
-                <li><input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="30" placeholder="Départ"/></li>
+                <li><input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="30" placeholder="Départ"  value="<?= isset($_SESSION['form_data']['lieu_depart']) ? htmlspecialchars($_SESSION['form_data']['lieu_depart']) : '' ?>"></li>
                     
-                <li><input type="text" id="lieu_arrivee" name="lieu_arrivee" required minlength="1" maxlength="50" size="30" placeholder="Destination"/></li>
+                <li><input type="text" id="lieu_arrivee" name="lieu_arrivee" required minlength="1" maxlength="50" size="30" placeholder="Destination" value="<?= isset($_SESSION['form_data']['lieu_arrivee']) ? htmlspecialchars($_SESSION['form_data']['lieu_arrivee']) : '' ?>"</li>
                     
-                <li><input type="date" id="date_depart" name="date_depart" required minlength="4" maxlength="8" size="10"/></li>
+                <li><input type="date" id="date_depart" name="date_depart" required minlength="4" maxlength="8" size="10" value="<?= isset($_SESSION['form_data']['date_depart']) ? htmlspecialchars($_SESSION['form_data']['date_depart']) : '' ?>"></li>
                     
 
 

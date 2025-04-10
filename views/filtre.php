@@ -16,37 +16,37 @@
   
         <section class="filtre">
                 
-                <form>
+                <form method="get" action="carpool_list.php">
                     <ul class="menu">
                         <li>
                             <label for="vehicletype">Type de véhicule:</label>
 
                             <select name="Ecologique" id="Ecologique">
                                 <option value="">--Type de véhicule--</option>
-                                <option value="Electrique">Écologique</option>
-                                <option value="Nonélectrique">Diesel/Essence</option>
+                                <option value="Electrique" <?= (isset($_GET['Ecologique']) && $_GET['Ecologique'] === 'Electrique') ? 'selected' : '' ?>>Électrique</option> 
+                                <option value="Thermique"><?= (isset($_GET['Ecologique']) && $_GET['Ecologique'] === 'Thermique') ? 'selected' : '' ?>Diesel/Essence</option>
                             </select>
 
                         </li>
 
                         <li>
                             <label for="Prixmax">Prix max (€):</label>
-                            
-                            <input type="number" id="Prixmax" name="Prixmax" required minlength="1" maxlength="50" size="30" placeholder="Entrez votre prix max"/>
+                            <input type="number" id="Prixmax" name="Prixmax" minlength="1" maxlength="50" size="30" placeholder="Entrez votre prix max" value="<?= htmlspecialchars($_GET['Prixmax'] ?? '') ?>">
                         </li>
                         <li>
-                            <label for="Dureemax">Durez max du trajet :</label>
-                            <input type="time" id="Dureemax" name="Dureemax" required minlength="1" maxlength="50" size="30" placeholder="Entrez la durée max"/>
+                            <label for="Dureemax">Durée max du trajet :</label>
+                            <input type="time" id="Dureemax" name="Dureemax"   minlength="1" maxlength="50" size="30" placeholder="Entrez la durée max" value="<?= htmlspecialchars($_GET['Dureemax'] ?? '') ?>">
+                            <button type="button" onclick="document.getElementById('Dureemax').value = ''" style="background: none; border: none; color: red; font-size: 1.2em; cursor: pointer; margin-left: 5px;">🗑️</button>
                         </li>
                         <li>
                             <label for="Notemin">Note minimale :</label>
                             <select name="Notemin" id="Notemin">
                                 <option value="">--Note minimale--</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="1" <?= (isset($_GET['Notemin']) && $_GET['Notemin'] === '1') ? 'selected' : '' ?>>1</option>
+                                <option value="2" <?= (isset($_GET['Notemin']) && $_GET['Notemin'] === '2') ? 'selected' : '' ?>>2</option>
+                                <option value="3" <?= (isset($_GET['Notemin']) && $_GET['Notemin'] === '3') ? 'selected' : '' ?>>3</option>
+                                <option value="4" <?= (isset($_GET['Notemin']) && $_GET['Notemin'] === '4') ? 'selected' : '' ?>>4</option>
+                                <option value="5" <?= (isset($_GET['Notemin']) && $_GET['Notemin'] === '5') ? 'selected' : '' ?>>5</option>
                             </select>
                         </li>
                         <button class="button" type="submit">Appliquer</button>

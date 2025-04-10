@@ -11,6 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultats = $controller->displayCarpool();
     $_SESSION['resultats'] = $resultats;
 
+    $_SESSION['form_data'] = [
+        'lieu_depart' => $_POST['lieu_depart'],
+        'lieu_arrivee' => $_POST['lieu_arrivee'],
+        'date_depart' => $_POST['date_depart']
+    ];
+
     if (isset($_POST['date_depart'])) {
         $_SESSION['date_depart_recherchee'] = $_POST['date_depart'];
     }
