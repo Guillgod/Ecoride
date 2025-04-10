@@ -60,9 +60,19 @@ class Creation_Carpool_Controller
         return $this->modelCreateCarpool->getCarpoolDetails($covoiturage_id); // Appel de la méthode pour récupérer les détails du covoiturage
     }
 
+    public function participerCarpool($utilisateur_id, $covoiturage_id) {
+        // Vérifie si l'utilisateur est déjà inscrit à ce covoiturage (optionnel, mais utile pour éviter les doublons)
+        if ($this->modelCreateCarpool->checkIfUserAlreadyJoined($utilisateur_id, $covoiturage_id)) {
+            return false; // L'utilisateur est déjà inscrit
+        }
 
-
-
-
-
+        // Essaye d'ajouter l'utilisateur au covoiturage
+        $result = $this->modelCreateCarpool->addUserToCarpool($utilisateur_id, $covoiturage_id);
+        
+        if ($result) {
+            return true; // Succès
+        } else {
+            return false; // Échec de l'ajout
+        }
     }
+}

@@ -59,4 +59,30 @@ class ModelCreateCarpool
         $stmt->execute();
         return $detailcovoiturage_id=$stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function addUserToCarpool($utilisateur_id, $covoiturage_id) {
+        // Connexion à la base de données (assurez-vous d'utiliser une méthode propre pour se connecter)
+          // Méthode pour se connecter à la DB
+
+        // Exemple d'insertion dans une table qui associe un utilisateur à un covoiturage
+         
+        $stmt = $this->db->prepare("INSERT INTO utilisateur_participe_covoiturage (id_utilisateur, id_covoiturage) VALUES (:utilisateur_id, :covoiturage_id)");
+        $stmt->bindValue(':utilisateur_id', $utilisateur_id);
+        $stmt->bindValue(':covoiturage_id', $covoiturage_id);
+        return $stmt->execute();
 }
+
+public function checkIfUserAlreadyJoined($utilisateur_id, $covoiturage_id) {
+     
+
+   
+    $stmt = $this->db->prepare("SELECT * FROM utilisateur_participe_covoiturage WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage");
+    $stmt->bindParam(':id_utilisateur', $utilisateur_id);
+    $stmt->bindParam(':id_covoiturage', $covoiturage_id);
+
+    $stmt->execute();
+
+    return $stmt->rowCount() > 0; // Si l'utilisateur est déjà inscrit
+}
+}        
+    
