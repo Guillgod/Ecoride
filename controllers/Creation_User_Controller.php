@@ -11,7 +11,8 @@ class Creation_user_controller
 
 
     public function createUserInDatabase()
-    {
+    {require_once '../models/ModelCreateCar.php';
+        require_once '../controllers/Creation_Car_Controller.php';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
@@ -39,7 +40,24 @@ class Creation_user_controller
         if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
             
             $usercreated = $this->modelCreateUser->createUser($nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo,$role);
-            echo "Votre compte utilisateur a été créé avec succès !";
+
+            if($usercreated){
+
+                if (($role === 'chauffeur' || $role === 'passager&chauffeur') && isset($_POST['modele'], $_POST['immatriculation'], $_POST['energie'], $_POST['couleur'], $_POST['date_premiere_immatriculation'], $_POST['marque'])) {
+                    $modele = $_POST['modele'];
+                    $immatriculation = $_POST['immatriculation'];
+                    $energie = $_POST['energie'];
+                    $couleur = $_POST['couleur'];
+                    $date_premiere_immatriculation = $_POST['date_premiere_immatriculation'];
+                    $marque = $_POST['marque'];
+        
+                    $modelCreateCar = new ModelCreateCar();
+                    $controllerCar = new Creation_Car_Controller($modelCreateCar);
+                    $controllerCar->createCarInDatabaseDirect($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque);
+                }
+        
+            }
+            echo "Votre compte utilisateur (et voiture si chauffeur) a été créé avec succès !";
               // Redirige vers la page de création de voiture
         } else {
             echo "Erreur lors du téléchargement de la photo";

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,13 +12,20 @@
 
     <?php
     require_once 'header.php';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require '../models/ModelCreateUser.php';
+    require '../controllers/Creation_User_controller.php';
+    $modelCreateUser = new ModelCreateUser();
+    $controllerCreateUser = new Creation_user_controller($modelCreateUser);
+    $controllerCreateUser->createUserInDatabase();
+    }
     ?>
     
     <h1>Connexion</h1>
  
     <form method="POST" action="creation_user.php" enctype="multipart/form-data">
 
-    <input type="hidden" name="form_type" value="creation_user.php">
+     
         <label for="nom">Nom :</label>
         <input type="text" name="nom" required>
         <br>
@@ -30,7 +39,7 @@
         <input type="password" name="password" required>
         <br>
         <label for="telephone">Telephone :</label>
-        <input type="int" name="telephone" required>
+        <input type="number" name="telephone" required>
         <br>
         <label for="adresse">Adresse :</label>
         <input type="text" name="adresse" required>
@@ -83,13 +92,4 @@ document.getElementById('role').addEventListener('change', function () {
 </body>
 </html>
 
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST'  && isset($_POST['form_type']) && $_POST['form_type'] === 'creation_user.php') {
-    require '../models/ModelCreateUser.php';
-    require '../controllers/Creation_User_controller.php';
-    $modelCreateUser = new ModelCreateUser();
-    $controllerCreateUser = new Creation_user_controller($modelCreateUser);
-    $controllerCreateUser->createUserInDatabase();
-    }
-
-    ?>
+    
