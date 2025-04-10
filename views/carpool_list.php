@@ -64,7 +64,7 @@ if (isset($_SESSION['resultats'])) {
     });
 
     // Débogage: Afficher le nombre de résultats après application des filtres
-    echo '<p>Nombre de résultats après filtrage : ' . count($resultats) . '</p>';
+    echo '<p>Nombre de résultats : ' . count($resultats) . '</p>';
 
     // Récupération de la date de départ recherchée
     $date_recherchee = $_SESSION['date_depart_recherchee'];

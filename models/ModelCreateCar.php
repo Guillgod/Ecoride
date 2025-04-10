@@ -3,13 +3,7 @@
 class ModelCreateCar
 {
     private PDO $db;
-    private string $modele;
-    private string $immatriculation;
-    private string $energie;
-    private string $couleur;
-    private string $date_premiere_immatriculation;
-
-    private string $utilise;
+    
 
     public function __construct()
     {

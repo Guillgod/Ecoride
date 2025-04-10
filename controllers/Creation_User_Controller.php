@@ -23,6 +23,7 @@ class Creation_user_controller
             $adresse = $_POST['adresse'];
             $date_naissance = $_POST['date_naissance'];
             $pseudo = $_POST['pseudo'];
+            $role = $_POST['role'];
             
             // Gestion du téléchargement de la photo
             $photo = $_FILES['photo']['name'];
@@ -37,7 +38,7 @@ class Creation_user_controller
         // Déplacez le fichier téléchargé
         if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
             
-            $usercreated = $this->modelCreateUser->createUser($nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo);
+            $usercreated = $this->modelCreateUser->createUser($nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo,$role);
             echo "Votre compte utilisateur a été créé avec succès !";
               // Redirige vers la page de création de voiture
         } else {

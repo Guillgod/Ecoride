@@ -43,8 +43,43 @@
         <br>
         <label for="photo">Photo :</label>
         <input type="file" name="photo" required>
+
+        <label for="role">Rôle :</label>
+        <select name="role" id="role" required>
+            <option value ="">--Sélectionner un rôle--</option>
+            <option value="chauffeur">Chauffeur</option>
+            <option value="passager">Passager</option>
+            <option value="passager&chauffeur">Passager et Chauffeur</option>
+        </select>
+        
+        <div id="form-voiture"></div>
+
         <input type="submit" value="Créer le compte">
+
+        <!-- Conteneur où le formulaire voiture sera chargé -->
+        
     </form>
+
+    <!-- JS pour charger le formulaire du chauffeur -->
+<script>
+document.getElementById('role').addEventListener('change', function () {
+    const role = this.value;
+    const container = document.getElementById('form-voiture');
+
+    if (role === 'chauffeur' || role === 'passager&chauffeur') {
+        fetch('creation_car.php')
+            .then(response => response.text())
+            .then(html => {
+                container.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement du formulaire voiture:', error);
+            });
+    } else {
+        container.innerHTML = ''; // Vide si rôle ≠ chauffeur
+    }
+});
+</script>
 </body>
 </html>
 
@@ -56,4 +91,5 @@
     $controllerCreateUser = new Creation_user_controller($modelCreateUser);
     $controllerCreateUser->createUserInDatabase();
     }
+
     ?>
