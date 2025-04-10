@@ -24,7 +24,11 @@ class ModelCreateCar
         $stmt->bindValue(':marque', $marque);
          
 
-        return $stmt->execute();
+        if( $stmt->execute()){
+            return $this->db->lastInsertId(); // Retourne l'ID de la voiture créée
+        }
+        return false; // En cas d'échec de l'insertion
     }
+};
+    
 
-}

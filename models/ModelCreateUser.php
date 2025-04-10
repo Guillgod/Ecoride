@@ -24,77 +24,12 @@ class ModelCreateUser
        
     }
 
-    public function getNom($nom)
-    {
-        return $this->nom;
-    }
-    public function getPrenom($prenom)
-    {
-        return $this->prenom;
-    }
-    public function getEmail($email)
-    {
-        return $this->email;
-    }
-    public function getPassword($password)
-    {
-        return $this->password;
-    }
-    public function getTelephone($telephone)
-    {
-        return $this->telephone;
-    }
-    public function getAdresse($adresse)
-    {
-        return $this->adresse;
-    }
-    public function getPseudo($pseudo)
-    {
-        return $this->pseudo;
-    }
-    public function getPhoto($photo)
-    {
-        return $this->photo;
-    }
-    
+   
 
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
-    }
-    public function setPrenom($prenom)
-    {
-        $this->prenom = $prenom;
-    }
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-    public function setTelephone($telephone)
-    {
-        $this->telephone = $telephone;
-    }
-    public function setAdresse($adresse)
-    {
-        $this->adresse = $adresse;
-    }
-    public function setPseudo($pseudo)
-    {
-        $this->pseudo = $pseudo;
-    }
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
-    }
-
-    public function createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_naissance, $pseudo, $photo,$role) 
+    public function createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_naissance, $pseudo, $photo,$role,$gere) 
     
     {
-        $stmt = $this->db->prepare("INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse,date_naissance, pseudo,photo,role) VALUES (:nom, :prenom, :email, :password, :telephone, :adresse, :date_naissance, :pseudo,:photo,:role)"); 
+        $stmt = $this->db->prepare("INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse,date_naissance, pseudo,photo,role,gere) VALUES (:nom, :prenom, :email, :password, :telephone, :adresse, :date_naissance, :pseudo,:photo,:role,:gere)"); 
         $stmt->bindValue(':nom', $nom);
         $stmt->bindValue(':prenom', $prenom);
         $stmt->bindValue(':email', $email);
@@ -105,6 +40,7 @@ class ModelCreateUser
         $stmt->bindValue(':pseudo', $pseudo);
         $stmt->bindValue(':photo', $photo);
         $stmt->bindValue(':role', $role); // Rôle par défaut
+        $stmt->bindValue(':gere', $gere); // Rôle par défaut
 
         return $stmt->execute();
     }

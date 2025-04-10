@@ -10,9 +10,7 @@ class Creation_Car_Controller
     }
 
 
-    public function createCarInDatabaseDirect($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque) {
-        $this->modelCreateCar->createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque);
-    }
+    
 
 
 
