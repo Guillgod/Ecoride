@@ -24,7 +24,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="header_content">
                 
                     <div class="logo">
-                        <a href="Page_accueil.php"><img src="img/Logo.png"  alt="voiture roulant dans une forêt" width="100" height="100"></a>
+                        <a href="Page_accueil.php"><img src="../img/Logo.png"  alt="voiture roulant dans une forêt" width="100" height="100"></a>
                         <p>Ecoride</p>
                     </div>
                     <div>

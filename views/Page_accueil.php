@@ -24,13 +24,13 @@
         <div id="carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/Voiture.jpg" class="imgcaroussel" alt="Voiture">
+                    <img src="../img/Voiture.jpg" class="imgcaroussel" alt="Voiture">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/autoroute.jpg" class="imgcaroussel" alt="Autoroute">
+                    <img src="../img/autoroute.jpg" class="imgcaroussel" alt="Autoroute">
                 </div>
                 <div class="carousel-item">
-                    <img src="img/autoroutenuit.jpg" class="imgcaroussel" alt="Autoroute de nuit">
+                    <img src="../img/autoroutenuit.jpg" class="imgcaroussel" alt="Autoroute de nuit">
                 </div>
             </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
