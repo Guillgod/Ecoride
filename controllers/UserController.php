@@ -35,4 +35,8 @@ class UserController {
         header('Location: Page_accueil.php'); // Redirige vers la page d'accueil après la déconnexion
         exit; // Assurez-vous de sortir après la redirection
     }
+
+    public function getUserInformationFromDatabase($email) {
+        return $this->modeluser->getUserInformation($email);
+    }
 }

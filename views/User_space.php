@@ -11,64 +11,46 @@
 require_once 'header.php';
 ?>
 
-<h3>Sélection du profil</h3>
-<form method="POST" action="User_space.php" class="radio-container">
 
-    <label>
-        <input type="radio" name="selection_role" value="passager">
-        Passager
-    </label><br>
+<p>Bienvenue dans votre espace utilisateur !</p>
 
-    <label>
-        <input type="radio" name="selection_role" value="chauffeur">
-        Chauffeur
-    </label><br>
+<?php
+require_once '../models/ModelUser.php';
+require_once '../controllers/UserController.php';
 
-    <label>
-        <input type="radio" name="selection_role" value="passager_et_chauffeur">
-        Passager et Chauffeur
-    </label><br>
-    <div id="form-voiture">
-        <div id="form-voiture-inner"></div>
-    </div>
-    <input class="button" type="submit" value="Valider">
+$modeluser = new ModelUser();
+$userController = new UserController($modeluser);
+$resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['email']);
 
-</form>
+if ($resultats) {
+    $chemin_photo = '../uploads/';
+    echo '<div>';
+    echo '<img src="../uploads/' . htmlspecialchars($resultats['photo']) . '" alt="Photo de ' . htmlspecialchars($resultats['pseudo']) . '" width="auto" height="300">';
+    echo '<p>Pseudo du chauffeur :' . htmlspecialchars($resultats['pseudo']) . '</p>';
+    echo '<p>Nom :' . htmlspecialchars($resultats['nom']) . '</p>';
+    echo '<p>Prénom :' . htmlspecialchars($resultats['prenom']) . '</p>';
+    echo '<p>Email :' . htmlspecialchars($resultats['email']) . '</p>';
+    echo '<p>Téléphone :' . htmlspecialchars($resultats['telephone']) . '</p>';
+    echo '<p>Adresse :' . htmlspecialchars($resultats['adresse']) . '</p>';
+    echo '<p>Date de naissance :' . htmlspecialchars($resultats['date_naissance']) . '</p>';
+    echo '<p>Rôle :' . htmlspecialchars($resultats['role']) . '</p>';
+    echo '<p>id véhicule géré à modifier plus tard :' . htmlspecialchars($resultats['gere']) . '</p>';
+    echo '<p>Note du chauffeur :' .  $resultats['note'] . '</p>';
+    echo '</div>';
+} else {
+    echo '<p>Aucun utilisateur spécifié.</p>';
+}
+
+?>
+
+
+
+
+
 
 <!-- Zone où le formulaire voiture sera injecté -->
 
 
-<script>
-document.querySelectorAll('input[name="selection_role"]').forEach((radio) => {
-  radio.addEventListener('change', function () {
-    const role = this.value;
-    const container = document.getElementById('form-voiture-inner');
-
-    if (role === 'chauffeur' || role === 'passager_et_chauffeur') {
-      fetch('creation_car.php')
-        .then(response => response.text())
-        .then(html => {
-          container.innerHTML = html;
-          container.classList.remove('visible'); // Réinitialise
-          // Laisse le DOM respirer, puis applique la classe visible
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              container.classList.add('visible');
-            });
-          });
-        })
-        .catch(error => {
-          console.error('Erreur lors du chargement du formulaire voiture:', error);
-        });
-    } else {
-      container.classList.remove('visible');
-      setTimeout(() => {
-        container.innerHTML = '';
-      }, 400);
-    }
-  });
-});
-</script>
 
 </body>
 </html>

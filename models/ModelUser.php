@@ -19,4 +19,12 @@ class ModelUser {
         }
         return false;
     }
+
+//Retourne tous les information de l'utilisateur (Ajouter les voitures liées à l'utilisateur)
+    public function getUserInformation($email) {
+        $stmt = $this->db->prepare("SELECT * FROM utilisateur WHERE email = :email");
+        $stmt->bindValue(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
