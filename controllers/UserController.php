@@ -39,4 +39,8 @@ class UserController {
     public function getUserInformationFromDatabase($email) {
         return $this->modeluser->getUserInformation($email);
     }
+
+    public function getPassengerCovoiturageFromDatabase($userId) {
+    return $this->modeluser->getPassengerCovoiturages($userId);
+    }
 }

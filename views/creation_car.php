@@ -9,6 +9,12 @@
 <input type="text" name="immatriculation" required>
 <br>
 
+<label for="nb_place_voiture">Nombre de places:</label>
+<input type="number" name="nb_place_voiture" required>
+<br>
+
+
+
 <label for="energie">Type de véhicule:</label>
 <select name="energie" required>
     <option value="">--Type de véhicule--</option>
@@ -26,4 +32,3 @@
 <label for="marque">Marque :</label>
 <input type="text" name="marque" required>
 <br>
- 

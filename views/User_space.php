@@ -25,6 +25,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
 if ($resultats) {
     $chemin_photo = '../uploads/';
     echo '<div>';
+    echo '<h2>Vos informations</h2>';
     echo '<img src="../uploads/' . htmlspecialchars($resultats['photo']) . '" alt="Photo de ' . htmlspecialchars($resultats['pseudo']) . '" width="auto" height="300">';
     echo '<p>Pseudo du chauffeur :' . htmlspecialchars($resultats['pseudo']) . '</p>';
     echo '<p>Nom :' . htmlspecialchars($resultats['nom']) . '</p>';
@@ -37,9 +38,57 @@ if ($resultats) {
     echo '<p>id véhicule géré à modifier plus tard :' . htmlspecialchars($resultats['gere']) . '</p>';
     echo '<p>Note du chauffeur :' .  $resultats['note'] . '</p>';
     echo '</div>';
+
+    echo '<h2>Voitures gérées</h2>';
+    if ($resultats['gere']) {
+        echo '<p>Marque : ' . htmlspecialchars($resultats['marque']) . '</p>';
+        echo '<p>Modèle : ' . htmlspecialchars($resultats['modele']) . '</p>';
+        echo '<p>Immatriculation : ' . htmlspecialchars($resultats['immatriculation']) . '</p>';
+        echo '<p>Nombre de places : ' . htmlspecialchars($resultats['nb_place_voiture']) . '</p>';
+        echo '<p>Type de véhicule : ' . htmlspecialchars($resultats['energie']) . '</p>';
+        echo '<p>Couleur : ' . htmlspecialchars($resultats['couleur']) . '</p>';
+    } else {
+        echo '<p>Aucune voiture gérée.</p>';
+    }
+
+    if($resultats['utilise']) {
+        echo '<h2>Vos covoiturages comme chauffeur</h2>';
+        echo '<p>Lieu de départ : ' . htmlspecialchars($resultats['lieu_depart']) . '</p>';
+        echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($resultats['lieu_arrivee']) . '</p>';
+        echo '<p>Date de départ : ' . htmlspecialchars($resultats['date_depart']) . '</p>';
+        echo '<p>Heure de départ : ' . htmlspecialchars($resultats['heure_depart']) . '</p>';
+        echo '<p>Date d\'arrivée : ' . htmlspecialchars($resultats['date_arrivee']) . '</p>';
+        echo '<p>Heure d\'arrivée : ' . htmlspecialchars($resultats['heure_arrivee']) . '</p>';
+        echo '<p>Nombre de places disponibles : ' . htmlspecialchars($resultats['nb_place_dispo']) . '</p>';
+        echo '<p>Prix par personne : ' . htmlspecialchars($resultats['prix_personne']) . '</p>';
+    }
+
+    $passengerCovoiturages = $userController->getPassengerCovoiturageFromDatabase($_SESSION['user']['utilisateur_id']);
+
+    if (!empty($passengerCovoiturages)) {
+        echo '<h2>Vos covoiturages en tant que passager</h2>';
+        foreach ($passengerCovoiturages as $covoiturage) {
+            echo '<div>';
+            echo '<p>Lieu de départ : ' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
+            echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+            echo '<p>Date de départ : ' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
+            echo '<p>Heure de départ : ' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
+            echo '<p>Date d\'arrivée : ' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
+            echo '<p>Heure d\'arrivée : ' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
+            echo '<p>Nombre de places disponibles : ' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
+            echo '<p>Prix par personne : ' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
+            echo '</div>';
+        }
+    } else {
+        echo '<p>Vous ne participez à aucun covoiturage en tant que passager.</p>';
+    }
+
+
 } else {
     echo '<p>Aucun utilisateur spécifié.</p>';
 }
+
+
 
 ?>
 
