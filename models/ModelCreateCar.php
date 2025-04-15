@@ -12,22 +12,20 @@ class ModelCreateCar
     }
 
 
-    public function createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation,$marque)  
+    public function createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation,$marque, $gere)  
     
     {
-        $stmt = $this->db->prepare("INSERT INTO voiture (modele, immatriculation, energie, couleur, date_premiere_immatriculation,marque) VALUES (:modele, :immatriculation, :energie, :couleur, :date_premiere_immatriculation,:marque)");  
+        $stmt = $this->db->prepare("INSERT INTO voiture (modele, immatriculation, energie, couleur, date_premiere_immatriculation,marque,gere) VALUES (:modele, :immatriculation, :energie, :couleur, :date_premiere_immatriculation,:marque,:gere)");  
         $stmt->bindValue(':modele', $modele);
         $stmt->bindValue(':immatriculation', $immatriculation);
         $stmt->bindValue(':energie', $energie);
         $stmt->bindValue(':couleur', $couleur);
         $stmt->bindValue(':date_premiere_immatriculation', $date_premiere_immatriculation);
         $stmt->bindValue(':marque', $marque);
+        $stmt->bindValue(':gere', $gere); // ID de l'utilisateur gérant la voiture
          
 
-        if( $stmt->execute()){
-            return $this->db->lastInsertId(); // Retourne l'ID de la voiture créée
-        }
-        return false; // En cas d'échec de l'insertion
+         return $stmt->execute();
     }
 };
     

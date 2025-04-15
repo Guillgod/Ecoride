@@ -124,7 +124,7 @@ unset($_SESSION['recherche_effectuee']);
 function afficherCovoiturage($ligne) {
     $chemin_photo = '../uploads/';
     echo '<div>';
-    echo '<img src="' . $chemin_photo . htmlspecialchars($ligne['photo']) . '" alt="Photo de ' . htmlspecialchars($ligne['pseudo']) . '">';
+    echo '<img src="' . htmlspecialchars($chemin_photo . $ligne['photo']) . '" alt="Photo de ' . htmlspecialchars($ligne['pseudo']) . '" width="auto" height="300">';
     echo '<p> Pseudo du chauffeur : ' . htmlspecialchars($ligne['pseudo']) . '</p>';
     echo '<p> Note du chauffeur : ' . htmlspecialchars($ligne['note']) . '</p>';
     echo '<p> Nb de places disponible: ' . htmlspecialchars($ligne['nb_place_dispo']) . '</p>';

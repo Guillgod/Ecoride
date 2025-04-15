@@ -32,8 +32,8 @@ class ModelCreateCarpool
 
     public function getCarpools($lieu_depart, $lieu_arrivee, $date_depart)
     {
-        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM utilisateur
-            JOIN voiture ON voiture.voiture_id = utilisateur.gere
+        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM voiture
+            JOIN utilisateur ON utilisateur.utilisateur_id = voiture.gere
             JOIN utilisateur_participe_covoiturage ON utilisateur_participe_covoiturage.id_utilisateur = utilisateur.utilisateur_id
             JOIN covoiturage ON covoiturage.covoiturage_id =voiture.utilise
             WHERE covoiturage.lieu_depart = :lieu_depart 
@@ -51,8 +51,8 @@ class ModelCreateCarpool
 
     public function getCarpoolDetails($covoiturage_id)
     {
-        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM utilisateur
-        JOIN voiture ON utilisateur.gere = voiture.voiture_id
+        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM voiture
+        JOIN utilisateur ON voiture.gere = utilisateur.utilisateur_id
         JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
         WHERE covoiturage.covoiturage_id = :covoiturage_id");
         $stmt->bindValue(':covoiturage_id', $covoiturage_id);

@@ -22,8 +22,8 @@ class ModelUser {
 
 //Retourne tous les information de l'utilisateur (Ajouter les voitures liées à l'utilisateur)
     public function getUserInformation($email) {
-        $stmt = $this->db->prepare("SELECT * FROM utilisateur 
-        LEFT JOIN voiture ON utilisateur.gere = voiture.voiture_id
+        $stmt = $this->db->prepare("SELECT * FROM voiture 
+        LEFT JOIN utilisateur ON voiture.gere = utilisateur.utilisateur_id
         LEFT JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
         LEFT JOIN utilisateur_participe_covoiturage ON utilisateur.utilisateur_id = utilisateur_participe_covoiturage.id_utilisateur
         WHERE email = :email ");

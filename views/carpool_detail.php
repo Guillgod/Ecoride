@@ -25,7 +25,7 @@
         if ($carpoolDetails) {
             $chemin_photo = '../uploads/';
             echo '<div>';
-            echo '<img src="' . $chemin_photo . htmlspecialchars($carpoolDetails['photo']) . '" alt="Photo de ' . htmlspecialchars($carpoolDetails['pseudo']) . '">';
+            echo '<img src="' . htmlspecialchars($chemin_photo . $carpoolDetails['photo']) . '" alt="Photo de ' . htmlspecialchars($carpoolDetails['pseudo']) . '" width="auto" height="300">';
             echo '<p>Pseudo du chauffeur :' . htmlspecialchars($carpoolDetails['pseudo']) . '</p>';
             echo '<p>Note du chauffeur :' .  $carpoolDetails['note'] . '</p>';
             echo '<p>Nb de place :' .  $carpoolDetails['nb_place_dispo'] . '</p>';

@@ -26,10 +26,10 @@ class ModelCreateUser
 
    
 
-    public function createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_naissance, $pseudo, $photo,$role,$gere) 
+    public function createUser($nom, $prenom, $email, $password, $telephone, $adresse,$date_naissance, $pseudo, $photo,$role) 
     
     {
-        $stmt = $this->db->prepare("INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse,date_naissance, pseudo,photo,role,gere) VALUES (:nom, :prenom, :email, :password, :telephone, :adresse, :date_naissance, :pseudo,:photo,:role,:gere)"); 
+        $stmt = $this->db->prepare("INSERT INTO utilisateur (nom, prenom, email, password, telephone, adresse,date_naissance, pseudo,photo,role) VALUES (:nom, :prenom, :email, :password, :telephone, :adresse, :date_naissance, :pseudo,:photo,:role)"); 
         $stmt->bindValue(':nom', $nom);
         $stmt->bindValue(':prenom', $prenom);
         $stmt->bindValue(':email', $email);
@@ -40,11 +40,14 @@ class ModelCreateUser
         $stmt->bindValue(':pseudo', $pseudo);
         $stmt->bindValue(':photo', $photo);
         $stmt->bindValue(':role', $role); // Rôle par défaut
-        $stmt->bindValue(':gere', $gere); // Rôle par défaut
+           
 
         return $stmt->execute();
     }
 
+    public function getLastInsertId() {
+        return $this->db->lastInsertId();
+    }
     
     
 }
