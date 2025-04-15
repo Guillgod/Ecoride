@@ -30,7 +30,7 @@ class Creation_user_controller
             
             // Gestion du téléchargement de la photo
             $photo = $_FILES['photo']['name'];
-            $target_dir = 'uploads/'; // Répertoire cible pour les photos
+            $target_dir = '../uploads/'; // Répertoire cible pour les photos
             $target_file = $target_dir . basename($photo);
 
         // Vérifiez si le répertoire existe, sinon créez-le

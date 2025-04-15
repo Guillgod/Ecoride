@@ -35,7 +35,6 @@ if ($resultats) {
     echo '<p>Adresse :' . htmlspecialchars($resultats['adresse']) . '</p>';
     echo '<p>Date de naissance :' . htmlspecialchars($resultats['date_naissance']) . '</p>';
     echo '<p>Rôle :' . htmlspecialchars($resultats['role']) . '</p>';
-    echo '<p>id véhicule géré à modifier plus tard :' . htmlspecialchars($resultats['gere']) . '</p>';
     echo '<p>Note du chauffeur :' .  $resultats['note'] . '</p>';
     echo '</div>';
 
@@ -69,6 +68,7 @@ if ($resultats) {
         echo '<h2>Vos covoiturages en tant que passager</h2>';
         foreach ($passengerCovoiturages as $covoiturage) {
             echo '<div>';
+            echo '<h3>Vous participer à ce covoiturage :</h3>';
             echo '<p>Lieu de départ : ' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
             echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
             echo '<p>Date de départ : ' . htmlspecialchars($covoiturage['date_depart']) . '</p>';

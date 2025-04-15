@@ -28,7 +28,7 @@
             echo '<img src="' . $chemin_photo . htmlspecialchars($carpoolDetails['photo']) . '" alt="Photo de ' . htmlspecialchars($carpoolDetails['pseudo']) . '">';
             echo '<p>Pseudo du chauffeur :' . htmlspecialchars($carpoolDetails['pseudo']) . '</p>';
             echo '<p>Note du chauffeur :' .  $carpoolDetails['note'] . '</p>';
-            echo '<p>Nb de place :' .  $carpoolDetails['nb_place'] . '</p>';
+            echo '<p>Nb de place :' .  $carpoolDetails['nb_place_dispo'] . '</p>';
             echo '<p>Prix par personne :' . htmlspecialchars($carpoolDetails['prix_personne']) . '</p>';
             echo '<p>Date de départ :' . htmlspecialchars($carpoolDetails['date_depart']) . '</p>';
             echo '<p>Heure de départ :' . htmlspecialchars($carpoolDetails['heure_depart']) . '</p>';
