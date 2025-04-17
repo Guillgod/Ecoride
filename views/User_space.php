@@ -43,6 +43,7 @@ $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION[
             echo '<p>Rôle :' . htmlspecialchars($resultats['role']) . '</p>';
             echo '<p>Note du chauffeur :' .  $resultats['note'] . '</p>';
             echo '<button class="button" onclick="window.location.href=\'creation_carpool.php\'">Créer un covoiturage</button>';
+            echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
             echo '</div>';
             
 
