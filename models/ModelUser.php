@@ -32,6 +32,13 @@ class ModelUser {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getUserInformationWithoutCar($email) {
+        $stmt = $this->db->prepare("SELECT * FROM utilisateur WHERE email = :email");
+        $stmt->bindValue(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function getPassengerCovoiturages($userId) {
         $stmt = $this->db->prepare("
             SELECT covoiturage.*

@@ -10,9 +10,10 @@
 
     <body>
  
-    <h1>Renseignez votre trajet</h1>
+    <h2>Renseignez votre trajet</h2>
  
     <form method="POST" action="creation_carpool.php">
+    
     <input type="hidden" name="form_type" value="creation_carpool.php">
         <p>Renseignez votre adresse de départ :</p>
 

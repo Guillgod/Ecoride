@@ -40,6 +40,10 @@ class UserController {
         return $this->modeluser->getUserInformation($email);
     }
 
+    public function getUserInformationWithoutCarFromDatabase($email) {
+        return $this->modeluser->getUserInformationWithoutCar($email);
+    }
+
     public function getPassengerCovoiturageFromDatabase($userId) {
     return $this->modeluser->getPassengerCovoiturages($userId);
     }
