@@ -96,9 +96,9 @@ $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION[
         
             $chemin_photo = '../uploads/';
             echo '<div>';
-            echo '<h2>Vos informations</h2>';
+            echo '<h2>Vos informations</h2> ';
             echo '<img src="../uploads/' . htmlspecialchars($resultats2['photo']) . '" alt="Photo de ' . htmlspecialchars($resultats2['pseudo']) . '" width="auto" height="300">';
-            echo '<p>Pseudo du chauffeur :' . htmlspecialchars($resultats2['pseudo']) . '</p>';
+            echo '<p>Pseudo :' . htmlspecialchars($resultats2['pseudo']) . '</p>';
             echo '<p>Nom :' . htmlspecialchars($resultats2['nom']) . '</p>';
             echo '<p>Prénom :' . htmlspecialchars($resultats2['prenom']) . '</p>';
             echo '<p>Email :' . htmlspecialchars($resultats2['email']) . '</p>';
@@ -108,7 +108,7 @@ $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION[
             echo '<p>Rôle :' . htmlspecialchars($resultats2['role']) . '</p>';
             echo '<p>Note du chauffeur :' .  $resultats2['note'] . '</p>';
             echo '<p>Vous n\'êtes pas chauffeur ? Modifier votre rôle pour créer un covoiturage</p>';
-            echo '<button class="button" onclick="window.location.href=\' \'">Modifier votre role</button>';
+            echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
             echo '</div>';
             
         }

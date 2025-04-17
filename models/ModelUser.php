@@ -49,4 +49,53 @@ class ModelUser {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function updateUser($pseudo, $nom, $prenom, $email, $telephone, $adresse, $date_naissance, $photo, $role, $id) {
+        // Requête de base
+        $sql = "
+            UPDATE utilisateur SET 
+            pseudo = :pseudo,
+            nom = :nom,
+            prenom = :prenom,
+            email = :email,
+            telephone = :telephone,
+            adresse = :adresse,
+            date_naissance = :date_naissance,
+            role = :role";
+    
+        // Ajout conditionnel de la photo
+        if ($photo !== null) {
+            $sql .= ", photo = :photo";
+        }
+    
+        $sql .= " WHERE utilisateur_id = :id";
+    
+        $stmt = $this->db->prepare($sql);
+    
+        // Bind des valeurs obligatoires
+        $stmt->bindValue(':pseudo', $pseudo);
+        $stmt->bindValue(':nom', $nom);
+        $stmt->bindValue(':prenom', $prenom);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':telephone', $telephone);
+        $stmt->bindValue(':adresse', $adresse);
+        $stmt->bindValue(':date_naissance', $date_naissance);
+        $stmt->bindValue(':role', $role);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    
+        // Bind de la photo seulement si fournie
+        if ($photo !== null) {
+            $stmt->bindValue(':photo', $photo);
+        }
+    
+        return $stmt->execute();
+    }
+
+    //Met à jour de la session après modification des informations de l'utilisateur
+    public function getUserById($id) {
+        $stmt = $this->db->prepare("SELECT * FROM utilisateur WHERE utilisateur_id = :id");
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

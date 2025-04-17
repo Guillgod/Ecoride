@@ -47,4 +47,44 @@ class UserController {
     public function getPassengerCovoiturageFromDatabase($userId) {
     return $this->modeluser->getPassengerCovoiturages($userId);
     }
+
+    public function updateUserInDatabase() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nom = $_POST['nom'];
+            $prenom = $_POST['prenom'];
+            $email = $_POST['email'];
+            $telephone = $_POST['telephone'];
+            $adresse = $_POST['adresse'];
+            $date_naissance = $_POST['date_naissance'];
+            $pseudo = $_POST['pseudo'];
+            $role = $_POST['role'];
+            $userId = $_SESSION['user']['utilisateur_id'];
+
+            $photo =null;
+            if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            
+            $photo = $_FILES['photo']['name'];
+            $target_dir = '../uploads/';
+            $target_file = $target_dir . basename($photo);
+    
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true);
+            }
+    
+            move_uploaded_file($_FILES['photo']['tmp_name'], $target_file);
+        }
+                // Créer l'utilisateur mis à jour
+                $userUpdated = $this->modeluser->updateUser($pseudo, $nom, $prenom, $email, $telephone, $adresse, $date_naissance, $photo, $role,$userId);
+    
+                if ($userUpdated) {
+                    // Requête pour récupérer les nouvelles données de l'utilisateur
+                    $updatedUser = $this->modeluser->getUserById($userId);
+
+                    // Mettre à jour la session après modification des infos utilisateur.
+                    $_SESSION['user'] = $updatedUser;
+
+                    echo 'Vos données ont bien été modifiées !';
+                }
+            } 
+    }
 }
