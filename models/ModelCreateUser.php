@@ -3,20 +3,7 @@
 class ModelCreateUser
 {
     private PDO $db;
-    private string $nom;
-    private string $prenom;
-    private string $email;
-    private string $password;
-    private string $telephone;
-    private string $adresse;
-
-    private string $date_de_naissance;
-    private string $pseudo;
-    
-    private string $gere;
-    private string $photo;
-
-    private $credit;
+     
 
     public function __construct()
     {
@@ -49,7 +36,28 @@ class ModelCreateUser
         return $this->db->lastInsertId();
     }
 
+    public function addCarToUser($utilisateur_id, $voiture_id) {
+        // Connexion à la base de données (assurez-vous d'utiliser une méthode propre pour se connecter)
+          // Méthode pour se connecter à la DB
+
+        // Exemple d'insertion dans une table qui associe un utilisateur à un covoiturage
+         
+        $stmt = $this->db->prepare("INSERT INTO utilisateur_possede_voiture (id_utilisateur_possede_voiture, id_voiture_possede_utilisateur) VALUES (:utilisateur_id, :voiture_id)");
+        $stmt->bindValue(':utilisateur_id', $utilisateur_id);
+        $stmt->bindValue(':voiture_id', $voiture_id);
+        return $stmt->execute();
+}
     
-    
-    
+public function checkIfCarAlreadyJoinedThisUser($utilisateur_id, $voiture_id) {
+     
+
+   
+    $stmt = $this->db->prepare("SELECT * FROM utilisateur_possede_voiture WHERE id_utilisateur = :id_utilisateur2 AND id_voiture = :id_voiture2");
+    $stmt->bindParam(':id_utilisateur2', $utilisateur_id);
+    $stmt->bindParam(':id_voiture2', $voiture_id);
+
+    $stmt->execute();
+
+    return $stmt->rowCount() > 0; // Si la voitureest déjà déclarée par l'utilisateur
+}
 }

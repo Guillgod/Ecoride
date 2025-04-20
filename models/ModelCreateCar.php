@@ -27,6 +27,9 @@ class ModelCreateCar
 
          return $stmt->execute();
     }
+    public function getLastInsertId() {
+        return $this->db->lastInsertId();
+    }
 };
     
 

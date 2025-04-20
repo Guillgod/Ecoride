@@ -35,4 +35,8 @@ class Creation_Car_Controller
             echo "échec à la création de la voiture";
         }
     }
+
+    public function getLastInsertId() {
+        return $this->modelCreateCar->getLastInsertId();
+    }
 }
