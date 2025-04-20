@@ -32,21 +32,19 @@ class ModelCreateCarpool
 
     public function getCarpools($lieu_depart, $lieu_arrivee, $date_depart)
     {
-        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.*, utilisateur_participe_coviturage * FROM voiture
-
-             
-        JOIN covoiturage ON covoiturage.covoiturage_id = voiture.utilise
-        JOIN utilisateur ON utilisateur.utilisateur_id = utilisateur_participe_covoiturage.id_utilisateur
-        WHERE covoiturage.lieu_depart = :lieu_depart 
-        AND covoiturage.lieu_arrivee = :lieu_arrivee 
-        AND covoiturage.date_depart >= :date_depart
-        ORDER BY ABS(DATEDIFF(covoiturage.date_depart, :date_depart)) ASC");
+        $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.*  FROM voiture
+            JOIN utilisateur_possede_voiture ON utilisateur_possede_voiture.id_utilisateur_possede_voiture = utilisateur.utilisateur_id 
+            JOIN utilisateur_participe_covoiturage ON utilisateur_participe_covoiturage.id_utilisateur = utilisateur.utilisateur_id
+            JOIN covoiturage ON covoiturage.covoiturage_id =voiture.utilise
+            WHERE covoiturage.lieu_depart = :lieu_depart 
+            AND covoiturage.lieu_arrivee = :lieu_arrivee 
+            AND covoiturage.date_depart >= :date_depart
+            ORDER BY ABS(DATEDIFF(covoiturage.date_depart, :date_depart)) ASC");
         $stmt->bindValue(':lieu_depart', $lieu_depart);
         $stmt->bindValue(':lieu_arrivee', $lieu_arrivee);
         $stmt->bindValue(':date_depart', $date_depart);
         $stmt->execute();
         return $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 
         }
 
