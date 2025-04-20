@@ -48,7 +48,7 @@ $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION[
             
 
             
-            if ($resultats['gere']) {
+            if ($resultats['id_voiture_possede_utilisateur']) {
                 echo '<h2>Voitures gérées</h2>';
                 echo '<p>Marque : ' . htmlspecialchars($resultats['marque']) . '</p>';
                 echo '<p>Modèle : ' . htmlspecialchars($resultats['modele']) . '</p>';

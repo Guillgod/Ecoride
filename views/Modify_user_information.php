@@ -39,10 +39,31 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         <select name="role" id="role">
             <option value="chauffeur" <?= $userData['role'] == 'chauffeur' ? 'selected' : '' ?>>Chauffeur</option>
             <option value="passager" <?= $userData['role'] == 'passager' ? 'selected' : '' ?>>Passager</option>
+            <option value="passager&chauffeur">Passager et Chauffeur</option>
         </select>
-
+        <div id="form-voiture"></div>
     <button type="submit" class="button">Enregistrer</button>
 </form>
+
+<script>
+document.getElementById('role').addEventListener('change', function () {
+    const role = this.value;
+    const container = document.getElementById('form-voiture');
+
+    if (role === 'chauffeur' || role === 'passager&chauffeur') {
+        fetch('creation_car.php')
+            .then(response => response.text())
+            .then(html => {
+                container.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement du formulaire voiture:', error);
+            });
+    } else {
+        container.innerHTML = ''; // Vide si rôle ≠ chauffeur
+    }
+});
+</script>
 
 </body>
 </html>

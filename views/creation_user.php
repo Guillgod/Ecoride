@@ -70,6 +70,8 @@
     </form>
 
     <!-- JS pour charger le formulaire du chauffeur -->
+
+     
 <script>
 document.getElementById('role').addEventListener('change', function () {
     const role = this.value;

@@ -44,10 +44,12 @@ class ModelCreateUser
 
         return $stmt->execute();
     }
-
+    // Fonction à supprimer après création de la table utilisateur
     public function getLastInsertId() {
         return $this->db->lastInsertId();
     }
+
+    
     
     
 }
