@@ -39,10 +39,9 @@ class Creation_user_controller
                 );
     
                 if ($userCreated) {
-                    // Récupérer l'identifiant de l'utilisateur     --------------------------------------------à modifier
+                    // Récupérer l'identifiant de l'utilisateur
                     $userId = $this->modelCreateUser->getLastInsertId();
-                    //-----------------------------------------------------------------------------------------------
-                    
+    
                     // Si le rôle inclut 'chauffeur', créer la voiture
                     if (($role === 'chauffeur' || $role === 'passager&chauffeur') &&
                         isset($_POST['modele'], $_POST['immatriculation'], $_POST['energie'], $_POST['couleur'], $_POST['date_premiere_immatriculation'], $_POST['marque'])) {
@@ -56,12 +55,10 @@ class Creation_user_controller
     
                         $modelCreateCar = new ModelCreateCar();
                         $controllerCar = new Creation_Car_Controller($modelCreateCar);
-                        
-                        $carCreated = $modelCreateCar->createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque );
-                        
+    
+                        $carCreated = $modelCreateCar->createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque, $userId);
+    
                         if ($carCreated) {
-                            $carId = $controllerCar->getLastInsertId(); // Récupérer l'ID de la voiture créée
-                            $carAdded = $this->modelCreateUser->addCarToUser($userId, $carId);
                             echo "Votre compte utilisateur et votre voiture ont été créés avec succès !";
                         } else {
                             echo "Votre compte utilisateur a été créé, mais il y a eu une erreur lors de la création de la voiture.";
@@ -77,23 +74,6 @@ class Creation_user_controller
             }
         } else {
             echo "Échec à la création du compte.";
-        }
-    }
-
-
-    public function participerCarpool($utilisateur_id, $voiture_id) {
-        // Vérifie si l'utilisateur est déjà inscrit à ce covoiturage (optionnel, mais utile pour éviter les doublons)
-        if ($this->modelCreateUser->checkIfCarAlreadyJoinedThisUser($utilisateur_id, $voiture_id)) {
-            return false; // L'utilisateur est déjà inscrit
-        }
-
-        // Essaye d'ajouter la voiture à l'utilisateur 
-        $result = $this->modelCreateUser->addCarToUser($utilisateur_id, $voiture_id);
-        
-        if ($result) {
-            return true; // Succès
-        } else {
-            return false; // Échec de l'ajout
         }
     }
 }

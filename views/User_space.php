@@ -41,9 +41,13 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             echo '<p>Date de naissance :' . htmlspecialchars($utilisateur['date_naissance']) . '</p>';
             echo '<p>Rôle :' . htmlspecialchars($utilisateur['role']) . '</p>';
             echo '<p>Note du chauffeur :' .  $utilisateur['note'] . '</p>';
-            echo '<button class="button" onclick="window.location.href=\'creation_carpool.php\'">Créer un covoiturage</button>';
             echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
             echo '<button class="button" onclick="window.location.href=\'creation_car.php\'">Ajoutez une voiture</button>';
+            if ($utilisateur['role'] == 'passager'  ) {
+                echo '<p>Vous n\'êtes pas chauffeur, vous ne pouvez pas créer de covoiturage. Veuillez modifier votre rôle.</p>';}
+            if ($utilisateur['role'] == 'chauffeur' || $utilisateur['role'] == 'passager&chauffeur') {
+            echo '<button class="button" onclick="window.location.href=\'creation_carpool.php\'">Créer un covoiturage</button>';
+            }
             echo '</div>';
             
 
@@ -89,7 +93,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             }
 
             $passengerCovoiturages = $userController->getPassengerCovoiturageFromDatabase($_SESSION['user']['utilisateur_id']);
-
+             
             if (!empty($passengerCovoiturages)) {
                 echo '<h2>Vos covoiturages en tant que passager</h2>';
                 foreach ($passengerCovoiturages as $covoiturage) {
