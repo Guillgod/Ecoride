@@ -112,5 +112,17 @@ public function getUserCarId($utilisateur_id) {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ? $result['id_voiture_possede_utilisateur'] : null;
 }
+
+// Retourne toutes les voitures gérées par l'utilisateur
+public function getUserCars($utilisateur_id) {
+    $stmt = $this->db->prepare("SELECT voiture.voiture_id, voiture.marque, voiture.modele, voiture.immatriculation
+                                FROM voiture
+                                JOIN utilisateur_possede_voiture ON voiture.voiture_id = utilisateur_possede_voiture.id_voiture_possede_utilisateur
+                                WHERE utilisateur_possede_voiture.id_utilisateur_possede_voiture = :utilisateur_id");
+    $stmt->bindValue(':utilisateur_id', $utilisateur_id);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }        
     

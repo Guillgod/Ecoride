@@ -34,8 +34,9 @@ class Creation_Carpool_Controller
                 return false;
             } 
             $covoiturage_id=$this->modelCreateCarpool->createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne);
-            $utilisateur_id=$_SESSION['user']['utilisateur_id'];
-            $voiture_id=$this->modelCreateCarpool->getUserCarId($utilisateur_id);
+            // $utilisateur_id=$_SESSION['user']['utilisateur_id'];
+            // $voiture_id=$this->modelCreateCarpool->getUserCarId($utilisateur_id);
+            $voiture_id = $_POST['voiture_id'];
             $this->modelCreateCarpool-> AddCarpoolToCar($voiture_id, $covoiturage_id);
             // Call the model method to create the user
             

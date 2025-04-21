@@ -9,6 +9,16 @@
 
 <?php
 require_once 'header.php';
+require_once '../controllers/creation_carpool_controller.php';
+require_once '../models/ModelCreateCarpool.php';
+
+
+    
+
+
+$modelCreateCarpool = new ModelCreateCarpool();
+$voitures =$modelCreateCarpool->getUserCars($_SESSION['user']['utilisateur_id']);
+$controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
 ?>
 
     <body>
@@ -59,20 +69,24 @@ require_once 'header.php';
         <input type="int" name="prix_personne" required>
         <br>
 
+        <label for="voiture_id">Choisir une voiture :</label>
+        <select name="voiture_id" required>
+            <option value="">--Sélectionnez une voiture--</option>
+            <?php foreach ($voitures as $voiture): ?>
+                <option value="<?= $voiture['voiture_id'] ?>">
+                    <?= $voiture['marque'] . ' ' . $voiture['modele'] . ' (' . $voiture['immatriculation'] . ')' ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <br>
+
         <input type="submit" value="Créer le trajet">
     </form>
 
+ 
+
+    
     <?php
-    require_once '../controllers/creation_carpool_controller.php';
-    require_once '../models/ModelCreateCarpool.php';
-
-
-
-    $modelCreateCarpool = new ModelCreateCarpool();
-    $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
-
-    
-    
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type']) && $_POST['form_type'] === 'creation_carpool.php') {
         $adresse_depart = $_POST['adresse_depart'];
         $lieu_depart = $_POST['lieu_depart'];
