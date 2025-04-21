@@ -54,11 +54,11 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
 
             // Afficher les voitures gérées par l'utilisateur
             echo '<h2>Voitures gérées</h2>';
-            $voituresAffichees=false;
+            $voituresAffichees=[]; //Permet de n'afficher qu'une seule fois la voiture
                 foreach ($resultats as $voiture) {
-                    if ($voiture['id_voiture_possede_utilisateur'] !== null) {
+                    $idVoiture = $voiture['id_voiture_possede_utilisateur'];
+                    if ($idVoiture !== null && !isset($voituresAffichees[$idVoiture])) {
                         echo '<div>';
-                        $voituresAffichees=true; 
                         echo '<p>Marque : ' . htmlspecialchars($voiture['marque']) . '</p>';
                         echo '<p>Modèle : ' . htmlspecialchars($voiture['modele']) . '</p>';
                         echo '<p>Immatriculation : ' . htmlspecialchars($voiture['immatriculation']) . '</p>';
@@ -66,10 +66,8 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                         echo '<p>Type de véhicule : ' . htmlspecialchars($voiture['energie']) . '</p>';
                         echo '<p>Couleur : ' . htmlspecialchars($voiture['couleur']) . '</p>';
                         echo '</div>';
-                        $voituresAffichees=true;
-                    }else {
-                        echo '<p>Aucune voiture gérée.</p>';
-                    }
+                        $voituresAffichees[$idVoiture]=true;;
+                    } 
 
 
                 
@@ -77,8 +75,11 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             
             // Afficher les covoiturages en tant que chauffeur
             echo '<h2>Vos covoiturages comme chauffeur</h2>';
+            $idCovoituragesAffiches=[]; //Permet de n'afficher qu'une seule fois le covoiturage
             foreach ($resultats as $resultat) {
-                if($resultat['id_covoiturage_utilise_voiture']!== null) {
+                $idCovoiturage =$resultat['id_covoiturage_utilise_voiture'];
+                if($idCovoiturage !== null && !isset($idCovoituragesAffiches[$idCovoiturage])) {
+                    echo '<div>';
                     echo '<p>Lieu de départ : ' . htmlspecialchars($resultat['lieu_depart']) . '</p>';
                     echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($resultat['lieu_arrivee']) . '</p>';
                     echo '<p>Date de départ : ' . htmlspecialchars($resultat['date_depart']) . '</p>';
@@ -87,9 +88,9 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                     echo '<p>Heure d\'arrivée : ' . htmlspecialchars($resultat['heure_arrivee']) . '</p>';
                     echo '<p>Nombre de places disponibles : ' . htmlspecialchars($resultat['nb_place_dispo']) . '</p>';
                     echo '<p>Prix par personne : ' . htmlspecialchars($resultat['prix_personne']) . '</p>';
-                }else {
-                    echo '<p>Vous ne participez à aucun un covoiturage avec cette voiture.</p>';
-                }
+                    echo '</div>';
+                    $idCovoituragesAffiches[$idCovoiturage]=true;;
+                } 
             }
 
             $passengerCovoiturages = $userController->getPassengerCovoiturageFromDatabase($_SESSION['user']['utilisateur_id']);
@@ -111,6 +112,13 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                 }
             } else {
                 echo '<p>Vous ne participez à aucun covoiturage en tant que passager.</p>';
+            }
+            if (empty($voituresAffichees)) {
+                echo '<p>Aucune voiture gérée actuellement.</p>';
+            }
+            
+            if (empty($idCovoituragesAffiches)) {
+                echo '<p>Vous ne participez à aucun covoiturage en tant que chauffeur.</p>';
             }
         }
      
