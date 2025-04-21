@@ -2,17 +2,38 @@
 require_once 'header.php';
 require_once '../models/ModelUser.php';
 require_once '../controllers/UserController.php';
+require_once '../models/ModelCreateCar.php';
+require_once '../controllers/Creation_Car_Controller.php';
+require_once '../controllers/Creation_User_Controller.php';
+require_once '../models/ModelCreateUser.php';
 
 
 $modelUser = new ModelUser();
 $userController = new UserController($modelUser);
+$modelCreateCar=new ModelCreateCar();
+$carController=new Creation_Car_Controller($modelCreateCar);
+$modelCreateUser=new ModelCreateUser();
+$createUserController=new Creation_user_controller($modelCreateUser);
+ 
+
+$userData =$userController->getUserInformationFromDatabase($_SESSION['user']['email']);
+ $userData = $userData[0]; 
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userController->updateUserInDatabase();
+     
+    if(isset($_POST['role']) && ($_POST['role'] === 'chauffeur' || $_POST['role'] === 'passager&chauffeur' ) ){ 
+        
+        $carController->createCarInDatabase();
+        $AddedCar=$modelCreateUser-> addCarToUser($userData['utilisateur_id'], $carController->getLastInsertId());
+    }
+
+
     header('Location: User_space.php');
     exit;
-}$userData =$userController->getUserInformationWithoutCarFromDatabase($_SESSION['user']['email']);
-
+}// On prend le premier résultat, car on s'attend à un seul utilisateur par email
+ //Ajouter la voiture à l'utilisateur
+ 
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="passager" <?= $userData['role'] == 'passager' ? 'selected' : '' ?>>Passager</option>
             <option value="passager&chauffeur">Passager et Chauffeur</option>
         </select>
-        <div id="form-voiture"></div>
+    <div id="form-voiture"></div>
     <button type="submit" class="button">Enregistrer</button>
 </form>
 

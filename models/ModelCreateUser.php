@@ -40,7 +40,6 @@ class ModelCreateUser
         // Connexion à la base de données (assurez-vous d'utiliser une méthode propre pour se connecter)
           // Méthode pour se connecter à la DB
 
-        // Exemple d'insertion dans une table qui associe un utilisateur à un covoiturage
          
         $stmt = $this->db->prepare("INSERT INTO utilisateur_possede_voiture (id_utilisateur_possede_voiture, id_voiture_possede_utilisateur) VALUES (:utilisateur_id, :voiture_id)");
         $stmt->bindValue(':utilisateur_id', $utilisateur_id);

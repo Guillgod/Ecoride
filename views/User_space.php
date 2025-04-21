@@ -26,9 +26,6 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
 // $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION['user']['email']);
 
  
- 
-    
-     
         if (is_array($resultats)&&count($resultats)>0) {
             $chemin_photo = '../uploads/';
             $utilisateur=$resultats[0] ;
@@ -46,6 +43,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             echo '<p>Note du chauffeur :' .  $utilisateur['note'] . '</p>';
             echo '<button class="button" onclick="window.location.href=\'creation_carpool.php\'">Créer un covoiturage</button>';
             echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
+            echo '<button class="button" onclick="window.location.href=\'creation_car.php\'">Ajoutez une voiture</button>';
             echo '</div>';
             
 
@@ -86,7 +84,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                     echo '<p>Nombre de places disponibles : ' . htmlspecialchars($resultat['nb_place_dispo']) . '</p>';
                     echo '<p>Prix par personne : ' . htmlspecialchars($resultat['prix_personne']) . '</p>';
                 }else {
-                    echo '<p>Vous ne participez pas à un covoiturage avec cette voiture.</p>';
+                    echo '<p>Vous ne participez à aucun un covoiturage avec cette voiture.</p>';
                 }
             }
 
