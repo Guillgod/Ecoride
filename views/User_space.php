@@ -75,11 +75,10 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                 
                 } 
             
-                var_dump($resultats);
             // Afficher les covoiturages en tant que chauffeur
             echo '<h2>Vos covoiturages comme chauffeur</h2>';
             foreach ($resultats as $resultat) {
-                if($resultat['utilise']!== null) {
+                if($resultat['id_covoiturage_utilise_voiture']!== null) {
                     echo '<p>Lieu de départ : ' . htmlspecialchars($resultat['lieu_depart']) . '</p>';
                     echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($resultat['lieu_arrivee']) . '</p>';
                     echo '<p>Date de départ : ' . htmlspecialchars($resultat['date_depart']) . '</p>';

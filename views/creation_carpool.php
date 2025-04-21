@@ -7,6 +7,9 @@
         <link href="../css/style.css" rel="stylesheet">
     </head>
 
+<?php
+require_once 'header.php';
+?>
 
     <body>
  

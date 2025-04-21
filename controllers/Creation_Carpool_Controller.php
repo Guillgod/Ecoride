@@ -1,4 +1,5 @@
 <?php
+require_once '../models/ModelCreateCarpool.php';
 //Gère la création du covoiturage, l'affichage des trajets et le détail d'un trajet
 class Creation_Carpool_Controller
 {
@@ -32,8 +33,13 @@ class Creation_Carpool_Controller
                 echo "L'heure d'arrivée doit être supérieure à l'heure de départ";
                 return false;
             } 
+            $covoiturage_id=$this->modelCreateCarpool->createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne);
+            $utilisateur_id=$_SESSION['user']['utilisateur_id'];
+            $voiture_id=$this->modelCreateCarpool->getUserCarId($utilisateur_id);
+            $this->modelCreateCarpool-> AddCarpoolToCar($voiture_id, $covoiturage_id);
             // Call the model method to create the user
-            return $this->modelCreateCarpool->createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne); 
+            
+            return $covoiturage_id; // Return the result of the creation
             
         
         }}

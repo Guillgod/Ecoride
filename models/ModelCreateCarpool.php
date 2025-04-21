@@ -24,9 +24,13 @@ class ModelCreateCarpool
         $stmt->bindValue(':date_arrivee', $date_arrivee);
         $stmt->bindValue(':heure_arrivee', $heure_arrivee);
         $stmt->bindValue(':prix_personne', $prix_personne);
-         
-
-        return $stmt->execute();
+        
+        if($stmt->execute()){
+           return $this->db->lastInsertId();
+        }
+        else{
+            return false; // En cas d'erreur lors de l'insertion
+        }
     }
 
 
@@ -36,8 +40,11 @@ class ModelCreateCarpool
             $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM voiture
             JOIN utilisateur_possede_voiture ON utilisateur_possede_voiture.id_voiture_possede_utilisateur = voiture.voiture_id
             JOIN utilisateur ON utilisateur_possede_voiture.id_utilisateur_possede_voiture = utilisateur.utilisateur_id
-            JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
-            WHERE lieu_depart = :lieu_depart AND lieu_arrivee = :lieu_arrivee AND date_depart BETWEEN :date_depart_min AND :date_depart_max");
+            JOIN voiture_utilise_covoiturage ON voiture_utilise_covoiturage.id_voiture_utilise_covoiturage = voiture.voiture_id  -- JOIN avec la table voiture_utilise_covoiturage
+            JOIN covoiturage ON voiture_utilise_covoiturage.id_covoiturage_utilise_voiture = covoiturage.covoiturage_id
+            WHERE lieu_depart = :lieu_depart 
+            AND lieu_arrivee = :lieu_arrivee 
+            AND date_depart BETWEEN :date_depart_min AND :date_depart_max");
             $stmt->bindValue(':lieu_depart', $lieu_depart);
             $stmt->bindValue(':lieu_arrivee', $lieu_arrivee);
             $stmt->bindValue(':date_depart_min', $date_depart_min);
@@ -55,8 +62,8 @@ class ModelCreateCarpool
         $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM voiture
         JOIN utilisateur_possede_voiture ON utilisateur_possede_voiture.id_voiture_possede_utilisateur = voiture.voiture_id
         JOIN utilisateur ON utilisateur_possede_voiture.id_utilisateur_possede_voiture = utilisateur.utilisateur_id
-        
-        JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
+        JOIN voiture_utilise_covoiturage ON voiture_utilise_covoiturage.id_voiture_utilise_covoiturage = voiture.voiture_id
+        JOIN covoiturage ON voiture_utilise_covoiturage.id_covoiturage_utilise_voiture = covoiturage.covoiturage_id
         WHERE covoiturage.covoiturage_id = :covoiturage_id");
         $stmt->bindValue(':covoiturage_id', $covoiturage_id);
         $stmt->execute();
@@ -88,6 +95,22 @@ public function checkIfUserAlreadyJoined($utilisateur_id, $covoiturage_id) {
     $stmt->execute();
 
     return $stmt->rowCount() > 0; // Si l'utilisateur est déjà inscrit
+}
+
+public function AddCarpoolToCar($voiture_id, $covoiturage_id) {
+
+    $stmt = $this->db->prepare("INSERT INTO voiture_utilise_covoiturage (id_voiture_utilise_covoiturage, id_covoiturage_utilise_voiture) VALUES (:voiture_id, :covoiturage_id)");
+    $stmt->bindValue(':voiture_id', $voiture_id);
+    $stmt->bindValue(':covoiturage_id', $covoiturage_id);
+    return $stmt->execute();
+}
+
+public function getUserCarId($utilisateur_id) {
+    $stmt = $this->db->prepare("SELECT id_voiture_possede_utilisateur FROM utilisateur_possede_voiture WHERE id_utilisateur_possede_voiture = :utilisateur_id LIMIT 1");
+    $stmt->bindValue(':utilisateur_id', $utilisateur_id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['id_voiture_possede_utilisateur'] : null;
 }
 }        
     

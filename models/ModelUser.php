@@ -22,13 +22,13 @@ class ModelUser {
 
 //Retourne tous les information de l'utilisateur (Ajouter les voitures liées à l'utilisateur)
     public function getUserInformation($email) {
-        $stmt = $this->db->prepare("SELECT * FROM utilisateur 
+        $stmt = $this->db->prepare("SELECT * FROM utilisateur
         LEFT JOIN utilisateur_possede_voiture ON utilisateur_possede_voiture.id_utilisateur_possede_voiture = utilisateur.utilisateur_id
         LEFT JOIN voiture ON utilisateur_possede_voiture.id_voiture_possede_utilisateur = voiture.voiture_id
-        LEFT JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
+        LEFT JOIN voiture_utilise_covoiturage ON voiture_utilise_covoiturage.id_voiture_utilise_covoiturage = voiture.voiture_id
+        LEFT JOIN covoiturage ON voiture_utilise_covoiturage.id_covoiturage_utilise_voiture = covoiturage.covoiturage_id
         LEFT JOIN utilisateur_participe_covoiturage ON utilisateur.utilisateur_id = utilisateur_participe_covoiturage.id_utilisateur
-        WHERE email = :email 
-        GROUP BY voiture.voiture_id");
+        WHERE email = :email");
         $stmt->bindValue(':email', $email);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -94,4 +94,6 @@ class ModelUser {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    
 }
