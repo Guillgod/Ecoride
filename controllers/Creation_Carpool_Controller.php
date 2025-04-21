@@ -47,8 +47,11 @@ class Creation_Carpool_Controller
             $lieu_arrivee = $_POST['lieu_arrivee'];
             $date_depart = $_POST['date_depart'];
 
+            //calculer la plage de date (par exemple, 2 jours avant et 3 jour après)
+            $date_depart_min = date('Y-m-d', strtotime($date_depart . ' -2 days'));
+            $date_depart_max = date('Y-m-d', strtotime($date_depart . ' +3 days'));
             
-            $displayedCarpool = $this->modelCreateCarpool->getCarpools($lieu_depart, $lieu_arrivee, $date_depart); 
+            $displayedCarpool = $this->modelCreateCarpool->getCarpools($lieu_depart, $lieu_arrivee, $date_depart_min, $date_depart_max); // Appel de la méthode pour récupérer les trajets
     
             return $displayedCarpool; // Appel de la méthode pour récupérer les trajets
         }

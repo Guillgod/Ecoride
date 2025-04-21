@@ -31,17 +31,17 @@ class ModelCreateCarpool
 
 
      
-        public function getCarpools($lieu_depart, $lieu_arrivee, $date_depart)
+        public function getCarpools($lieu_depart, $lieu_arrivee, $date_depart_min, $date_depart_max)
         {
             $stmt = $this->db->prepare("SELECT utilisateur.*, voiture.*, covoiturage.* FROM voiture
             JOIN utilisateur_possede_voiture ON utilisateur_possede_voiture.id_voiture_possede_utilisateur = voiture.voiture_id
             JOIN utilisateur ON utilisateur_possede_voiture.id_utilisateur_possede_voiture = utilisateur.utilisateur_id
             JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
-            WHERE lieu_depart = :lieu_depart AND lieu_arrivee = :lieu_arrivee AND date_depart = :date_depart
-             ");
+            WHERE lieu_depart = :lieu_depart AND lieu_arrivee = :lieu_arrivee AND date_depart BETWEEN :date_depart_min AND :date_depart_max");
             $stmt->bindValue(':lieu_depart', $lieu_depart);
             $stmt->bindValue(':lieu_arrivee', $lieu_arrivee);
-            $stmt->bindValue(':date_depart', $date_depart);
+            $stmt->bindValue(':date_depart_min', $date_depart_min);
+            $stmt->bindValue(':date_depart_max', $date_depart_max);
             $stmt->execute();
             return $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

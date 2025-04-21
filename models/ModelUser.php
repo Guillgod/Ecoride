@@ -30,16 +30,9 @@ class ModelUser {
         WHERE email = :email ");
         $stmt->bindValue(':email', $email);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getUserInformationWithoutCar($email) {
-        $stmt = $this->db->prepare("SELECT * FROM utilisateur WHERE email = :email");
-        // -- LEFT JOIN utilisateur_possede_voiture ON id_voiture_possede_voiture = voiture.voiture_id");
-        $stmt->bindValue(':email', $email);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 
     public function getPassengerCovoiturages($userId) {
         $stmt = $this->db->prepare("

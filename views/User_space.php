@@ -23,53 +23,71 @@ $userController = new UserController($modeluser);
 
 
 $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['email']);
-$resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION['user']['email']);
+// $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION['user']['email']);
 
+ 
  
     
      
-        if (is_array($resultats)) {
+        if (is_array($resultats)&&count($resultats)>0) {
             $chemin_photo = '../uploads/';
+            $utilisateur=$resultats[0] ;
             echo '<div>';
             echo '<h2>Vos informations</h2>';
-            echo '<img src="../uploads/' . htmlspecialchars($resultats['photo']) . '" alt="Photo de ' . htmlspecialchars($resultats['pseudo']) . '" width="auto" height="300">';
-            echo '<p>Pseudo du chauffeur :' . htmlspecialchars($resultats['pseudo']) . '</p>';
-            echo '<p>Nom :' . htmlspecialchars($resultats['nom']) . '</p>';
-            echo '<p>Prénom :' . htmlspecialchars($resultats['prenom']) . '</p>';
-            echo '<p>Email :' . htmlspecialchars($resultats['email']) . '</p>';
-            echo '<p>Téléphone :' . htmlspecialchars($resultats['telephone']) . '</p>';
-            echo '<p>Adresse :' . htmlspecialchars($resultats['adresse']) . '</p>';
-            echo '<p>Date de naissance :' . htmlspecialchars($resultats['date_naissance']) . '</p>';
-            echo '<p>Rôle :' . htmlspecialchars($resultats['role']) . '</p>';
-            echo '<p>Note du chauffeur :' .  $resultats['note'] . '</p>';
+            echo '<img src="../uploads/' . htmlspecialchars($utilisateur['photo']) . '" alt="Photo de ' . htmlspecialchars($utilisateur['pseudo']) . '" width="auto" height="300">';
+            echo '<p>Pseudo du chauffeur :' . htmlspecialchars($utilisateur['pseudo']) . '</p>';
+            echo '<p>Nom :' . htmlspecialchars($utilisateur['nom']) . '</p>';
+            echo '<p>Prénom :' . htmlspecialchars($utilisateur['prenom']) . '</p>';
+            echo '<p>Email :' . htmlspecialchars($utilisateur['email']) . '</p>';
+            echo '<p>Téléphone :' . htmlspecialchars($utilisateur['telephone']) . '</p>';
+            echo '<p>Adresse :' . htmlspecialchars($utilisateur['adresse']) . '</p>';
+            echo '<p>Date de naissance :' . htmlspecialchars($utilisateur['date_naissance']) . '</p>';
+            echo '<p>Rôle :' . htmlspecialchars($utilisateur['role']) . '</p>';
+            echo '<p>Note du chauffeur :' .  $utilisateur['note'] . '</p>';
             echo '<button class="button" onclick="window.location.href=\'creation_carpool.php\'">Créer un covoiturage</button>';
             echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
             echo '</div>';
             
 
-            
-            if ($resultats['id_voiture_possede_utilisateur']) {
-                echo '<h2>Voitures gérées</h2>';
-                echo '<p>Marque : ' . htmlspecialchars($resultats['marque']) . '</p>';
-                echo '<p>Modèle : ' . htmlspecialchars($resultats['modele']) . '</p>';
-                echo '<p>Immatriculation : ' . htmlspecialchars($resultats['immatriculation']) . '</p>';
-                echo '<p>Nombre de places : ' . htmlspecialchars($resultats['nb_place_voiture']) . '</p>';
-                echo '<p>Type de véhicule : ' . htmlspecialchars($resultats['energie']) . '</p>';
-                echo '<p>Couleur : ' . htmlspecialchars($resultats['couleur']) . '</p>';
-            } else {
-                echo '<p>Aucune voiture gérée.</p>';
-            }
+            // Afficher les voitures gérées par l'utilisateur
+            echo '<h2>Voitures gérées</h2>';
+            $voituresAffichees=false;
+                foreach ($resultats as $voiture) {
+                    if ($voiture['id_voiture_possede_utilisateur'] !== null) {
+                        echo '<div>';
+                        $voituresAffichees=true; 
+                        echo '<p>Marque : ' . htmlspecialchars($voiture['marque']) . '</p>';
+                        echo '<p>Modèle : ' . htmlspecialchars($voiture['modele']) . '</p>';
+                        echo '<p>Immatriculation : ' . htmlspecialchars($voiture['immatriculation']) . '</p>';
+                        echo '<p>Nombre de places : ' . htmlspecialchars($voiture['nb_place_voiture']) . '</p>';
+                        echo '<p>Type de véhicule : ' . htmlspecialchars($voiture['energie']) . '</p>';
+                        echo '<p>Couleur : ' . htmlspecialchars($voiture['couleur']) . '</p>';
+                        echo '</div>';
+                        $voituresAffichees=true;
+                    }else {
+                        echo '<p>Aucune voiture gérée.</p>';
+                    }
 
-            if($resultats['utilise']) {
-                echo '<h2>Vos covoiturages comme chauffeur</h2>';
-                echo '<p>Lieu de départ : ' . htmlspecialchars($resultats['lieu_depart']) . '</p>';
-                echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($resultats['lieu_arrivee']) . '</p>';
-                echo '<p>Date de départ : ' . htmlspecialchars($resultats['date_depart']) . '</p>';
-                echo '<p>Heure de départ : ' . htmlspecialchars($resultats['heure_depart']) . '</p>';
-                echo '<p>Date d\'arrivée : ' . htmlspecialchars($resultats['date_arrivee']) . '</p>';
-                echo '<p>Heure d\'arrivée : ' . htmlspecialchars($resultats['heure_arrivee']) . '</p>';
-                echo '<p>Nombre de places disponibles : ' . htmlspecialchars($resultats['nb_place_dispo']) . '</p>';
-                echo '<p>Prix par personne : ' . htmlspecialchars($resultats['prix_personne']) . '</p>';
+
+                
+                } 
+            
+
+            // Afficher les covoiturages en tant que chauffeur
+            echo '<h2>Vos covoiturages comme chauffeur</h2>';
+            foreach ($resultats as $resultat) {
+                if($resultat['utilise']) {
+                    echo '<p>Lieu de départ : ' . htmlspecialchars($resultat['lieu_depart']) . '</p>';
+                    echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($resultat['lieu_arrivee']) . '</p>';
+                    echo '<p>Date de départ : ' . htmlspecialchars($resultat['date_depart']) . '</p>';
+                    echo '<p>Heure de départ : ' . htmlspecialchars($resultat['heure_depart']) . '</p>';
+                    echo '<p>Date d\'arrivée : ' . htmlspecialchars($resultat['date_arrivee']) . '</p>';
+                    echo '<p>Heure d\'arrivée : ' . htmlspecialchars($resultat['heure_arrivee']) . '</p>';
+                    echo '<p>Nombre de places disponibles : ' . htmlspecialchars($resultat['nb_place_dispo']) . '</p>';
+                    echo '<p>Prix par personne : ' . htmlspecialchars($resultat['prix_personne']) . '</p>';
+                }else {
+                    echo '<p>Vous ne participez pas à un covoiturage avec cette voiture.</p>';
+                }
             }
 
             $passengerCovoiturages = $userController->getPassengerCovoiturageFromDatabase($_SESSION['user']['utilisateur_id']);
@@ -93,26 +111,7 @@ $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION[
                 echo '<p>Vous ne participez à aucun covoiturage en tant que passager.</p>';
             }
         }
-    elseif(is_array($resultats2) ){
-        
-            $chemin_photo = '../uploads/';
-            echo '<div>';
-            echo '<h2>Vos informations</h2> ';
-            echo '<img src="../uploads/' . htmlspecialchars($resultats2['photo']) . '" alt="Photo de ' . htmlspecialchars($resultats2['pseudo']) . '" width="auto" height="300">';
-            echo '<p>Pseudo :' . htmlspecialchars($resultats2['pseudo']) . '</p>';
-            echo '<p>Nom :' . htmlspecialchars($resultats2['nom']) . '</p>';
-            echo '<p>Prénom :' . htmlspecialchars($resultats2['prenom']) . '</p>';
-            echo '<p>Email :' . htmlspecialchars($resultats2['email']) . '</p>';
-            echo '<p>Téléphone :' . htmlspecialchars($resultats2['telephone']) . '</p>';
-            echo '<p>Adresse :' . htmlspecialchars($resultats2['adresse']) . '</p>';
-            echo '<p>Date de naissance :' . htmlspecialchars($resultats2['date_naissance']) . '</p>';
-            echo '<p>Rôle :' . htmlspecialchars($resultats2['role']) . '</p>';
-            echo '<p>Note du chauffeur :' .  $resultats2['note'] . '</p>';
-            echo '<p>Vous n\'êtes pas chauffeur ? Modifier votre rôle pour créer un covoiturage</p>';
-            echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
-            echo '</div>';
-            
-        }
+     
     else {
     '<p>Vous n\'êtes pas identifié. Veuillez vous connecter à votre compte</p>';
     echo '<button class="button" onclick="window.location.href=\'login.php\'">Se connecter</button>';

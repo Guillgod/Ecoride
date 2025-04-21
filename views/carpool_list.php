@@ -116,6 +116,7 @@ if (isset($_SESSION['resultats'])) {
         }
     } else {
         // Si aucun résultat dans la session après filtrage
+         
         echo '<p>Aucun covoiturage trouvé entre ces villes avec les filtres appliqués.</p>';
     }
 }
