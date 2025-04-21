@@ -27,7 +27,8 @@ class ModelUser {
         LEFT JOIN voiture ON utilisateur_possede_voiture.id_voiture_possede_utilisateur = voiture.voiture_id
         LEFT JOIN covoiturage ON voiture.utilise = covoiturage.covoiturage_id
         LEFT JOIN utilisateur_participe_covoiturage ON utilisateur.utilisateur_id = utilisateur_participe_covoiturage.id_utilisateur
-        WHERE email = :email ");
+        WHERE email = :email 
+        GROUP BY voiture.voiture_id");
         $stmt->bindValue(':email', $email);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
