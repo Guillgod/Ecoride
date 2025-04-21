@@ -22,8 +22,8 @@ $userData =$userController->getUserInformationFromDatabase($_SESSION['user']['em
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userController->updateUserInDatabase();
      
-    if(isset($_POST['role']) && ($_POST['role'] === 'chauffeur' || $_POST['role'] === 'passager&chauffeur' ) ){ 
-        
+    if(isset($_POST['role']) && ($_POST['role'] === 'chauffeur' || $_POST['role'] === 'passager&chauffeur' )&& isset($_POST['ajout_vehicule']) ){ 
+
         $carController->createCarInDatabase();
         $AddedCar=$modelCreateUser-> addCarToUser($userData['utilisateur_id'], $carController->getLastInsertId());
     }
@@ -60,29 +60,58 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         <select name="role" id="role">
             <option value="chauffeur" <?= $userData['role'] == 'chauffeur' ? 'selected' : '' ?>>Chauffeur</option>
             <option value="passager" <?= $userData['role'] == 'passager' ? 'selected' : '' ?>>Passager</option>
-            <option value="passager&chauffeur">Passager et Chauffeur</option>
+            <option value="passager&chauffeur"<?= $userData['role'] == 'passager&chauffeur' ? 'selected' : '' ?>>Passager et Chauffeur</option>
         </select>
+
+        <div id="ajout-vehicule-container" style="display: none;">
+            <label>
+            <input type="checkbox" id="ajout-vehicule" name="ajout_vehicule">
+            Ajouter un nouveau véhicule
+            </label>
+        </div>
+
     <div id="form-voiture"></div>
     <button type="submit" class="button">Enregistrer</button>
 </form>
 
 <script>
-document.getElementById('role').addEventListener('change', function () {
-    const role = this.value;
-    const container = document.getElementById('form-voiture');
+document.addEventListener('DOMContentLoaded', function () {
+    const roleSelect = document.getElementById('role');
+    const ajoutVehiculeContainer = document.getElementById('ajout-vehicule-container');
+    const ajoutVehiculeCheckbox = document.getElementById('ajout-vehicule');
+    const formVoiture = document.getElementById('form-voiture');
 
-    if (role === 'chauffeur' || role === 'passager&chauffeur') {
-        fetch('creation_car.php')
-            .then(response => response.text())
-            .then(html => {
-                container.innerHTML = html;
-            })
-            .catch(error => {
-                console.error('Erreur lors du chargement du formulaire voiture:', error);
-            });
-    } else {
-        container.innerHTML = ''; // Vide si rôle ≠ chauffeur
+    function updateAjoutVehiculeVisibility() {
+        const role = roleSelect.value;
+        if (role === 'chauffeur' || role === 'passager&chauffeur') {
+            ajoutVehiculeContainer.style.display = 'block';
+        } else {
+            ajoutVehiculeContainer.style.display = 'none';
+            ajoutVehiculeCheckbox.checked = false;
+            formVoiture.innerHTML = '';
+        }
     }
+
+    function updateFormVoitureVisibility() {
+        if (ajoutVehiculeCheckbox.checked) {
+            fetch('creation_car.php')
+                .then(response => response.text())
+                .then(html => {
+                    formVoiture.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement du formulaire voiture:', error);
+                });
+        } else {
+            formVoiture.innerHTML = '';
+        }
+    }
+
+    roleSelect.addEventListener('change', updateAjoutVehiculeVisibility);
+    ajoutVehiculeCheckbox.addEventListener('change', updateFormVoitureVisibility);
+
+    // Initialisation lors du chargement de la page
+    updateAjoutVehiculeVisibility();
 });
 </script>
 
