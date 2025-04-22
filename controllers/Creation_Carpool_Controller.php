@@ -25,7 +25,8 @@ class Creation_Carpool_Controller
             $date_arrivee = $_POST['date_arrivee'];
             $heure_arrivee = $_POST['heure_arrivee'];
             $prix_personne = $_POST['prix_personne'];
-            
+            $voiture_id = $_POST['voiture_id'];
+            $nb_place_dispo = $this->modelCreateCarpool->getNbPlaceVoiture($voiture_id);
             if (strtotime($date_arrivee)<strtotime($date_depart)){
                 echo "La date d'arrivée doit être supérieure à la date de départ";
                 return false;
@@ -33,10 +34,10 @@ class Creation_Carpool_Controller
                 echo "L'heure d'arrivée doit être supérieure à l'heure de départ";
                 return false;
             } 
-            $covoiturage_id=$this->modelCreateCarpool->createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne);
+            $covoiturage_id=$this->modelCreateCarpool->createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne,$nb_place_dispo);
             // $utilisateur_id=$_SESSION['user']['utilisateur_id'];
             // $voiture_id=$this->modelCreateCarpool->getUserCarId($utilisateur_id);
-            $voiture_id = $_POST['voiture_id'];
+            
             $this->modelCreateCarpool-> AddCarpoolToCar($voiture_id, $covoiturage_id);
             // Call the model method to create the user
             
@@ -86,6 +87,10 @@ class Creation_Carpool_Controller
         }
     }
 
+    public function decreaseNb_Seat_Carpool_In_Database($id_covoiturage, $nb_place_dispo)
+    {        
+        return $this->modelCreateCarpool->decreaseNb_Seat_Carpool($id_covoiturage,$nb_place_dispo); // Appel de la méthode pour récupérer les détails du covoiturage
+    }
     
   
 

@@ -11,10 +11,10 @@ class ModelCreateCarpool
     }
 
 
-    public function createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne)  
+    public function createCarpool($adresse_depart, $lieu_depart, $date_depart, $heure_depart, $adresse_arrivee, $lieu_arrivee, $date_arrivee, $heure_arrivee,$prix_personne,$nb_place_dispo)  
     
     {
-        $stmt = $this->db->prepare("INSERT INTO covoiturage (adresse_depart, lieu_depart, date_depart, heure_depart, adresse_arrivee, lieu_arrivee, date_arrivee, heure_arrivee, prix_personne) VALUES ( :adresse_depart, :lieu_depart, :date_depart, :heure_depart, :adresse_arrivee, :lieu_arrivee, :date_arrivee, :heure_arrivee, :prix_personne)");
+        $stmt = $this->db->prepare("INSERT INTO covoiturage (adresse_depart, lieu_depart, date_depart, heure_depart, adresse_arrivee, lieu_arrivee, date_arrivee, heure_arrivee, prix_personne,nb_place_dispo) VALUES ( :adresse_depart, :lieu_depart, :date_depart, :heure_depart, :adresse_arrivee, :lieu_arrivee, :date_arrivee, :heure_arrivee, :prix_personne, :nb_place_dispo)");
         $stmt->bindValue(':adresse_depart', $adresse_depart);
         $stmt->bindValue(':lieu_depart', $lieu_depart);
         $stmt->bindValue(':date_depart', $date_depart);
@@ -24,6 +24,7 @@ class ModelCreateCarpool
         $stmt->bindValue(':date_arrivee', $date_arrivee);
         $stmt->bindValue(':heure_arrivee', $heure_arrivee);
         $stmt->bindValue(':prix_personne', $prix_personne);
+        $stmt->bindValue(':nb_place_dispo', $nb_place_dispo); // Nombre de places disponibles par défaut
         
         if($stmt->execute()){
            return $this->db->lastInsertId();
@@ -124,6 +125,18 @@ class ModelCreateCarpool
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-      
+    public function decreaseNb_Seat_Carpool ($id_covoiturage, $nb_place_dispo) {
+        $stmt = $this->db->prepare("UPDATE covoiturage SET nb_place_dispo = :nb_place_dispo - 1 WHERE covoiturage_id = :id_covoiturage");
+        $stmt->bindValue(':id_covoiturage', $id_covoiturage);
+        $stmt->bindValue(':nb_place_dispo', $nb_place_dispo);
+        return $stmt->execute();
+    }      
     
+    public function getNbPlaceVoiture($voiture_id) {
+        $stmt = $this->db->prepare("SELECT nb_place_voiture FROM voiture WHERE voiture_id = :voiture_id");
+        $stmt->bindValue(':voiture_id', $voiture_id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['nb_place_voiture'] : 0;
+    }
 }

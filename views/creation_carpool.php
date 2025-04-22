@@ -19,6 +19,7 @@ require_once '../models/ModelCreateCarpool.php';
 $modelCreateCarpool = new ModelCreateCarpool();
 $voitures =$modelCreateCarpool->getUserCars($_SESSION['user']['utilisateur_id']);
 $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
+ 
 ?>
 
     <body>
@@ -73,6 +74,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
         <select name="voiture_id" required>
             <option value="">--Sélectionnez une voiture--</option>
             <?php foreach ($voitures as $voiture): ?>
+                
                 <option value="<?= $voiture['voiture_id'] ?>">
                     <?= $voiture['marque'] . ' ' . $voiture['modele'] . ' (' . $voiture['immatriculation'] . ')' ?>
                 </option>

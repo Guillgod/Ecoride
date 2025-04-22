@@ -15,6 +15,7 @@
     require_once 'Barre_de_recherche.php';
     require '../models/ModelCreateCarpool.php';
     require '../controllers/Creation_Carpool_Controller.php';
+    require '../models/ModelPayment.php';
     require '../controllers/Payment_Controller.php';
     require '../controllers/Creation_User_Controller.php';
     
@@ -28,6 +29,7 @@
         $id_chauffeur = $carpoolDetails['utilisateur_id'];
         $id_passager = $_SESSION['user']['utilisateur_id'];
         $prix_personne = $carpoolDetails['prix_personne'];
+        $nb_place_dispo = $carpoolDetails['nb_place_dispo'];
         
 
 
@@ -72,6 +74,7 @@
                     }
                     $Stockedpayment=$controllerPayment-> stockPaymentCarpool($id_chauffeur,$id_passager,$covoiturage_id, $prix_personne);
                     $decreaseCredit = $controllerPayment->decreaseCreditPassenger($id_passager, $prix_personne);
+                    $decreaseNbSeatOfCarpool=$controller->decreaseNb_Seat_Carpool_In_Database($covoiturage_id, $nb_place_dispo);
                     // Empêche la duplication du bouton après l'inscription
                     unset($_POST['participer']);
                     echo '<p>Vous avez bien rejoint ce covoiturage !</p>';
