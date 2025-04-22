@@ -41,6 +41,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             echo '<p>Date de naissance :' . htmlspecialchars($utilisateur['date_naissance']) . '</p>';
             echo '<p>Rôle :' . htmlspecialchars($utilisateur['role']) . '</p>';
             echo '<p>Note du chauffeur :' .  $utilisateur['note'] . '</p>';
+            echo '<p>Crédits :' .  $utilisateur['credit'] . '</p>';
             echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
             
             if ($utilisateur['role'] == 'passager'  ) {

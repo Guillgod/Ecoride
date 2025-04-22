@@ -84,45 +84,46 @@ class ModelCreateCarpool
         return $stmt->execute();
 }
 
-public function checkIfUserAlreadyJoined($utilisateur_id, $covoiturage_id) {
-     
+    public function checkIfUserAlreadyJoined($utilisateur_id, $covoiturage_id) {
+        
 
-   
-    $stmt = $this->db->prepare("SELECT * FROM utilisateur_participe_covoiturage WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage");
-    $stmt->bindParam(':id_utilisateur', $utilisateur_id);
-    $stmt->bindParam(':id_covoiturage', $covoiturage_id);
-
-    $stmt->execute();
-
-    return $stmt->rowCount() > 0; // Si l'utilisateur est déjà inscrit
-}
-
-public function AddCarpoolToCar($voiture_id, $covoiturage_id) {
-
-    $stmt = $this->db->prepare("INSERT INTO voiture_utilise_covoiturage (id_voiture_utilise_covoiturage, id_covoiturage_utilise_voiture) VALUES (:voiture_id, :covoiturage_id)");
-    $stmt->bindValue(':voiture_id', $voiture_id);
-    $stmt->bindValue(':covoiturage_id', $covoiturage_id);
-    return $stmt->execute();
-}
-
-public function getUserCarId($utilisateur_id) {
-    $stmt = $this->db->prepare("SELECT id_voiture_possede_utilisateur FROM utilisateur_possede_voiture WHERE id_utilisateur_possede_voiture = :utilisateur_id LIMIT 1");
-    $stmt->bindValue(':utilisateur_id', $utilisateur_id);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result ? $result['id_voiture_possede_utilisateur'] : null;
-}
-
-// Retourne toutes les voitures gérées par l'utilisateur
-public function getUserCars($utilisateur_id) {
-    $stmt = $this->db->prepare("SELECT voiture.voiture_id, voiture.marque, voiture.modele, voiture.immatriculation
-                                FROM voiture
-                                JOIN utilisateur_possede_voiture ON voiture.voiture_id = utilisateur_possede_voiture.id_voiture_possede_utilisateur
-                                WHERE utilisateur_possede_voiture.id_utilisateur_possede_voiture = :utilisateur_id");
-    $stmt->bindValue(':utilisateur_id', $utilisateur_id);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-}        
     
+        $stmt = $this->db->prepare("SELECT * FROM utilisateur_participe_covoiturage WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage");
+        $stmt->bindParam(':id_utilisateur', $utilisateur_id);
+        $stmt->bindParam(':id_covoiturage', $covoiturage_id);
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0; // Si l'utilisateur est déjà inscrit
+    }
+
+    public function AddCarpoolToCar($voiture_id, $covoiturage_id) {
+
+        $stmt = $this->db->prepare("INSERT INTO voiture_utilise_covoiturage (id_voiture_utilise_covoiturage, id_covoiturage_utilise_voiture) VALUES (:voiture_id, :covoiturage_id)");
+        $stmt->bindValue(':voiture_id', $voiture_id);
+        $stmt->bindValue(':covoiturage_id', $covoiturage_id);
+        return $stmt->execute();
+    }
+
+    public function getUserCarId($utilisateur_id) {
+        $stmt = $this->db->prepare("SELECT id_voiture_possede_utilisateur FROM utilisateur_possede_voiture WHERE id_utilisateur_possede_voiture = :utilisateur_id LIMIT 1");
+        $stmt->bindValue(':utilisateur_id', $utilisateur_id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['id_voiture_possede_utilisateur'] : null;
+    }
+
+    // Retourne toutes les voitures gérées par l'utilisateur
+    public function getUserCars($utilisateur_id) {
+        $stmt = $this->db->prepare("SELECT voiture.voiture_id, voiture.marque, voiture.modele, voiture.immatriculation
+                                    FROM voiture
+                                    JOIN utilisateur_possede_voiture ON voiture.voiture_id = utilisateur_possede_voiture.id_voiture_possede_utilisateur
+                                    WHERE utilisateur_possede_voiture.id_utilisateur_possede_voiture = :utilisateur_id");
+        $stmt->bindValue(':utilisateur_id', $utilisateur_id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+      
+    
+}
