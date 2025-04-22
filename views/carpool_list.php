@@ -33,6 +33,11 @@ if (isset($_SESSION['resultats'])) {
 
     // Application des filtres
     $resultats = array_filter($resultats, function ($ligne) use ($filtre_energie, $filtre_prixmax, $filtre_dureemax, $filtre_notemin) {
+        if ($ligne['nb_place_dispo'] <= 0) {
+            return false; // Ignore les lignes où le nombre de places disponibles est inférieur ou égal à 0
+        }
+        
+        
         // Filtre énergie
         if ($filtre_energie && strtolower($ligne['energie']) !== strtolower($filtre_energie)) {
             return false;

@@ -25,7 +25,7 @@ $userController = new UserController($modeluser);
 $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['email']);
 // $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION['user']['email']);
 
- 
+
         if (is_array($resultats)&&count($resultats)>0) {
             $chemin_photo = '../uploads/';
             $utilisateur=$resultats[0] ;
@@ -80,7 +80,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             foreach ($resultats as $resultat) {
                 $idCovoiturage =$resultat['id_covoiturage_utilise_voiture'];
                 if($idCovoiturage !== null && !isset($idCovoituragesAffiches[$idCovoiturage])) {
-                    echo '<div>';
+                    echo '<div id="covoiturage_chauffeur'.$idCovoiturage.'">';
                     echo '<p>Lieu de départ : ' . htmlspecialchars($resultat['lieu_depart']) . '</p>';
                     echo '<p>Lieu d\'arrivée : ' . htmlspecialchars($resultat['lieu_arrivee']) . '</p>';
                     echo '<p>Date de départ : ' . htmlspecialchars($resultat['date_depart']) . '</p>';
@@ -89,13 +89,19 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                     echo '<p>Heure d\'arrivée : ' . htmlspecialchars($resultat['heure_arrivee']) . '</p>';
                     echo '<p>Nombre de places disponibles : ' . htmlspecialchars($resultat['nb_place_dispo']) . '</p>';
                     echo '<p>Prix par personne : ' . htmlspecialchars($resultat['prix_personne']) . '</p>';
+
+                     
+                        echo '<button class="button commencer-btn" data-id="' . $idCovoiturage . '">Commencer</button>';
+                        echo '<button class="button annuler-btn" data-id="' . $idCovoiturage . '">Annuler</button>';
+                     
+                    
                     echo '</div>';
-                    $idCovoituragesAffiches[$idCovoiturage]=true;;
+                    $idCovoituragesAffiches[$idCovoiturage]=true;
                 } 
             }
 
             $passengerCovoiturages = $userController->getPassengerCovoiturageFromDatabase($_SESSION['user']['utilisateur_id']);
-             
+            
             if (!empty($passengerCovoiturages)) {
                 echo '<h2>Vos covoiturages en tant que passager</h2>';
                 foreach ($passengerCovoiturages as $covoiturage) {
@@ -132,10 +138,28 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
 
 
 
-
+<!-- Gère l'affichages des boutons au clic. Cepependant, je pourrai peut-être changer l'affichage des boutons via le php avec une condition sur l'état du covoiturage en ajoutant une colonne dans la table covoiturage. -->
 
 <!-- Zone où le formulaire voiture sera injecté -->
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".commencer-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
+            if (covoiturageDiv) {
+                // Remplacer le bouton "Commencer" par "Arrivé à destination"
+                this.outerHTML = '<button class="button arrive-btn" data-id="' + id + '">Arrivé à destination</button>';
+                // Supprimer le bouton "Annuler"
+                const annulerBtn = covoiturageDiv.querySelector(".annuler-btn");
+                if (annulerBtn) {
+                    annulerBtn.remove();
+                }
+            }
+        });
+    });
+});
+</script>
 
 
 </body>
