@@ -13,4 +13,9 @@ class UpdateCarpool_Controller  {
     public function changerEtatCovoiturage($idCovoiturage, $nouvelEtat) {
         return $this->model->updateEtatCovoiturage($idCovoiturage, $nouvelEtat);
     }
+
+    public function supprimerCovoiturage($idCovoiturage) {
+    return $this->model->deleteCarpool($idCovoiturage);
+}
+    
 }

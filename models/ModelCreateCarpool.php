@@ -139,4 +139,6 @@ class ModelCreateCarpool
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['nb_place_voiture'] : 0;
     }
+
+    
 }
