@@ -92,6 +92,5 @@ class Creation_Carpool_Controller
         return $this->modelCreateCarpool->decreaseNb_Seat_Carpool($id_covoiturage,$nb_place_dispo); // Appel de la méthode pour récupérer les détails du covoiturage
     }
     
-  
 
 }

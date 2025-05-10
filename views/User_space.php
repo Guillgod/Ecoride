@@ -90,9 +90,17 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                     echo '<p>Nombre de places disponibles : ' . htmlspecialchars($resultat['nb_place_dispo']) . '</p>';
                     echo '<p>Prix par personne : ' . htmlspecialchars($resultat['prix_personne']) . '</p>';
 
-                     
-                        echo '<button class="button commencer-btn" data-id="' . $idCovoiturage . '">Commencer</button>';
-                        echo '<button class="button annuler-btn" data-id="' . $idCovoiturage . '">Annuler</button>';
+                        
+                        $statut = $resultat['statut'];  
+
+                        if ($statut === 'prévu') {
+                            echo '<button class="button commencer-btn" data-id="' . $idCovoiturage . '">Commencer</button>';
+                            echo '<button class="button annuler-btn" data-id="' . $idCovoiturage . '">Annuler</button>';
+                        } elseif ($statut === 'en_cours') {
+                            echo '<button class="button arrive-btn" data-id="' . $idCovoiturage . '">Arrivé à destination</button>';
+                        } elseif ($statut === 'terminé') {
+                            echo '<p style="color:green;">Ce covoiturage est terminé.</p>';
+                        }
                      
                     
                     echo '</div>';
@@ -142,20 +150,32 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
 
 <!-- Zone où le formulaire voiture sera injecté -->
 <script>
+    console.log("Script JS chargé !");
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".commencer-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
             const id = this.getAttribute("data-id");
             const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
-            if (covoiturageDiv) {
-                // Remplacer le bouton "Commencer" par "Arrivé à destination"
-                this.outerHTML = '<button class="button arrive-btn" data-id="' + id + '">Arrivé à destination</button>';
-                // Supprimer le bouton "Annuler"
-                const annulerBtn = covoiturageDiv.querySelector(".annuler-btn");
-                if (annulerBtn) {
-                    annulerBtn.remove();
+            const self = this;
+
+            fetch('../controllers/Update_Statut_Carpool.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: "id_covoiturage=" + encodeURIComponent(id) + "&nouvel_etat=en_cours"
+            })
+            .then(res => res.text())
+            .then(data => {
+                if (data.trim() === "ok") {
+                    self.outerHTML = `<button class="button arrive-btn" data-id="${id}">Arrivé à destination</button>`;
+                    const annulerBtn = covoiturageDiv.querySelector(".annuler-btn");
+                    if (annulerBtn) annulerBtn.remove();
+                } else {
+                    console.error("Échec de la mise à jour :", data);
                 }
-            }
+            })
+            .catch(err => console.error("Erreur AJAX :", err));
         });
     });
 });
