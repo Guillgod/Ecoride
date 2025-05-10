@@ -151,34 +151,66 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
 <!-- Zone où le formulaire voiture sera injecté -->
 <script>
     console.log("Script JS chargé !");
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".commencer-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            const id = this.getAttribute("data-id");
-            const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
-            const self = this;
+    document.addEventListener("DOMContentLoaded", function () {
+        // Gestion du bouton "Commencer"
+        document.querySelectorAll(".commencer-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
+                const self = this;
 
-            fetch('../controllers/Update_Statut_Carpool.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: "id_covoiturage=" + encodeURIComponent(id) + "&nouvel_etat=en_cours"
-            })
-            .then(res => res.text())
-            .then(data => {
-                if (data.trim() === "ok") {
-                    self.outerHTML = `<button class="button arrive-btn" data-id="${id}">Arrivé à destination</button>`;
-                    const annulerBtn = covoiturageDiv.querySelector(".annuler-btn");
-                    if (annulerBtn) annulerBtn.remove();
-                } else {
-                    console.error("Échec de la mise à jour :", data);
-                }
-            })
-            .catch(err => console.error("Erreur AJAX :", err));
+                fetch('../controllers/Update_Statut_Carpool.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id_covoiturage=" + encodeURIComponent(id) + "&nouvel_etat=en_cours"
+                })
+                .then(res => res.text())
+                .then(data => {
+                    if (data.trim() === "ok") {
+                        self.outerHTML = `<button class="button arrive-btn" data-id="${id}">Arrivé à destination</button>`;
+                        const annulerBtn = covoiturageDiv.querySelector(".annuler-btn");
+                        if (annulerBtn) annulerBtn.remove();
+                        attachArriveEvent(); // attache les événements "arrivé"
+                    } else {
+                        console.error("Échec de la mise à jour :", data);
+                    }
+                })
+                .catch(err => console.error("Erreur AJAX :", err));
+            });
         });
+
+        // Fonction pour attacher les événements "Arrivé à destination"
+        function attachArriveEvent() {
+            document.querySelectorAll(".arrive-btn").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    const id = this.getAttribute("data-id");
+                    const self = this;
+
+                    fetch('../controllers/Update_Statut_Carpool.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: "id_covoiturage=" + encodeURIComponent(id) + "&nouvel_etat=terminé"
+                    })
+                    .then(res => res.text())
+                    .then(data => {
+                        if (data.trim() === "ok") {
+                            self.outerHTML = `<p style="color: green; font-weight: bold;">Ce covoiturage est terminé.</p>`;
+                        } else {
+                            console.error("Échec de la mise à jour :", data);
+                        }
+                    })
+                    .catch(err => console.error("Erreur AJAX :", err));
+                });
+            });
+        }
+
+        // Attacher immédiatement les éventuels boutons "arrivé à destination" déjà présents
+        attachArriveEvent();
     });
-});
 </script>
 
 
