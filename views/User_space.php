@@ -180,6 +180,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Gérer le clic sur le bouton "Arrivé à destination"
+    document.querySelectorAll(".arrive-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
+            const self = this;
+
+            fetch('../controllers/Update_Statut_Carpool.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: "id_covoiturage=" + encodeURIComponent(id) + "&nouvel_etat=terminé"
+            })
+            .then(res => res.text())
+            .then(data => {
+                if (data.trim() === "ok") {
+                    // Modifier l'affichage pour "Covoiturage terminé"
+                    self.outerHTML = `<p style="color:green;">Ce covoiturage est terminé.</p>`;
+                } else {
+                    console.error("Échec de la mise à jour :", data);
+                }
+            })
+            .catch(err => console.error("Erreur AJAX :", err));
+        });
+    });
+
 //suppression du covoiturage quand le chauffeur clique sur "Annuler"
 document.addEventListener("DOMContentLoaded", function () {
     // ... bouton "Commencer" déjà présent
