@@ -123,7 +123,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                     echo '<p>Heure d\'arrivée : ' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
                     echo '<p>Nombre de places disponibles : ' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
                     echo '<p>Prix par personne : ' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
-                    echo '<button class="button annuler-btn" data-id="' . $idCovoiturage . '">Annuler</button>';
+                    echo '<button class="button annuler2-btn" data-id="' . $covoiturage['covoiturage_id'] . '" data-user="' . $_SESSION['user']['utilisateur_id'] . '">Annuler</button>';
                     echo '</div>';
                 }
             } else {
@@ -246,6 +246,33 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+});
+
+document.querySelectorAll(".annuler2-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        const idCovoiturage = this.getAttribute("data-id");
+        const idPassager = this.getAttribute("data-user");
+        const div = this.parentElement;
+
+        if (confirm("Voulez-vous annuler votre participation ?")) {
+            fetch('../controllers/Delete_Carpool_Passenger.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: "id_covoiturage=" + encodeURIComponent(idCovoiturage) + "&id_passager=" + encodeURIComponent(idPassager)
+            })
+            .then(res => res.text())
+            .then(data => {
+                if (data.trim() === "ok") {
+                    div.remove(); // ✅ Supprime l'affichage
+                } else {
+                    alert("Erreur : " + data);
+                }
+            })
+            .catch(err => console.error("Erreur AJAX :", err));
+        }
+    });
 });
 </script>
 

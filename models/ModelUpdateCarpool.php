@@ -68,4 +68,6 @@ public function getAllPassengersByCarpoolId($id_covoiturage) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+
 }

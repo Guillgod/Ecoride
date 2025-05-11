@@ -97,5 +97,16 @@ class ModelUser {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    
+    public function incrementPlaceDisponible($id_covoiturage) {
+    $stmt = $this->db->prepare("UPDATE covoiturage SET nb_place_dispo = nb_place_dispo + 1 WHERE covoiturage_id = :id");
+    $stmt->bindValue(':id', $id_covoiturage);
+    return $stmt->execute();
+}
+
+public function deletePassengerParticipation($id_passager, $id_covoiturage) {
+    $stmt = $this->db->prepare("DELETE FROM utilisateur_participe_covoiturage WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage");
+    $stmt->bindValue(':id_utilisateur', $id_passager);
+    $stmt->bindValue(':id_covoiturage', $id_covoiturage);
+    return $stmt->execute();
+}
 }
