@@ -62,12 +62,43 @@ public function getPrixPersonneByCovoiturageId($id_covoiturage) {
 }
 
 public function getAllPassengersByCarpoolId($id_covoiturage) {
-    $stmt = $this->db->prepare("SELECT id_utilisateur FROM utilisateur_participe_covoiturage WHERE id_covoiturage = :id_covoiturage");
-    $stmt->bindParam(':id_covoiturage', $id_covoiturage, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $requete = "
+        SELECT 
+            utilisateur.utilisateur_id, 
+            utilisateur.prenom, 
+            utilisateur.email 
+        FROM utilisateur_participe_covoiturage
+        JOIN utilisateur 
+            ON utilisateur_participe_covoiturage.id_utilisateur = utilisateur.utilisateur_id
+        WHERE utilisateur_participe_covoiturage.id_covoiturage = :id_covoiturage
+    ";
+
+    $statement = $this->db->prepare($requete);
+    $statement->bindParam(':id_covoiturage', $id_covoiturage, PDO::PARAM_INT);
+    $statement->execute();
+    
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
+
+
+
+// public function getAllPassengersByCarpoolId($id_covoiturage) {
+//     $stmt = $this->db->prepare("SELECT id_utilisateur FROM utilisateur_participe_covoiturage 
+//     JOIN utilisateur ON utilisateur_participe_covoiturage.id_utilisateur = utilisateur.utilisateur_id
+//     WHERE id_covoiturage = :id_covoiturage");
+//     $stmt->bindParam(':id_covoiturage', $id_covoiturage, PDO::PARAM_INT);
+//     $stmt->execute();
+//     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+// }
+
+public function getCarpoolDetailsById($id_covoiturage) {
+    $sql = "SELECT lieu_depart, lieu_arrivee, date_depart, heure_depart FROM covoiturage WHERE covoiturage_id = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindParam(':id', $id_covoiturage, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
 }
