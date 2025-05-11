@@ -123,6 +123,7 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
                     echo '<p>Heure d\'arrivée : ' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
                     echo '<p>Nombre de places disponibles : ' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
                     echo '<p>Prix par personne : ' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
+                    echo '<button class="button annuler-btn" data-id="' . $idCovoiturage . '">Annuler</button>';
                     echo '</div>';
                 }
             } else {
@@ -150,8 +151,10 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
 
 <!-- Zone où le formulaire voiture sera injecté -->
 <script>
-    console.log("Script JS chargé !");
+console.log("Script JS chargé !");
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Commencer un covoiturage
     document.querySelectorAll(".commencer-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
             const id = this.getAttribute("data-id");
@@ -171,34 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     self.outerHTML = `<button class="button arrive-btn" data-id="${id}">Arrivé à destination</button>`;
                     const annulerBtn = covoiturageDiv.querySelector(".annuler-btn");
                     if (annulerBtn) annulerBtn.remove();
-                } else {
-                    console.error("Échec de la mise à jour :", data);
-                }
-            })
-            .catch(err => console.error("Erreur AJAX :", err));
-        });
-    });
-});
-
-// Gérer le clic sur le bouton "Arrivé à destination"
-    document.querySelectorAll(".arrive-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            const id = this.getAttribute("data-id");
-            const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
-            const self = this;
-
-            fetch('../controllers/Update_Statut_Carpool.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: "id_covoiturage=" + encodeURIComponent(id) + "&nouvel_etat=terminé"
-            })
-            .then(res => res.text())
-            .then(data => {
-                if (data.trim() === "ok") {
-                    // Modifier l'affichage pour "Covoiturage terminé"
-                    self.outerHTML = `<p style="color:green;">Ce covoiturage est terminé.</p>`;
+                    attachArriveEvent(); // 🔄 réattache l'événement "arrivé"
                 } else {
                     console.error("Échec de la mise à jour :", data);
                 }
@@ -207,14 +183,46 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-//suppression du covoiturage quand le chauffeur clique sur "Annuler"
-document.addEventListener("DOMContentLoaded", function () {
-    // ... bouton "Commencer" déjà présent
+    // Fonction pour attacher l'événement "Arrivé"
+    function attachArriveEvent() {
+        document.querySelectorAll(".arrive-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
+                const self = this;
 
+                fetch('../controllers/Update_Statut_Carpool.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id_covoiturage=" + encodeURIComponent(id) + "&nouvel_etat=terminé"
+                })
+                .then(res => res.text())
+                .then(data => {
+                    if (data.trim() === "ok") {
+                        self.outerHTML = `<p style="color:green;">Ce covoiturage est terminé.</p>`;
+                    } else {
+                        console.error("Échec de la mise à jour :", data);
+                    }
+                })
+                .catch(err => console.error("Erreur AJAX :", err));
+            });
+        });
+    }
+
+    attachArriveEvent(); // appel initial
+
+    // Supprimer un covoiturage
     document.querySelectorAll(".annuler-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
             const id = this.getAttribute("data-id");
-            const covoiturageDiv = document.getElementById("covoiturage_chauffeur" + id);
+            const covoiturageDiv = document.querySelector(`#covoiturage_chauffeur${id}`);
+
+            if (!covoiturageDiv) {
+                console.warn(`Div avec id "covoiturage_chauffeur${id}" introuvable.`);
+                return;
+            }
 
             if (confirm("Êtes-vous sûr de vouloir annuler ce covoiturage ?")) {
                 fetch('../controllers/Delete_Carpool_Controller.php', {
@@ -226,16 +234,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(res => res.text())
                 .then(data => {
+                    console.log("Réponse du serveur :", data);
                     if (data.trim() === "ok") {
-                        covoiturageDiv.remove();
+                        covoiturageDiv.remove(); // ✅ Supprime visuellement
                     } else {
-                        console.error("Erreur suppression :", data);
+                        console.error("Erreur lors de la suppression :", data);
                     }
                 })
                 .catch(err => console.error("Erreur AJAX :", err));
             }
         });
     });
+
 });
 </script>
 

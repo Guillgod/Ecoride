@@ -19,5 +19,9 @@ class Payment_Controller
         return $modelPayment->decreaseCreditPassenger($id_passager, $prix_personne);
     }
 
+    public function increaseCreditPassenger($id_passager, $prix_personne) {
+        $modelPayment = new ModelPayment();
+        return $modelPayment->increaseCreditPassenger($id_passager, $prix_personne);
+    }
 
 }

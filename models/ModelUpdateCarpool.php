@@ -54,6 +54,18 @@ class ModelUpdateCarpool {
 }
 
 //Commit ou Rollback : Si toutes les suppressions réussissent, la transaction est validée (commit). Si une erreur survient pendant l'exécution de l'une des requêtes, la transaction est annulée (rollback), ce qui garantit qu'aucune donnée partielle ne soit enregistrée.
+public function getPrixPersonneByCovoiturageId($id_covoiturage) {
+    $stmt = $this->db->prepare("SELECT prix_personne FROM covoiturage WHERE covoiturage_id = :id");
+    $stmt->bindValue(':id', $id_covoiturage);
+    $stmt->execute();
+    return $stmt->fetchColumn(); // retourne directement le prix
+}
 
+public function getAllPassengersByCarpoolId($id_covoiturage) {
+    $stmt = $this->db->prepare("SELECT id_utilisateur FROM utilisateur_participe_covoiturage WHERE id_covoiturage = :id_covoiturage");
+    $stmt->bindParam(':id_covoiturage', $id_covoiturage, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }

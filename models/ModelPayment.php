@@ -26,4 +26,12 @@ class ModelPayment
         return $stmt->execute();
     }      
 
+    public function increaseCreditPassenger ($id_passager, $prix_personne) {
+        $stmt = $this->db->prepare("UPDATE utilisateur SET credit = credit + :prix_personne WHERE utilisateur_id = :id_passager");
+        $stmt->bindValue(':id_passager', $id_passager);
+        $stmt->bindValue(':prix_personne', $prix_personne);
+        return $stmt->execute();
+    }      
+
+
 }
