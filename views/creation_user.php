@@ -50,6 +50,9 @@
         <label for="pseudo">Pseudo :</label>
         <input type="text" name="pseudo" required>
         <br>
+        <label for="preferences">Préférences :</label>
+        <textarea name="preferences" rows="5" cols="30"></textarea>
+        <br>
         <label for="photo">Photo :</label>
         <input type="file" name="photo" required>
 
@@ -60,7 +63,21 @@
             <option value="passager">Passager</option>
             <option value="passager&chauffeur">Passager et Chauffeur</option>
         </select>
-        
+        <br>
+        <label for="animal">Acceptez-vous les animaux ? :</label>
+        <select name="animal" id="animal" required>
+            <option value ="">--Sélectionner votre choix--</option>
+            <option value="oui animal">Oui</option>
+            <option value="non animal">Non</option>
+        </select>
+        <br>
+        <label for="fumeur">Acceptez-vous les fumeurs ? :</label>
+        <select name="fumeur" id="fumeur" required>
+            <option value ="">--Sélectionner votre choix--</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+        </select>
+        <br>
         <div id="form-voiture"></div>
 
         <input type="submit" value="Créer le compte">

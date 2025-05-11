@@ -56,12 +56,27 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label>Adresse : <input type="text" name="adresse" value="<?= htmlspecialchars($userData['adresse']) ?>"></label><br>
     <label>Date de naissance : <input type="date" name="date_naissance" value="<?= htmlspecialchars($userData['date_naissance']) ?>"></label><br>
     <label>Photo : <input type="file" name="photo"></label><br>
+    <label>Préférences :</label><br>
+<textarea name="preferences" rows="5" cols="50"><?= htmlspecialchars($userData['preferences']) ?></textarea><br>
+
+    <label>Accepte les fumeurs : 
+        <select name="fumeur" id="fumeur">
+            <option value="oui" <?= $userData['fumeur'] == 'oui' ? 'selected' : '' ?>>Oui</option>
+            <option value="non" <?= $userData['fumeur'] == 'non' ? 'selected' : '' ?>>Non</option>
+        </select>
+    <br>
+    <label>Accepte les animaux : 
+        <select name="animal" id="animal">
+            <option value="oui" <?= $userData['animal'] == 'oui' ? 'selected' : '' ?>>Oui</option>
+            <option value="non" <?= $userData['animal'] == 'non' ? 'selected' : '' ?>>Non</option>
+        </select>
+    <br>
     <label>Rôle : 
         <select name="role" id="role">
             <option value="chauffeur" <?= $userData['role'] == 'chauffeur' ? 'selected' : '' ?>>Chauffeur</option>
             <option value="passager" <?= $userData['role'] == 'passager' ? 'selected' : '' ?>>Passager</option>
             <option value="passager&chauffeur"<?= $userData['role'] == 'passager&chauffeur' ? 'selected' : '' ?>>Passager et Chauffeur</option>
-        </select>
+        </select><br>
 
         <div id="ajout-vehicule-container" style="display: none;">
             <label>

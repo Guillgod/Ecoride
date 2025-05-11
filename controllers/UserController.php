@@ -57,6 +57,9 @@ class UserController {
             $pseudo = $_POST['pseudo'];
             $role = $_POST['role'];
             $userId = $_SESSION['user']['utilisateur_id'];
+            $preferences = $_POST['preferences'];
+            $fumeur = $_POST['fumeur'];  
+            $animal = $_POST['animal'];  
 
             $photo =null;
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
@@ -72,7 +75,7 @@ class UserController {
             move_uploaded_file($_FILES['photo']['tmp_name'], $target_file);
         }
                 // Créer l'utilisateur mis à jour
-                $userUpdated = $this->modeluser->updateUser($pseudo, $nom, $prenom, $email, $telephone, $adresse, $date_naissance, $photo, $role,$userId);
+                $userUpdated = $this->modeluser->updateUser($pseudo, $nom, $prenom, $email, $telephone, $adresse, $date_naissance, $photo, $role,$userId,$preferences,$fumeur,$animal);
     
                 if ($userUpdated) {
                     // Requête pour récupérer les nouvelles données de l'utilisateur

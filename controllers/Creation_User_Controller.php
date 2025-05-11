@@ -27,6 +27,9 @@ class Creation_user_controller
             $photo = $_FILES['photo']['name'];
             $target_dir = '../uploads/';
             $target_file = $target_dir . basename($photo);
+            $preferences = $_POST['preferences'];
+            $fumeur = $_POST['fumeur'];
+            $animal = $_POST['animal'];
     
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
@@ -35,8 +38,7 @@ class Creation_user_controller
             if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
                 // Créer l'utilisateur
                 $userCreated = $this->modelCreateUser->createUser(
-                    $nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo, $role
-                );
+                    $nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo, $role,$preferences,$fumeur,$animal);
     
                 if ($userCreated) {
                     // Récupérer l'identifiant de l'utilisateur

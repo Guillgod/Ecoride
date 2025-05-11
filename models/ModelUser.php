@@ -48,7 +48,7 @@ class ModelUser {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateUser($pseudo, $nom, $prenom, $email, $telephone, $adresse, $date_naissance, $photo, $role, $id) {
+    public function updateUser($pseudo, $nom, $prenom, $email, $telephone, $adresse, $date_naissance, $photo, $role, $id,$preferences, $fumeur, $animal) {
         // Requête de base
         $sql = "
             UPDATE utilisateur SET 
@@ -59,7 +59,10 @@ class ModelUser {
             telephone = :telephone,
             adresse = :adresse,
             date_naissance = :date_naissance,
-            role = :role";
+            role = :role,
+            preferences = :preferences,
+            fumeur = :fumeur,
+            animal = :animal";
     
         // Ajout conditionnel de la photo
         if ($photo !== null) {
@@ -80,6 +83,9 @@ class ModelUser {
         $stmt->bindValue(':date_naissance', $date_naissance);
         $stmt->bindValue(':role', $role);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':preferences', $preferences);
+        $stmt->bindValue(':fumeur', $fumeur);
+        $stmt->bindValue(':animal', $animal);
     
         // Bind de la photo seulement si fournie
         if ($photo !== null) {
