@@ -56,6 +56,10 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             echo '</div>';
             
 
+            //Affiche l'encadré avis si covoiturage auquel le participant a participé 
+
+
+
             // Afficher les voitures gérées par l'utilisateur
             echo '<h2>Voitures gérées</h2>';
             $voituresAffichees=[]; //Permet de n'afficher qu'une seule fois la voiture

@@ -45,6 +45,9 @@
             echo '<p>Heure de départ :' . htmlspecialchars($carpoolDetails['heure_depart']) . '</p>';
             echo '<p>Heure d\'arrivée :' . htmlspecialchars($carpoolDetails['heure_arrivee']) . '</p>';
             echo '<p>Energie du véhicule :' . htmlspecialchars($carpoolDetails['energie']) . '</p>';
+            echo '<p>Fumeurs acceptés ? :' . htmlspecialchars($carpoolDetails['fumeur']) . '</p>';
+            echo '<p>Animaux acceptés ? :' . htmlspecialchars($carpoolDetails['animal']) . '</p>';
+            echo '<p>Préférences conducteurs:' . htmlspecialchars($carpoolDetails['preferences']) . '</p>';
             echo '</div>';
         } else {
             echo '<p>Aucun identifiant de covoiturage spécifié.</p>';
