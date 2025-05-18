@@ -32,5 +32,18 @@ public function getFinishedCarpoolFromDatabase()
         
          
     }
+
+
+    public function getAvisEnCours(){
+        // Récupérer les avis en cours depuis le modèle
+        return $this->modelCreateAvis->getAvisEnCours();
+    }
+
+
+    public function InsertAvisInDatabase($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé, $note_validé, $utilisateur_validé){
+        // Récupérer les avis en cours depuis le modèle
+        return $this->modelCreateAvis->InsertAvisInDatabase($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé, $note_validé, $utilisateur_validé);
+    }
+
 }
 

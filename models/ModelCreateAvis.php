@@ -13,10 +13,12 @@ class ModelCreateAvis
 
 
         public function getFinishedCarpool(){
-    $stmt = $this->db->prepare("SELECT * FROM covoiturage WHERE statut = 'terminé'
+    $stmt = $this->db->prepare("SELECT * FROM covoiturage 
             JOIN utilisateur_participe_covoiturage ON utilisateur_participe_covoiturage.id_covoiturage = covoiturage.covoiturage_id
-            WHERE utilisateur_participe_covoiturage.id_utilisateur = :id_utilisateur");
-    $stmt->bindValue(':id_utilisateur', $_SESSION['id_utilisateur']);
+            JOIN voiture_utilise_covoiturage ON voiture_utilise_covoiturage.id_covoiturage_utilise_voiture = covoiturage.covoiturage_id
+            JOIN utilisateur_possede_voiture ON utilisateur_possede_voiture.id_voiture_possede_utilisateur = voiture_utilise_covoiturage.id_voiture_utilise_covoiturage
+            WHERE statut = 'terminé' AND utilisateur_participe_covoiturage.id_utilisateur = :id_utilisateur");
+    $stmt->bindValue(':id_utilisateur', $_SESSION['user']['utilisateur_id']);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -28,7 +30,7 @@ class ModelCreateAvis
         $stmt->bindValue(':id_chauffeur_en_cours', $id_chauffeur_en_cours);
         $stmt->bindValue(':commentaire_en_cours', $commentaire_en_cours);
         $stmt->bindValue(':note_en_cours', $note_en_cours);
-        $stmt->bindValue(':id_utilisateur_en_cours', $_SESSION['id_utilisateur']);
+        $stmt->bindValue(':id_utilisateur_en_cours', $_SESSION['user']['utilisateur_id']);
 
         return $stmt->execute();
     }
@@ -36,8 +38,8 @@ class ModelCreateAvis
 
 public function getAvisEnCours(){
     $stmt = $this->db->prepare("SELECT * FROM avis_en_cours 
-    JOIN utilisateur_participe_covoiturage ON utilisateur_participe_covoiturage.id_covoiturage = avis_en_cours.id_covoiturage_en_cours WHERE id_utilisateur_encours = :id_utilisateur");
-    $stmt->bindValue(':id_utilisateur', $_SESSION['id_utilisateur']);
+    JOIN utilisateur_participe_covoiturage ON utilisateur_participe_covoiturage.id_covoiturage = avis_en_cours.id_covoiturage_en_cours WHERE id_utilisateur_en_cours = :id_utilisateur");
+    $stmt->bindValue(':id_utilisateur', $_SESSION['user']['utilisateur_id']);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

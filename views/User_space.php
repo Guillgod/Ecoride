@@ -17,18 +17,49 @@ require_once 'header.php';
 <?php
 require_once '../models/ModelUser.php';
 require_once '../controllers/UserController.php';
+require_once '../controllers/Creation_Avis_Controller.php';
+
+
 
 $modeluser = new ModelUser();
 $userController = new UserController($modeluser);
+$modelavis = new ModelCreateAvis();
+$avisController = new Creation_Avis_Controller($modelavis);
 
 
 $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['email']);
 // $resultats2=$userController->getUserInformationWithoutCarFromDatabase($_SESSION['user']['email']);
+$resultatscovoiturageterminé=$avisController->getFinishedCarpoolFromDatabase();
+$resultatsavis=$avisController->getAvisEnCours();
 
+// Gestion de la création d'un avis soumis à validation lors du clic sur le bouton "Envoyer l'avis"
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'], $_POST['note_en_cours'])) {
+    // Récupérer les données
+    $commentaire = $_POST['commentaire_en_cours'];
+    $note = $_POST['note_en_cours'];
 
+    // Récupérer le covoiturage terminé (on suppose qu’il n’y en a qu’un ici)
+    $covoituragesTermines = $avisController->getFinishedCarpoolFromDatabase();
+
+    if (!empty($covoituragesTermines)) {
+        $id_covoiturage = $covoituragesTermines[0]['covoiturage_id'];
+        $id_chauffeur = $covoituragesTermines[0]['id_utilisateur_possede_voiture']; 
+
+        // Créer l’avis temporaire
+        $avisController->createAvisEnCours($id_covoiturage, $id_chauffeur);
+        echo '<p style="color:green;">Votre avis a bien été soumis pour validation.</p>';
+    } else {
+        echo '<p style="color:red;">Erreur : aucun covoiturage terminé trouvé.</p>';
+    }
+}
+
+//Affichage des informations de l'utilisateur
         if (is_array($resultats)&&count($resultats)>0) {
             $chemin_photo = '../uploads/';
             $utilisateur=$resultats[0] ;
+            // var_dump($resultats);
+            // var_dump($resultatscovoiturageterminé);
+            var_dump($resultatsavis);
             echo '<div>';
             echo '<h2>Vos informations</h2>';
             echo '<img src="../uploads/' . htmlspecialchars($utilisateur['photo']) . '" alt="Photo de ' . htmlspecialchars($utilisateur['pseudo']) . '" width="auto" height="300">';
@@ -56,9 +87,34 @@ $resultats=$userController->getUserInformationFromDatabase($_SESSION['user']['em
             echo '</div>';
             
 
-            //Affiche l'encadré avis si covoiturage auquel le participant a participé 
+            // Dépôt d'AVIS : Affiche l'encadré avis si covoiturage auquel le participant a participé  est terminé
+            if (count($resultatscovoiturageterminé) > 0 && empty($resultatsavis)) {
+                echo '<div>';
+                echo '<h2>Déposer votre avis</h2>';
+                echo '<p>Vous avez participé à un covoiturage, vous pouvez donner votre avis sur le chauffeur.</p>';
 
+                echo '<form method="POST" action="User_space.php">';
+    
+                // Liste déroulante pour la note
+                echo '<label for="note">Note (1 à 5) :</label>';
+                echo '<select name="note_en_cours" id="note_en_cours" required>';
+                    for ($i = 1; $i <= 5; $i++) {
+                        echo "<option value=\"$i\">$i</option>";
+                    }
+                echo '</select><br><br>';
 
+                // Zone de texte pour le commentaire
+                echo '<label for="commentaire">Commentaire :</label><br>';
+                echo '<textarea name="commentaire_en_cours" id="commentaire_en_cours" rows="4" cols="50" placeholder="Votre avis..." required></textarea><br><br>';
+
+                // Bouton de soumission
+                echo '<button type="submit" class="button">Envoyer l\'avis</button>';
+
+                echo '</form>';
+                echo '</div>';
+                } 
+
+            
 
             // Afficher les voitures gérées par l'utilisateur
             echo '<h2>Voitures gérées</h2>';
