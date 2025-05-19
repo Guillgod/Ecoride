@@ -18,19 +18,13 @@ public function getFinishedCarpoolFromDatabase()
     
 
 
-    public function createAvisEnCours($id_covoiturage_en_cours, $id_chauffeur_en_cours)
+    public function createAvisEnCours($id_covoiturage_en_cours, $id_chauffeur_en_cours,$commentaire_en_cours,$note_en_cours)
     {
-        
-             
-            $commentaire_en_cours = $_POST['commentaire_en_cours'];
-            $note_en_cours = $_POST['note_en_cours'];
-             
 
             // Call the model method to create the user
             $aviscreated = $this->modelCreateAvis->createAvisTemp($id_covoiturage_en_cours, $id_chauffeur_en_cours, $commentaire_en_cours, $note_en_cours); 
             echo "Avis soumis à validation";
         
-         
     }
 
 

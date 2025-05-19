@@ -24,7 +24,7 @@ class ModelCreateAvis
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-    public function createAvisTemp($id_covoiturage_en_cours, $id_chauffeur_en_cours, $commentaire_en_cours, $note_en_cours)
+    public function createAvisTemp($id_covoiturage_en_cours, $id_chauffeur_en_cours, $commentaire_en_cours,$note_en_cours)
     {
         $stmt = $this->db->prepare("INSERT INTO avis_en_cours (id_covoiturage_en_cours, id_chauffeur_en_cours, commentaire_en_cours, note_en_cours,id_utilisateur_en_cours) VALUES (:id_covoiturage_avis_en_cours, :id_chauffeur_en_cours, :commentaire_en_cours, :note_en_cours, :id_utilisateur_en_cours)");
         $stmt->bindValue(':id_covoiturage_avis_en_cours', $id_covoiturage_en_cours);

@@ -33,25 +33,27 @@ $resultatscovoiturageterminé=$avisController->getFinishedCarpoolFromDatabase();
 $resultatsavis=$avisController->getAvisEnCours();
 
 // Gestion de la création d'un avis soumis à validation lors du clic sur le bouton "Envoyer l'avis"
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'], $_POST['note_en_cours'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'], $_POST['note_en_cours'], $_POST['id_covoiturage'], $_POST['id_chauffeur'])) {
     // Récupérer les données
-    $commentaire = $_POST['commentaire_en_cours'];
-    $note = $_POST['note_en_cours'];
+    $commentaire_en_cours = $_POST['commentaire_en_cours'];
+    $note_en_cours = $_POST['note_en_cours'];
+    $id_covoiturage = $_POST['id_covoiturage'];
+    $id_chauffeur = $_POST['id_chauffeur'];
 
     // Récupérer le covoiturage terminé (on suppose qu’il n’y en a qu’un ici)
     $covoituragesTermines = $avisController->getFinishedCarpoolFromDatabase();
 
-    if (!empty($covoituragesTermines)) {
-        $id_covoiturage = $_POST['id_covoiturage'];
-        $id_chauffeur = $_POST['id_chauffeur'];
+        
 
         // Créer l’avis temporaire
-        $avisController->createAvisEnCours($id_covoiturage, $id_chauffeur);
+        $avisController->createAvisEnCours($id_covoiturage, $id_chauffeur, $commentaire_en_cours,$note_en_cours);
+         
+        header("Location: User_space.php");
+
         echo '<p style="color:green;">Votre avis a bien été soumis pour validation.</p>';
-    } else {
-        echo '<p style="color:red;">Erreur : aucun covoiturage terminé trouvé.</p>';
-    }
-}
+        exit();
+    }  
+
 
 //Affichage des informations de l'utilisateur
         if (is_array($resultats)&&count($resultats)>0) {
@@ -85,36 +87,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
             
 
             // Dépôt d'AVIS : Affiche l'encadré avis si covoiturage auquel le participant a participé  est terminé
-            if (count($resultatscovoiturageterminé) > 0 && empty($resultatsavis)) {
-            echo '<h2>Déposer vos avis</h2>';
-
-            foreach ($resultatscovoiturageterminé as $covoiturage) {
-                echo '<div style="border:1px solid #ccc; padding:10px; margin:10px 0;">';
-                echo '<p>Vous avez participé à un covoiturage entre <strong>' . 
-                    ucfirst(htmlspecialchars($covoiturage['lieu_depart'])) . '</strong> et <strong>' .
-                    ucfirst(htmlspecialchars($covoiturage['lieu_arrivee'])) . '</strong>.';
-                echo ' Vous pouvez donner votre avis sur le chauffeur <strong>' .
-                    ucfirst(htmlspecialchars($covoiturage['pseudo'])) . '</strong>.</p>';
-
-                echo '<form method="POST" action="User_space.php">';
-                echo '<input type="hidden" name="id_covoiturage" value="' . htmlspecialchars($covoiturage['covoiturage_id']) . '">';
-                echo '<input type="hidden" name="id_chauffeur" value="' . htmlspecialchars($covoiturage['id_utilisateur_possede_voiture']) . '">';
-
-                echo '<label for="note">Note (1 à 5) :</label>';
-                echo '<select name="note_en_cours" required>';
-                for ($i = 1; $i <= 5; $i++) {
-                    echo "<option value=\"$i\">$i</option>";
-                }
-                echo '</select><br><br>';
-
-                echo '<label for="commentaire">Commentaire :</label><br>';
-                echo '<textarea name="commentaire_en_cours" rows="4" cols="50" required></textarea><br><br>';
-
-                echo '<button type="submit" class="button">Envoyer l\'avis</button>';
-                echo '</form>';
-                echo '</div>';
+    if (count($resultatscovoiturageterminé) > 0) {
+    echo '<h2>Déposer vos avis</h2>';
+    foreach ($resultatscovoiturageterminé as $covoiturage) {
+        // Vérifie si un avis a déjà été donné pour ce covoiturage
+        $avisDejaDonne = false;
+        foreach ($resultatsavis as $avis) {
+            if ($avis['id_covoiturage'] == $covoiturage['covoiturage_id']) {
+                $avisDejaDonne = true;
+                break;
             }
         }
+
+        if (!$avisDejaDonne) {
+            // Affiche le formulaire seulement si aucun avis n’existe encore
+            echo '<div style="border:1px solid #ccc; padding:10px; margin:10px 0;">';
+            echo '<p>Vous avez participé à un covoiturage entre <strong>' . 
+                ucfirst(htmlspecialchars($covoiturage['lieu_depart'])) . '</strong> et <strong>' .
+                ucfirst(htmlspecialchars($covoiturage['lieu_arrivee'])) . '</strong>.';
+            echo ' Vous pouvez donner votre avis sur le chauffeur <strong>' .
+                ucfirst(htmlspecialchars($covoiturage['pseudo'])) . '</strong>.</p>';
+
+            echo '<form method="POST" action="User_space.php">';
+            echo '<input type="hidden" name="id_covoiturage" value="' . htmlspecialchars($covoiturage['covoiturage_id']) . '">';
+            echo '<input type="hidden" name="id_chauffeur" value="' . htmlspecialchars($covoiturage['id_utilisateur_possede_voiture']) . '">';
+
+            echo '<label for="note_en_cours">Note (1 à 5) :</label>';
+            echo '<select name="note_en_cours" required>';
+            for ($i = 1; $i <= 5; $i++) {
+                echo "<option value=\"$i\">$i</option>";
+            }
+            echo '</select><br><br>';
+
+            echo '<label for="commentaire_en_cours">Commentaire :</label><br>';
+            echo '<textarea name="commentaire_en_cours" rows="4" cols="50" required></textarea><br><br>';
+
+            echo '<button type="submit" class="button">Envoyer l\'avis</button>';
+            echo '</form>';
+            echo '</div>';
+            }
+    }
+    }  
             
 
             // Afficher les voitures gérées par l'utilisateur
