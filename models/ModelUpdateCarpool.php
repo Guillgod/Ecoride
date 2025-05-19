@@ -101,4 +101,32 @@ public function getCarpoolDetailsById($id_covoiturage) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+
+// récupère les informations des passagers qui n'ont pas encore envoyé d'avis
+public function getParticipantsNonNotifies($id_covoiturage) {
+    $sql = "
+        SELECT utilisateur.utilisateur_id, utilisateur.prenom, utilisateur.nom, utilisateur.email 
+        FROM utilisateur
+        JOIN utilisateur_participe_covoiturage ON utilisateur.utilisateur_id = id_utilisateur
+        WHERE utilisateur_participe_covoiturage.id_covoiturage = :id AND utilisateur_participe_covoiturage.avis_envoye = FALSE  
+    ";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id', $id_covoiturage);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+// Visn tagguer si un avis a déjà été envoyé
+public function marquerAvisEnvoye($id_utilisateur, $id_covoiturage) {
+    $sql = "
+        UPDATE utilisateur_participe_covoiturage
+        SET avis_envoye = TRUE
+        WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage
+    ";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id_utilisateur', $id_utilisateur);
+    $stmt->bindValue(':id_covoiturage', $id_covoiturage);
+    
+    $stmt->execute();
+}
+
 }

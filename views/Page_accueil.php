@@ -17,6 +17,9 @@
         <?php
         require_once 'header.php';
         ?>
+        <?php
+        require_once 'Barre_de_recherche.php';
+        ?>
 
     <section class="container1">
         
@@ -70,9 +73,7 @@
     </section>
 
 
-    <?php
-    require_once 'Barre_de_recherche.php';
-    ?>
+    
 
     </section>
     
