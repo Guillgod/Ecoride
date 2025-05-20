@@ -33,6 +33,9 @@ if (session_status() == PHP_SESSION_NONE) {
                                 <li><a  href="Page_accueil.php">Accueil</a></li>
                                 <li><a  href="carpool_list.php">Covoiturage</a></li>
                                 <li><a  href="User_space.php">Utilisateurs</a></li>
+                                <?php if(isset($_SESSION['user']) && $_SESSION['user']['role'] == 'employé'): ?>
+                                    <li><a  href="Vue_employee.php">Employé</a></li>
+                                <?php endif; ?>
                                 <li><a  href="">Contact</a></li>
                                 <li> 
                                     <?php if(isset($_SESSION['user'])): ?>
