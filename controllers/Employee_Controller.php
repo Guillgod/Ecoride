@@ -12,7 +12,7 @@ class Employee_Controller {
 
 
 
-    public static function LoadAvisCarpoolEnCoursFromDatabase ()  {
+    public function LoadAvisCarpoolEnCoursFromDatabase ()  {
         $modelEmployee = new ModelEmployee();
         return $modelEmployee->LoadAvisCarpoolEnCours();
     }
