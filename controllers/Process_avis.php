@@ -17,11 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $model->RefuserAvis($id);
     }
 
-    if ($action === 'valider') {
-    $model->ValiderAvis($id);
-    echo "Avis validé avec ID: $id";
-    exit; // temporairement désactive la redirection pour voir le message
-}
+//     if ($action === 'valider') {
+//     $model->ValiderAvis($id);
+//     echo "Avis validé avec ID: $id";
+//     exit; // temporairement désactive la redirection pour voir le message
+// }
 
     header('Location: ../views/Vue_employee.php');
     exit;

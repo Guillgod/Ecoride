@@ -69,12 +69,35 @@ class ModelEmployee
         $stmt->execute([':id_covoiturage' => $id_covoiturage]);
         echo "Paiement validé<br>";
 
-        // Étapes 4 et 5
+        // Étapes 4 et 5 : Supprimer la ligne de paiement en cours et de l'avis en cours
         $stmt = $this->db->prepare("DELETE FROM paiement_en_cours WHERE id_covoiturage_paye = :id_covoiturage");
         $stmt->execute([':id_covoiturage' => $id_covoiturage]);
 
         $stmt = $this->db->prepare("DELETE FROM avis_en_cours WHERE id_avis_en_cours = :id");
         $stmt->execute([':id' => $id_avis_en_cours]);
+
+        // Étape 6 : Créditer le chauffeur avec les crédits du paiement
+        $stmt = $this->db->prepare("
+        UPDATE utilisateur 
+        JOIN paiement ON utilisateur.utilisateur_id = paiement.id_chauffeur_paye_ok
+        SET utilisateur.credit = utilisateur.credit + paiement.nb_credit_paye_ok - 2
+        WHERE paiement.id_covoiturage_paye_ok = :id_covoiturage 
+        ");
+
+        $stmt->execute([':id_covoiturage' => $id_covoiturage]);
+        echo "Crédits ajoutés au chauffeur<br>";
+
+        // Etape 7 : Implémenter la nouvelle note du chauffeur.
+        $stmt = $this->db->prepare("
+        UPDATE utilisateur  
+        JOIN avis ON utilisateur.utilisateur_id = avis.id_chauffeur_validé
+        SET utilisateur.note = (SELECT ROUND(AVG(note_validé), 2) FROM avis
+        WHERE id_chauffeur_validé = utilisateur.utilisateur_id)
+        WHERE avis.id_covoiturage_validé = :id_covoiturage");
+
+        $stmt->execute([':id_covoiturage' => $id_covoiturage]);
+
+
 
         $this->db->commit();
         echo "Avis supprimé<br>";
@@ -90,5 +113,14 @@ class ModelEmployee
     }
 
     
+      
+    
+ // Afficher les avis dans CarpoolDetail.php l'avis validé dans le détail du covoiturage. 
 
+
+    // La suppression de la ligne paiement_en_cours doit être différencier (à vérifier). Actuellement, toutes les lignes pour lesquelles le covoiturage est le même sont supprimées. Il faut que la suppression ne se fasse que pour la ligne de paiement_en_cours qui correspond à l'avis validé.
+    // Egalement modifier l'affichage des covoiturages. Actuellement, même les covoiturages terminés sont affichés.
+
+
+    //Attention, les covoiturages terminés apparaissent dans l'affichage des covoiturages. Il faut que seuls les covoiturages prévu apparaissent.
 }

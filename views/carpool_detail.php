@@ -60,6 +60,10 @@
 
             // Si le formulaire a été soumis et que l'utilisateur n'a pas encore participé
             if (isset($_POST['participer'])) {
+                if($carpoolDetails['prix_personne'] > $_SESSION['user']['credit']){
+                    echo '<p>Vous n\'avez pas assez de crédits pour participer à ce covoiturage.</p>';
+                    exit;
+                }
                 $controller = new Creation_Carpool_Controller($modelCreateCarpool);
                 $result = $controller->participerCarpool($utilisateur_id, $covoiturage_id);
                  
