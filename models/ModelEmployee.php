@@ -119,8 +119,5 @@ class ModelEmployee
 
 
     // La suppression de la ligne paiement_en_cours doit être différencier (à vérifier). Actuellement, toutes les lignes pour lesquelles le covoiturage est le même sont supprimées. Il faut que la suppression ne se fasse que pour la ligne de paiement_en_cours qui correspond à l'avis validé.
-    // Egalement modifier l'affichage des covoiturages. Actuellement, même les covoiturages terminés sont affichés.
-
-
-    //Attention, les covoiturages terminés apparaissent dans l'affichage des covoiturages. Il faut que seuls les covoiturages prévu apparaissent.
+   
 }

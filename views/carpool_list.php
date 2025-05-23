@@ -22,6 +22,7 @@ require_once 'filtre.php';
 // Vérifiez si des résultats sont stockés dans la session
 
 
+
 if (isset($_SESSION['resultats'])) {
     $resultats = $_SESSION['resultats'];
 
@@ -33,7 +34,8 @@ if (isset($_SESSION['resultats'])) {
 
     // Application des filtres
     $resultats = array_filter($resultats, function ($ligne) use ($filtre_energie, $filtre_prixmax, $filtre_dureemax, $filtre_notemin) {
-        if ($ligne['nb_place_dispo'] <= 0) {
+        if ($ligne['nb_place_dispo'] <= 0 || $ligne['statut'] !== 'prévu') {
+            
             return false; // Ignore les lignes où le nombre de places disponibles est inférieur ou égal à 0
         }
         
