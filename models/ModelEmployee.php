@@ -40,67 +40,93 @@ class ModelEmployee
     try {
         echo "Début validation...<br>";
 
-        // Étape 1
-        $stmt = $this->db->prepare("INSERT INTO avis (id_utilisateur_validé, id_chauffeur_validé, id_covoiturage_validé, note_validé, commentaire_validé)
+        // Étape 1 : Copier l'avis dans la table "avis"
+        $stmt = $this->db->prepare("
+            INSERT INTO avis (id_utilisateur_validé, id_chauffeur_validé, id_covoiturage_validé, note_validé, commentaire_validé)
             SELECT id_utilisateur_en_cours, id_chauffeur_en_cours, id_covoiturage_en_cours, note_en_cours, commentaire_en_cours
             FROM avis_en_cours
-            WHERE id_avis_en_cours = :id");
+            WHERE id_avis_en_cours = :id
+        ");
         $stmt->execute(['id' => $id_avis_en_cours]);
         echo "Insertion avis réussie<br>";
 
-        // Étape 2
-        $stmt = $this->db->prepare("SELECT id_covoiturage_en_cours FROM avis_en_cours WHERE id_avis_en_cours = :id");
+        // Étape 2 : Récupérer les identifiants nécessaires
+        $stmt = $this->db->prepare("
+            SELECT id_covoiturage_en_cours, id_utilisateur_en_cours, id_chauffeur_en_cours 
+            FROM avis_en_cours 
+            WHERE id_avis_en_cours = :id
+        ");
         $stmt->execute([':id' => $id_avis_en_cours]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$row) {
-            throw new Exception("Covoiturage introuvable pour cet avis.");
-        }
-        $id_covoiturage = $row['id_covoiturage_en_cours'];
-        echo "ID covoiturage récupéré : $id_covoiturage<br>";
 
-        // Étape 3
+        if (!$row) {
+            throw new Exception("Avis introuvable.");
+        }
+
+        $id_covoiturage = $row['id_covoiturage_en_cours'];
+        $id_passager = $row['id_utilisateur_en_cours'];
+        $id_chauffeur = $row['id_chauffeur_en_cours'];
+        echo "Données récupérées<br>";
+
+        // Étape 3 : Insérer le paiement pour ce passager uniquement
         $stmt = $this->db->prepare("
             INSERT INTO paiement (id_chauffeur_paye_ok, id_passager_paye_ok, id_covoiturage_paye_ok, nb_credit_paye_ok)
             SELECT id_chauffeur, id_passager, id_covoiturage_paye, nb_credit
             FROM paiement_en_cours
-            WHERE id_covoiturage_paye = :id_covoiturage
+            WHERE id_covoiturage_paye = :id_covoiturage AND id_passager = :id_passager
         ");
-
-        $stmt->execute([':id_covoiturage' => $id_covoiturage]);
+        $stmt->execute([
+            ':id_covoiturage' => $id_covoiturage,
+            ':id_passager' => $id_passager
+        ]);
         echo "Paiement validé<br>";
 
-        // Étapes 4 et 5 : Supprimer la ligne de paiement en cours et de l'avis en cours
-        $stmt = $this->db->prepare("DELETE FROM paiement_en_cours WHERE id_covoiturage_paye = :id_covoiturage");
-        $stmt->execute([':id_covoiturage' => $id_covoiturage]);
+        // Étape 4 : Supprimer le paiement en cours pour ce passager uniquement
+        $stmt = $this->db->prepare("
+            DELETE FROM paiement_en_cours 
+            WHERE id_covoiturage_paye = :id_covoiturage AND id_passager = :id_passager
+        ");
+        $stmt->execute([
+            ':id_covoiturage' => $id_covoiturage,
+            ':id_passager' => $id_passager
+        ]);
 
-        $stmt = $this->db->prepare("DELETE FROM avis_en_cours WHERE id_avis_en_cours = :id");
+        // Étape 5 : Supprimer l'avis en cours validé
+        $stmt = $this->db->prepare("
+            DELETE FROM avis_en_cours 
+            WHERE id_avis_en_cours = :id
+        ");
         $stmt->execute([':id' => $id_avis_en_cours]);
 
-        // Étape 6 : Créditer le chauffeur avec les crédits du paiement
+        // Étape 6 : Créditer le chauffeur avec le paiement de ce passager (-2 pour la commission)
         $stmt = $this->db->prepare("
-        UPDATE utilisateur 
-        JOIN paiement ON utilisateur.utilisateur_id = paiement.id_chauffeur_paye_ok
-        SET utilisateur.credit = utilisateur.credit + paiement.nb_credit_paye_ok - 2
-        WHERE paiement.id_covoiturage_paye_ok = :id_covoiturage 
+            UPDATE utilisateur 
+            JOIN paiement 
+            ON utilisateur.utilisateur_id = paiement.id_chauffeur_paye_ok
+            SET utilisateur.credit = utilisateur.credit + paiement.nb_credit_paye_ok - 2
+            WHERE paiement.id_covoiturage_paye_ok = :id_covoiturage AND paiement.id_passager_paye_ok = :id_passager
         ");
+        $stmt->execute([
+            ':id_covoiturage' => $id_covoiturage,
+            ':id_passager' => $id_passager
+        ]);
+        echo "Crédit ajouté au chauffeur<br>";
 
-        $stmt->execute([':id_covoiturage' => $id_covoiturage]);
-        echo "Crédits ajoutés au chauffeur<br>";
-
-        // Etape 7 : Implémenter la nouvelle note du chauffeur.
+        // Étape 7 : Mettre à jour la moyenne de note du chauffeur
         $stmt = $this->db->prepare("
-        UPDATE utilisateur  
-        JOIN avis ON utilisateur.utilisateur_id = avis.id_chauffeur_validé
-        SET utilisateur.note = (SELECT ROUND(AVG(note_validé), 2) FROM avis
-        WHERE id_chauffeur_validé = utilisateur.utilisateur_id)
-        WHERE avis.id_covoiturage_validé = :id_covoiturage");
-
-        $stmt->execute([':id_covoiturage' => $id_covoiturage]);
-
-
+            UPDATE utilisateur  
+            SET note = (
+                SELECT ROUND(AVG(note_validé), 2) 
+                FROM avis 
+                WHERE id_chauffeur_validé = :id_chauffeur
+            )
+            WHERE utilisateur_id = :id_chauffeur
+        ");
+        $stmt->execute([':id_chauffeur' => $id_chauffeur]);
+        echo "Note moyenne du chauffeur mise à jour<br>";
 
         $this->db->commit();
-        echo "Avis supprimé<br>";
+        echo "Validation terminée avec succès<br>";
     } catch (Exception $e) {
         $this->db->rollBack();
         echo "Erreur : " . $e->getMessage();
@@ -118,6 +144,6 @@ class ModelEmployee
  // Afficher les avis dans CarpoolDetail.php l'avis validé dans le détail du covoiturage. 
 
 
-    // La suppression de la ligne paiement_en_cours doit être différencier (à vérifier). Actuellement, toutes les lignes pour lesquelles le covoiturage est le même sont supprimées. Il faut que la suppression ne se fasse que pour la ligne de paiement_en_cours qui correspond à l'avis validé.
-   
+    
+
 }
