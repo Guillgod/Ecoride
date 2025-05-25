@@ -40,12 +40,12 @@ public function getFinishedCarpoolFromDatabase()
     }
 
 
-        public function createAvis($id_covoiturage, $id_chauffeur,$commentaire,$note)
+        public function createAvisInDatabase($id_covoiturage, $id_chauffeur,$commentaire,$note)
     {
-
+        $id_utilisateur_validé = $_SESSION['user']['utilisateur_id']; // Récupérer l'ID de l'utilisateur connecté
             // Call the model method to create the user
-            $aviscreated = $this->modelCreateAvis->createAvisTemp($id_covoiturage, $id_chauffeur, $commentaire, $note); 
-            echo "Avis créé avec succès";
+            return $aviscreated = $this->modelCreateAvis->createAvis($id_covoiturage, $id_chauffeur, $commentaire, $note, $id_utilisateur_validé ); 
+             
         
     }
 }

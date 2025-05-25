@@ -47,8 +47,8 @@ public function getAvisEnCours(){
     }
 
 public function InsertAvisInDatabase($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé, $note_validé, $utilisateur_validé){
-    $stmt = $this->db->prepare("INSERT INTO avis (id_covoiturage_validé, id_chauffeur_validé, commentaire_validé, note_validé, id_utilisateur_validé) VALUES (:id_covoiturage_avis_validé, :id_chauffeur_validé, :commentaire_validé, :note_validé,:id_utilisateur_validé)");
-    $stmt->bindValue(':id_covoiturage_avis_en_cours', $id_covoiturage_validé);
+    $stmt = $this->db->prepare("INSERT INTO avis (id_covoiturage_validé, id_chauffeur_validé, commentaire_validé, note_validé, id_utilisateur_validé) VALUES (:id_covoiturage_validé, :id_chauffeur_validé, :commentaire_validé, :note_validé,:id_utilisateur_validé)");
+    $stmt->bindValue(':id_covoiturage_validé', $id_covoiturage_validé);
     $stmt->bindValue(':id_chauffeur_validé', $id_chauffeur_validé);
     $stmt->bindValue(':commentaire_validé', $commentaire_validé);
     $stmt->bindValue(':note_validé', $note_validé);
@@ -59,16 +59,103 @@ public function InsertAvisInDatabase($id_covoiturage_validé, $id_chauffeur_vali
 
 }
 
-public function createAvis($id_covoiturage_en_cours, $id_chauffeur_en_cours, $commentaire_en_cours,$note_en_cours)
+public function createAvis($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé,$note_validé, $id_utilisateur_validé)
     {
-        $stmt = $this->db->prepare("INSERT INTO avis_en_cours (id_covoiturage_en_cours, id_chauffeur_en_cours, commentaire_en_cours, note_en_cours,id_utilisateur_en_cours) VALUES (:id_covoiturage_avis_en_cours, :id_chauffeur_en_cours, :commentaire_en_cours, :note_en_cours, :id_utilisateur_en_cours)");
-        $stmt->bindValue(':id_covoiturage_avis_en_cours', $id_covoiturage_en_cours);
-        $stmt->bindValue(':id_chauffeur_en_cours', $id_chauffeur_en_cours);
-        $stmt->bindValue(':commentaire_en_cours', $commentaire_en_cours);
-        $stmt->bindValue(':note_en_cours', $note_en_cours);
-        $stmt->bindValue(':id_utilisateur_en_cours', $_SESSION['user']['utilisateur_id']);
+        
+        $this->db->beginTransaction();
 
-        return $stmt->execute();
+    try {
+        echo "Début validation...<br>";
+
+        // Étape 1 : Copier le formulaire avis dans la  table "avis"  
+        $stmt = $this->db->prepare("INSERT INTO avis (id_covoiturage_validé, id_chauffeur_validé, commentaire_validé, note_validé,id_utilisateur_validé) VALUES (:id_covoiturage_valide, :id_chauffeur_valide, :commentaire_valide, :note_valide, :id_utilisateur_valide)");
+        $stmt->bindValue(':id_covoiturage_valide', $id_covoiturage_validé);
+        $stmt->bindValue(':id_chauffeur_valide', $id_chauffeur_validé);
+        $stmt->bindValue(':commentaire_valide', $commentaire_validé);
+        $stmt->bindValue(':note_valide', $note_validé);
+        $stmt->bindValue(':id_utilisateur_valide', $id_utilisateur_validé);
+        $stmt->execute();
+        
+
+        // Étape 2 : Récupérer les identifiants nécessaires
+        
+
+        $id_covoiturage = $id_covoiturage_validé;
+        $id_passager = $_SESSION['user']['utilisateur_id'];
+        $id_chauffeur = $id_chauffeur_validé;
+        
+
+        // Étape 3 : Insérer le paiement pour ce passager uniquement
+        $stmt = $this->db->prepare("
+            INSERT INTO paiement (id_chauffeur_paye_ok, id_passager_paye_ok, id_covoiturage_paye_ok, nb_credit_paye_ok)
+            SELECT id_chauffeur, id_passager, id_covoiturage_paye, nb_credit
+            FROM paiement_en_cours
+            WHERE id_covoiturage_paye = :id_covoiturage AND id_passager = :id_passager
+        ");
+        $stmt->execute([
+            ':id_covoiturage' => $id_covoiturage,
+            ':id_passager' => $id_passager
+        ]);
+        
+
+        // Étape 4 : Supprimer le paiement en cours pour ce passager uniquement
+        $stmt = $this->db->prepare("
+            DELETE FROM paiement_en_cours 
+            WHERE id_covoiturage_paye = :id_covoiturage AND id_passager = :id_passager
+        ");
+        $stmt->execute([
+            ':id_covoiturage' => $id_covoiturage,
+            ':id_passager' => $id_passager
+        ]);
+
+        
+
+        //Etape 5: Taggué l'avis à TRUE comme envoyé dans la table utilisateur_participe_covoiturage
+        $stmt = $this->db->prepare("
+        UPDATE utilisateur_participe_covoiturage 
+        SET avis_envoye = 1 
+        WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage
+        ");
+        $stmt->execute([
+            ':id_utilisateur' => $id_passager,
+            ':id_covoiturage' => $id_covoiturage
+        ]);
+        
+
+
+        // Étape 6 : Créditer le chauffeur avec le paiement de ce passager (-2 pour la commission)
+        $stmt = $this->db->prepare("
+            UPDATE utilisateur 
+            JOIN paiement 
+            ON utilisateur.utilisateur_id = paiement.id_chauffeur_paye_ok
+            SET utilisateur.credit = utilisateur.credit + paiement.nb_credit_paye_ok - 2
+            WHERE paiement.id_covoiturage_paye_ok = :id_covoiturage AND paiement.id_passager_paye_ok = :id_passager
+        ");
+        $stmt->execute([
+            ':id_covoiturage' => $id_covoiturage,
+            ':id_passager' => $id_passager
+        ]);
+         
+
+        // Étape 7 : Mettre à jour la moyenne de note du chauffeur
+        $stmt = $this->db->prepare("
+            UPDATE utilisateur  
+            SET note = (
+                SELECT ROUND(AVG(note_validé), 2) 
+                FROM avis 
+                WHERE id_chauffeur_validé = :id_chauffeur
+            )
+            WHERE utilisateur_id = :id_chauffeur
+        ");
+        $stmt->execute([':id_chauffeur' => $id_chauffeur]);
+         
+
+        $this->db->commit();
+        
+    } catch (Exception $e) {
+        $this->db->rollBack();
+        echo "Erreur : " . $e->getMessage();
+    }
     }
 }
 

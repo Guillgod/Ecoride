@@ -52,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
         echo '<p style="color:green;">Votre avis a bien été soumis pour validation.</p>';
         exit();
     } elseif (isset($_POST['soumettre_avis'])) {
-        // Soumettre l'avis directement (ajuster selon ta logique si un avis direct doit exister)
+        // Soumettre l'avis directement (ajuster selon la logique si un avis direct doit exister)
         // Exemple : méthode createAvisValide directement
-        $avisController->createAvis($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé, $note_validé);
-        header("Location: User_space.php");
+        $avistest=$avisController->createAvisInDatabase($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé, $note_validé);
+        // header("Location: User_space.php");
         echo '<p style="color:green;">Votre avis a été soumis directement.</p>';
         exit();
     } //------------------------------------------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
             echo '<textarea name="commentaire_en_cours" rows="4" cols="50" required></textarea><br><br>';
 
             echo '<button type="submit" name="soumettre_avis" class="button">Soumettre l\'avis</button>';
-            echo '<button type="submit" class="button">Soumettre l\'avis à l\'employé</button>';
+            echo '<button type="submit" name="soumettre_avis_employe" class="button">Soumettre l\'avis à l\'employé</button>';
             
             echo '</form>';
             echo '</div>';
