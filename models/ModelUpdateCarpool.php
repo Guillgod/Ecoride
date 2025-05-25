@@ -119,9 +119,9 @@ public function getParticipantsNonNotifies($id_covoiturage) {
 public function marquerAvisEnvoye($id_utilisateur, $id_covoiturage) {
     $sql = "
         UPDATE utilisateur_participe_covoiturage
-        SET avis_envoye = TRUE
+        SET avis_envoye = FALSE   
         WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage
-    ";
+    "; //Vérifier que le FASLE fonctionne bien en laissant s'afficher les avis ---------------------------------------------------------------------------
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':id_utilisateur', $id_utilisateur);
     $stmt->bindValue(':id_covoiturage', $id_covoiturage);

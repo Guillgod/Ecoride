@@ -25,7 +25,7 @@ class UpdateCarpool_Controller  {
             $id_utilisateur = $participant['utilisateur_id'];
 
             // Envoi du mail
-            if (MailController::sendReviewInvitation($email, $prenom, $nom, $idCovoiturage)) {
+            if (MailController::sendReviewInvitation($email, $prenom, $nom, $idCovoiturage) ) {  /// Ajouter la condition pour dire seulement quand on a la table avis_en_cours est remplie, on lance la fonction marquerAvisEnvoye
                 // Marquer comme envoyé
                 $this->model->marquerAvisEnvoye($id_utilisateur, $idCovoiturage);
             }

@@ -98,6 +98,19 @@ class ModelEmployee
         ");
         $stmt->execute([':id' => $id_avis_en_cours]);
 
+        //Etape 5.1 : Taggué l'avis à TRUE comme envoyé dans la table utilisateur_participe_covoiturage
+        $stmt = $this->db->prepare("
+        UPDATE utilisateur_participe_covoiturage 
+        SET avis_envoye = 1 
+        WHERE id_utilisateur = :id_utilisateur AND id_covoiturage = :id_covoiturage
+        ");
+        $stmt->execute([
+            ':id_utilisateur' => $id_passager,
+            ':id_covoiturage' => $id_covoiturage
+        ]);
+        echo "Champ avis_envoye mis à jour<br>";
+
+
         // Étape 6 : Créditer le chauffeur avec le paiement de ce passager (-2 pour la commission)
         $stmt = $this->db->prepare("
             UPDATE utilisateur 
@@ -144,6 +157,7 @@ class ModelEmployee
  // Afficher les avis dans CarpoolDetail.php l'avis validé dans le détail du covoiturage. 
 
 
+    // L'avis continue d'être demandé au passager même s'il a déjà été donné. Pour le moment, le formulaire avis n,e s'affiche plus car la table utilisateur_participe_covoiturage a un champ avis_envoye directement à 1 à la place de 0 au moemnt où le chauffeur passe le covoiturage au statut terminé.
     
 
 }
