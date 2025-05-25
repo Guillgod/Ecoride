@@ -36,19 +36,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
     $note_en_cours = $_POST['note_en_cours'];
     $id_covoiturage = $_POST['id_covoiturage'];
     $id_chauffeur = $_POST['id_chauffeur'];
+    $commentaire_validé = $_POST['commentaire_en_cours'];
+    $note_validé = $_POST['note_en_cours'];
+    $id_covoiturage_validé = $_POST['id_covoiturage'];
+    $id_chauffeur_validé = $_POST['id_chauffeur'];
 
     // Récupérer le covoiturage terminé (on suppose qu’il n’y en a qu’un ici)
     $covoituragesTermines = $avisController->getFinishedCarpoolFromDatabase();
 
-        
-
-        // Créer l’avis temporaire
-        $avisController->createAvisEnCours($id_covoiturage, $id_chauffeur, $commentaire_en_cours,$note_en_cours);
-         
+    // Différenciation des boutons de soumission --------------------------------------------------------------------------
+        if (isset($_POST['soumettre_avis_employe'])) {
+        // Soumettre à validation de l'employé
+        $avisController->createAvisEnCours($id_covoiturage, $id_chauffeur, $commentaire_en_cours, $note_en_cours);
         header("Location: User_space.php");
-
         echo '<p style="color:green;">Votre avis a bien été soumis pour validation.</p>';
         exit();
+    } elseif (isset($_POST['soumettre_avis'])) {
+        // Soumettre l'avis directement (ajuster selon ta logique si un avis direct doit exister)
+        // Exemple : méthode createAvisValide directement
+        $avisController->createAvis($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé, $note_validé);
+        header("Location: User_space.php");
+        echo '<p style="color:green;">Votre avis a été soumis directement.</p>';
+        exit();
+    } //------------------------------------------------------------------------------------------------------------------------
+
+        // // Créer l’avis temporaire
+        // $avisController->createAvisEnCours($id_covoiturage, $id_chauffeur, $commentaire_en_cours,$note_en_cours);
+         
+        // header("Location: User_space.php");
+
+        // echo '<p style="color:green;">Votre avis a bien été soumis pour validation.</p>';
+        // exit();
     }  
 
 //Affichage des informations de l'utilisateur
@@ -119,7 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
             echo '<label for="commentaire_en_cours">Commentaire :</label><br>';
             echo '<textarea name="commentaire_en_cours" rows="4" cols="50" required></textarea><br><br>';
 
-            echo '<button type="submit" class="button">Envoyer l\'avis</button>';
+            echo '<button type="submit" name="soumettre_avis" class="button">Soumettre l\'avis</button>';
+            echo '<button type="submit" class="button">Soumettre l\'avis à l\'employé</button>';
+            
             echo '</form>';
             echo '</div>';
             }

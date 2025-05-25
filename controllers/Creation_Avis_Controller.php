@@ -39,5 +39,14 @@ public function getFinishedCarpoolFromDatabase()
         return $this->modelCreateAvis->InsertAvisInDatabase($id_covoiturage_validé, $id_chauffeur_validé, $commentaire_validé, $note_validé, $utilisateur_validé);
     }
 
+
+        public function createAvis($id_covoiturage, $id_chauffeur,$commentaire,$note)
+    {
+
+            // Call the model method to create the user
+            $aviscreated = $this->modelCreateAvis->createAvisTemp($id_covoiturage, $id_chauffeur, $commentaire, $note); 
+            echo "Avis créé avec succès";
+        
+    }
 }
 
