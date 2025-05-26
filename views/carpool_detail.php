@@ -10,7 +10,7 @@
 
     <?php
     session_start(); // Démarrage de la session
-     
+    
     require_once 'header.php';
     require_once 'Barre_de_recherche.php';
     require '../models/ModelCreateCarpool.php';
@@ -31,7 +31,7 @@
         $prix_personne = $carpoolDetails['prix_personne'];
         $nb_place_dispo = $carpoolDetails['nb_place_dispo'];
         
-
+        // Affichage des détails du covoiturage
 
         if ($carpoolDetails) {
             $chemin_photo = '../uploads/';

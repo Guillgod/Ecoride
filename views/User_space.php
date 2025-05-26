@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
             }
             echo '</div>';
             
-            var_dump($resultatscovoiturageterminé);
+            
 
             // Dépôt d'AVIS : Affiche l'encadré avis si covoiturage auquel le participant a participé  est terminé
     if (count($resultatscovoiturageterminé) > 0) {
