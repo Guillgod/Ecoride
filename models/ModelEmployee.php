@@ -125,6 +125,26 @@ class ModelEmployee
         ]);
         echo "Crédit ajouté au chauffeur<br>";
 
+        // Étape 6.1 : Créditer la plateforme
+        $stmt = $this->db->prepare("
+        INSERT INTO gain_plateforme (date_de_paiement) 
+        VALUES (CURRENT_DATE)
+        ");
+        $stmt->execute();
+
+        $lastId = $this->db->lastInsertId(); // ← récupère l'ID de la ligne insérée
+
+        // Mise à jour de cette ligne
+        $updateStmt = $this->db->prepare("
+            UPDATE gain_plateforme 
+            SET gain = 2 
+            WHERE id_gain = :id
+        ");
+        $updateStmt->bindValue(':id', $lastId, PDO::PARAM_INT);
+        $updateStmt->execute();
+
+        echo "Crédit ajouté à la plateforme<br>";
+
         // Étape 7 : Mettre à jour la moyenne de note du chauffeur
         $stmt = $this->db->prepare("
             UPDATE utilisateur  

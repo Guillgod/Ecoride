@@ -65,7 +65,7 @@ public function createAvis($id_covoiturage_validé, $id_chauffeur_validé, $comm
         $this->db->beginTransaction();
 
     try {
-        echo "Début validation...<br>";
+        
 
         // Étape 1 : Copier le formulaire avis dans la  table "avis"  
         $stmt = $this->db->prepare("INSERT INTO avis (id_covoiturage_validé, id_chauffeur_validé, commentaire_validé, note_validé,id_utilisateur_validé) VALUES (:id_covoiturage_valide, :id_chauffeur_valide, :commentaire_valide, :note_valide, :id_utilisateur_valide)");
@@ -136,6 +136,25 @@ public function createAvis($id_covoiturage_validé, $id_chauffeur_validé, $comm
             ':id_passager' => $id_passager
         ]);
          
+        // Étape 6.1 : Créditer la plateforme
+        $stmt = $this->db->prepare("
+        INSERT INTO gain_plateforme (date_de_paiement) 
+        VALUES (CURRENT_DATE)
+        ");
+        $stmt->execute();
+
+        $lastId = $this->db->lastInsertId(); // ← récupère l'ID de la ligne insérée
+
+        // Mise à jour de cette ligne
+        $updateStmt = $this->db->prepare("
+            UPDATE gain_plateforme 
+            SET gain = 2 
+            WHERE id_gain = :id
+        ");
+        $updateStmt->bindValue(':id', $lastId, PDO::PARAM_INT);
+        $updateStmt->execute();
+
+        echo "Crédit ajouté à la plateforme<br>";
 
         // Étape 7 : Mettre à jour la moyenne de note du chauffeur
         $stmt = $this->db->prepare("
@@ -159,4 +178,4 @@ public function createAvis($id_covoiturage_validé, $id_chauffeur_validé, $comm
     }
 }
 
-     
+// Revoir la méthode 6.1 pour créditer uniquement la dernière ligne insérée dans la table gain_plateforme

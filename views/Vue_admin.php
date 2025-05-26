@@ -24,7 +24,7 @@ $year = $graphInfo['year'];
 <body>
 
 
-
+<!-- Affichage du 1er graphique nb covoiturage par mois  -->
     <section>
        <h1>Statistiques</h1> 
         <h2>Covoiturages par jour - Mois  </h2>
@@ -101,6 +101,10 @@ $year = $graphInfo['year'];
                 }
             });
         </script>
+    </section>
+
+    <section>
+        
     </section>
 
 </body>
