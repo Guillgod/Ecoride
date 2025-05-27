@@ -9,23 +9,46 @@ class UserController {
     }
 
     public function login() {
-         
-        // Vérifie si le formulaire de connexion a été soumis
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $user = $this->modeluser->authenticate($email, $password);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $user = $this->modeluser->authenticate($email, $password);
 
-            if($user) {
-                $_SESSION['user']=$user; //Enregistre l'utilisateur connecté dans la session
-                header('Location: Page_accueil.php');
-                exit();
-                
-            } else {
-                echo 'Email ou mot de passe incorrect';
+        if ($user) {
+            if ($user['parametre'] === 'suspendu') {
+                // L'utilisateur est suspendu, session détruite + message
+                session_destroy();
+                echo '<p style="color:red;">Votre compte est suspendu.</p>';
+                return;
             }
-        }else "échec";
+
+            // Sinon, utilisateur valide
+            $_SESSION['user'] = $user;
+            header('Location: Page_accueil.php');
+            exit();
+        } else {
+            echo '<p style="color:red;">Email ou mot de passe incorrect.</p>';
+        }
     }
+}
+    // public function login() {
+         
+    //     // Vérifie si le formulaire de connexion a été soumis
+    //     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         $email = $_POST['email'];
+    //         $password = $_POST['password'];
+    //         $user = $this->modeluser->authenticate($email, $password);
+
+    //         if($user) {
+    //             $_SESSION['user']=$user; //Enregistre l'utilisateur connecté dans la session
+    //             header('Location: Page_accueil.php');
+    //             exit();
+                
+    //         } else {
+    //             echo 'Email ou mot de passe incorrect';
+    //         }
+    //     }else "échec";
+    //}
 
 
     public function logout() {

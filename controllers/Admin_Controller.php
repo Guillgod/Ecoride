@@ -45,4 +45,16 @@ public function showGraphPage()
         'totalCredits' => $totalCredits
     ];
 }
+
+ public function getAnAccount($email) {
+    return $this->modelAdmin->getAnAccount($email);
+}
+
+public function suspendAccount($email) {
+    return $this->modelAdmin->suspendUser($email);
+}
+
+public function offSuspendUser($email) {
+    return $this->modelAdmin->offSuspendUser($email);
+}
 }

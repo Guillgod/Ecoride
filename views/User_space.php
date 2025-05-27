@@ -1,3 +1,21 @@
+<?php
+session_start(); // Démarrer la session
+
+require_once 'header.php'; // Afficher le header
+
+if (!isset($_SESSION['user'])) {
+    echo '<p style="color:red;">Vous devez être connecté pour accéder à votre espace utilisateur.</p>';
+    
+    // Bouton "Se connecter"
+    echo '<button class="button" onclick="window.location.href=\'login.php\'">Se connecter</button>';
+    
+    // Arrêter le reste de la page
+    return;
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

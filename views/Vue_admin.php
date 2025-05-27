@@ -1,6 +1,7 @@
 <?php
 require_once '../models/ModelAdmin.php';
 require_once '../controllers/Admin_Controller.php';
+require_once '../views/header.php';
 
 $controller = new CreationGraph(new ModelAdmin());
 $graphInfo = $controller->showGraphPage();
@@ -8,6 +9,14 @@ $data = $graphInfo['data'];
 $month = $graphInfo['month'];
 $year = $graphInfo['year'];
 
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsuspend'])) {
+    $email = $_POST['email'];
+    $controller->offSuspendUser($email);
+    header("Location: ../views/Vue_admin.php"); // Ou la page admin appropriée
+    exit;
+}
 ?>
 
 
@@ -192,6 +201,68 @@ if ($nextCreditMonth > 12) {
 </script>
 
     </section>
+
+    <section>
+        <h2>Supendre un compte</h2>
+        <form action="" method="post">
+            <label for="email">Email de l'utilisateur :</label>
+            <input type="email" id="email" name="email" required>
+            <button class='button' type="submit">Afficher</button>
+        </form>
+<?php
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
+            echo "<h2>Informations sur l'utilisateur</h2>";
+            $email = $_POST['email'];
+            $userInfo = $controller->getAnAccount($email);
+            if ($userInfo) {
+                echo "<h3>Informations sur l'utilisateur :</h3>";
+                echo "<p>Email: " . htmlspecialchars($userInfo['email']) . "</p>";
+                echo "<p>Nom: " . htmlspecialchars($userInfo['nom']) . "</p>";
+                echo "<p>Prénom: " . htmlspecialchars($userInfo['prenom']) . "</p>";
+                
+                // Ajoutez d'autres champs si nécessaire
+
+                if ($userInfo['parametre'] == 'valide') {
+                    
+                    // echo "<form action='suspendre_compte.php' method='post'>";
+                    // echo "<input type='hidden' name='email' value='" . htmlspecialchars($userInfo['email']) . "'>";
+                    // echo "<button class='button' type='submit'>Suspendre le compte</button>";
+                    // echo "</form>";
+                    echo "<form action='' method='post'>";
+                echo "<input type='hidden' name='suspend_email' value='" . htmlspecialchars($userInfo['email']) . "'>";
+                echo '<button type="submit" name="suspend" class="button" onclick="return confirm(\'Confirmer la suspension de ce compte ?\');">Suspendre</button>';
+                echo '</form>';}
+
+                
+                
+
+                elseif ($userInfo['parametre'] == 'suspendu') {
+                    echo "<p style='color: red;'>Compte suspendu</p>";
+                    echo "<form method='post' action=''>";
+                    echo "<input type='hidden' name='email' value='" . htmlspecialchars($userInfo['email']) . "'>";
+                    echo "<button type='submit' name='unsuspend' class='button'>Lever la suspension</button>";
+                    echo "</form>";
+                }
+            }
+        }
+        ?>
+
+    
+        
+    </section>
+<?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['suspend_email'])) {
+    $emailToSuspend = $_POST['suspend_email'];
+    $suspensionResult = $controller->suspendAccount($emailToSuspend);
+    
+    if ($suspensionResult) {
+        echo "<p style='color:green;'>Le compte de $emailToSuspend a été suspendu avec succès.</p>";
+    } else {
+        echo "<p style='color:red;'>Échec de la suspension du compte.</p>";
+    }
+}
+    ?>
 
 </body>
 </html>

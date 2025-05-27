@@ -48,4 +48,23 @@ public function getTotalCreditsGagnes() {
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC)['total_credits'];
 }
+
+public function getAnAccount($email) {
+    $stmt = $this->db->prepare("SELECT * FROM utilisateur
+    WHERE email = :email");
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+//Supend l'utilisateur
+public function suspendUser($email) {
+    $stmt = $this->db->prepare("UPDATE utilisateur SET parametre = 'suspendu' WHERE email = :email");
+    return $stmt->execute(['email' => $email]);
+}
+//Désuspend l'utilisateur
+public function offSuspendUser($email) {
+    $stmt = $this->db->prepare("UPDATE utilisateur SET parametre = 'valide' WHERE email = :email");
+    return $stmt->execute(['email' => $email]);
+}
 }
