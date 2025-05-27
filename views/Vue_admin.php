@@ -117,6 +117,7 @@ $creditData = $creditGraph['data'];
 $creditMonth = $creditGraph['month'];
 $creditYear = $creditGraph['year'];
 
+
 // Gestion des flèches
 $prevCreditMonth = $creditMonth - 1;
 $prevCreditYear = $creditYear;
@@ -133,6 +134,9 @@ if ($nextCreditMonth > 12) {
 }
 ?>
     <section>
+        <h3 style="text-align: center; margin-top: 20px;">
+    Total des crédits gagnés par la plateforme : <?= $creditGraph['totalCredits'] ?? 0 ?> crédits
+</h3>
 <h2>Nb de crédits par jour - <?= sprintf("%02d", $creditGraph['month']) ?>/<?= $creditGraph['year'] ?></h2>
 <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 30px 0;">
     <a href="?year=<?= $prevCreditYear ?>&month=<?= $prevCreditMonth ?>" style="font-size: 24px;">⬅️</a>

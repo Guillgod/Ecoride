@@ -42,4 +42,10 @@ public function getCreditsByDay($year, $month) {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+public function getTotalCreditsGagnes() {
+    $stmt = $this->db->prepare("SELECT COALESCE(SUM(gain), 0) AS total_credits FROM gain_plateforme");
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC)['total_credits'];
+}
 }

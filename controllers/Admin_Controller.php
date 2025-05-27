@@ -37,10 +37,12 @@ public function showGraphPage()
     $month = isset($_GET['month']) ? (int)$_GET['month'] : date('m');
 
     $data = $this->modelAdmin->getCreditsByDay($year, $month);
+    $totalCredits = $this->modelAdmin->getTotalCreditsGagnes();
     return [
         'data' => $data,
         'year' => $year,
-        'month' => $month
+        'month' => $month,
+        'totalCredits' => $totalCredits
     ];
 }
 }
