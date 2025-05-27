@@ -31,13 +31,16 @@ public function showGraphPage()
         'year' => $year
     ];
 }
+//Gère l'envoi des données pour le graphique des crédits par jour
+   public function showCreditGraph() {
+    $year = isset($_GET['year']) ? (int)$_GET['year'] : date('Y');
+    $month = isset($_GET['month']) ? (int)$_GET['month'] : date('m');
 
-    // public function showGraphPage() {
-    //     $model = new ModelAdmin();
-    //     $year = date('Y');
-    //     $month = date('m'); // ou récupéré dynamiquement
-
-    //     return $data = $model->getCovoituragesByDay($year, $month);
-         
-    //     }
+    $data = $this->modelAdmin->getCreditsByDay($year, $month);
+    return [
+        'data' => $data,
+        'year' => $year,
+        'month' => $month
+    ];
+}
 }

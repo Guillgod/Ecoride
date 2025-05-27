@@ -26,4 +26,20 @@ class ModelAdmin
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+public function getCreditsByDay($year, $month) {
+    $stmt = $this->db->prepare("
+        SELECT 
+            DATE(date_de_paiement) AS jour, 
+            SUM(gain) AS total_credits
+        FROM gain_plateforme
+        WHERE YEAR(date_de_paiement) = :year AND MONTH(date_de_paiement) = :month
+        GROUP BY jour
+        ORDER BY jour
+    ");
+    $stmt->bindValue(':year', $year, PDO::PARAM_INT);
+    $stmt->bindValue(':month', $month, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }

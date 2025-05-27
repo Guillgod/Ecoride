@@ -47,14 +47,18 @@ $year = $graphInfo['year'];
     }
 ?>
 
-<div style="max-width: 800px;">
+<div style="display: flex; flex-direction: column; align-items: center; margin: 30px 0;">
+    <!-- Flèches et titre centrés -->
     <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
         <a href="?year=<?= $prevYear ?>&month=<?= $prevMonth ?>" style="font-size: 24px;">⬅️</a>
         <h2 style="margin: 0;">Covoiturages par jour - <?= sprintf("%02d", $month) ?>/<?= $year ?></h2>
         <a href="?year=<?= $nextYear ?>&month=<?= $nextMonth ?>" style="font-size: 24px;">➡️</a>
     </div>
 
-    <canvas id="covoiturageChart"></canvas>
+    <!-- Graphique centré -->
+    <div style="max-width: 800px; width: 100%;">
+        <canvas id="covoiturageChart"></canvas>
+    </div>
 </div>
 
         <script>
@@ -101,10 +105,88 @@ $year = $graphInfo['year'];
                 }
             });
         </script>
-    </section>
 
+
+
+
+
+    </section>
+<?php
+$creditGraph = $controller->showCreditGraph();
+$creditData = $creditGraph['data'];
+$creditMonth = $creditGraph['month'];
+$creditYear = $creditGraph['year'];
+
+// Gestion des flèches
+$prevCreditMonth = $creditMonth - 1;
+$prevCreditYear = $creditYear;
+if ($prevCreditMonth < 1) {
+    $prevCreditMonth = 12;
+    $prevCreditYear--;
+}
+
+$nextCreditMonth = $creditMonth + 1;
+$nextCreditYear = $creditYear;
+if ($nextCreditMonth > 12) {
+    $nextCreditMonth = 1;
+    $nextCreditYear++;
+}
+?>
     <section>
-        
+<h2>Nb de crédits par jour - <?= sprintf("%02d", $creditGraph['month']) ?>/<?= $creditGraph['year'] ?></h2>
+<div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 30px 0;">
+    <a href="?year=<?= $prevCreditYear ?>&month=<?= $prevCreditMonth ?>" style="font-size: 24px;">⬅️</a>
+    <h2>Nb de crédits par jour - <?= sprintf("%02d", $creditMonth) ?>/<?= $creditYear ?></h2>
+    <a href="?year=<?= $nextCreditYear ?>&month=<?= $nextCreditMonth ?>" style="font-size: 24px;">➡️</a>
+</div>
+<div style="max-width: 800px; margin: 0 auto;">
+    <canvas id="creditChart"></canvas>
+</div>
+
+<script>
+    const creditData = <?= json_encode($creditData) ?>;
+    const creditLabels = [];
+    const creditValues = [];
+
+    creditData.forEach(row => {
+        creditLabels.push(row.jour);
+        creditValues.push(row.total_credits);
+    });
+
+    const creditCtx = document.getElementById('creditChart').getContext('2d');
+    new Chart(creditCtx, {
+        type: 'bar',
+        data: {
+            labels: creditLabels,
+            datasets: [{
+                label: 'Crédits gagnés',
+                data: creditValues,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Nb crédits'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
     </section>
 
 </body>
