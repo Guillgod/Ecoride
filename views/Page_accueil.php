@@ -17,64 +17,69 @@
         <?php
         require_once 'header.php';
         ?>
+
+        <div class="container1">
+        <h1>🌿 Bienvenue sur Ecoride – Le covoiturage engagé</h1>
+        </div>
         <?php
         require_once 'Barre_de_recherche.php';
         ?>
 
-    <section class="container1">
-        
-        
-        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="../img/Voiture.jpg" class="imgcaroussel" alt="Voiture">
-                </div>
-                <div class="carousel-item">
-                    <img src="../img/autoroute.jpg" class="imgcaroussel" alt="Autoroute">
-                </div>
-                <div class="carousel-item">
-                    <img src="../img/autoroutenuit.jpg" class="imgcaroussel" alt="Autoroute de nuit">
-                </div>
-            </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Précédent</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Suivant</span>
-        </button>
-            
-    
+    <section class="container2">
+    <div class="image">
+            <img src="../img/voiture21.jpg" class="img-fluid" alt="Voiture roulant sur une route par beau temps">
         </div>
 
-        
+    <div class="text">
+    <h2>🎯 Notre mission</h2>
+    <p>Chez Ecoride, nous croyons qu’il est possible de se déplacer autrement, en alliant praticité, économies et respect de l’environnement.</p>
+    <p>Notre plateforme de covoiturage est conçue pour favoriser les trajets responsables, en mettant en avant les comportements écologiques.</p>
 
-        <div class="Presentation">
-            <h1>
-                Bienvenue chez Ecoride !
-            </h1>
-            <h2>
-                Notre Mission
-            </h2>
-            <p>Écoride s'engage à rendre vos trajets quotidiens plus responsables en offrant une solution de covoiturage durable qui réduit l'empreinte carbone.</p>
-
-            <h2>Pourquoi Nous Choisir ?</h2>
-            <p>Application Simple : Connectez-vous facilement avec d'autres utilisateurs pour planifier vos trajets. Impact Écologique : Chaque trajet inclut une estimation de l'empreinte carbone. Incentives Écologiques : Gagnez des points pour des réductions sur des produits écoresponsables.</p>
-            
-            
-            <h2>Notre Engagement</h2>
-            <p>Tous Types de Véhicules : Nous accueillons les trajets en véhicules électriques, hybrides et non électriques. Sensibilisation : Participez à nos campagnes pour promouvoir le covoiturage. Impact Local : Soutenez l’économie locale en privilégiant les trajets régionaux.
-            <h2>Rejoignez le Mouvement !</h2>
-            <p>Ecoride, chaque trajet compte. Ensemble, construisons un avenir plus vert !</p>
-            
-        </div>
+    <h2>🚗 Une communauté tournée vers l’avenir</h2>
+    <p><strong>Application simple :</strong> Connectez-vous facilement avec d'autres utilisateurs pour planifier vos trajets.</p>
+    <p><strong>Impact écologique :</strong> Chaque trajet inclut une estimation de l'empreinte carbone.</p>
+    <p><strong>Incentives écologiques :</strong> Gagnez des points pour des réductions sur des produits écoresponsables.</p>
+</div>
     
     </section>
 
+    <section class="container2">
+   <div class="text">
+    <h2>🌍 Nos valeurs</h2>
 
     
+        <p><strong>Écologie pragmatique :</strong> chaque trajet partagé est un pas vers moins d’émissions.</p>
+        <p><strong>Accessibilité pour tous :</strong> pas besoin d’avoir une voiture électrique pour être écoresponsable.</p>
+        <p><strong>Communauté solidaire :</strong> entraide, confiance et convivialité sont au cœur de notre service.</p>
+    
 
+<h2>🌱 Rejoignez le mouvement</h2>
+
+    <p>Avec Ecoride, vous ne faites pas que voyager : vous agissez. Ensemble, rendons la route plus verte, un trajet à la fois.</p>
+
+
+
+   </div> 
+
+
+        <div class="image">
+            <img src="../img/voiture.jpeg" class="img-fluid" alt="Image d'une femme relaxée dans une décapotable">
+        </div>
+
+
+
+    </section>
+    
+
+    <section class="contact">
+        <div class="text-contact">
+        <h2>Contactez-nous</h2>
+        <p>Une question ? Un besoin particulier ? Contactez-nous sans hésiter. Nous sommes là pour vous accompagner et vous garantir une réponse dans les meilleurs délais.</p>
+        </div>
+
+        <div>
+             <button type="button" class="btn-contact" onclick="window.location.href='contact.php'">Nous contacter</button>
+        </div>
     </section>
     
     <?php

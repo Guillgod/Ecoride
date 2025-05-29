@@ -1,172 +1,274 @@
 /* Réinitialisation des paramètres CSS du navigateur */
-
-*{
+* {
     padding: 0;
-    margin:0;
-    box-sizing :border-box;
-    line-height:inherit;
-    color:inherit;
-    font:inherit;
-    font-family:Verdana, Geneva, Tahoma, sans-serif
-
-} 
+    margin: 0;
+    box-sizing: border-box;
+    line-height: inherit;
+    color: inherit;
+    font: inherit;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 a {
-  cursor: pointer;
-  text-decoration: none!important;
-  color: black!important;
+    cursor: pointer;
+    text-decoration: none !important;
+    color: white !important;
 }
 ul, ol {
     list-style: none;
-  }
-li{
-    padding:0px;
-    margin:0px;
+}
+li {
+    padding: 0px;
+    margin: 0px;
 }
 
- /* body{
-    display:flex;
-    flex-direction: column;
-    min-height: 80vh;
-}  */
 /* Stylisation du header */
-.header_content{
-    /* background-color: rgb(61, 114, 228); */
+.header_content {
+    background-color: #0B480B;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
-    margin : 10px;
-    padding :10px;
+    padding: 10px;
     justify-content: space-between;
+    font-size: 1.3em;
 }
 
-.header_content .logo p{
+.header_content .logo p {
     font-size: 2.5em;
     padding: 0;
     margin: 0;
-    font-family: permanent Marker;
+    font-family: 'Permanent Marker', cursive;
     background: linear-gradient(to right, rgb(40, 226, 33), rgb(59, 182, 125));
     background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color : transparent
-    
+    -webkit-text-fill-color: transparent;
 }
 
-.logo{
+.logo {
     display: flex;
     align-items: center;
-    gap:20px
-
+    gap: 20px;
 }
 
-.menu{
+.menu {
     display: flex;
     align-items: center;
-    gap:30px;
-    font-size : 0.8em;
+    gap: 30px;
+    font-size: 0.8em;
     margin: 10px;
     padding: 10px;
-    
 }
-.menu a{
-    color: black!important;
+.menu a {
+    color: white !important;
+    font-weight: 600;
 }
 
-.button{
-    background-color:  rgb(59, 182, 125);
-    /* font-weight: bolder; */
-    /* padding: 10px 20px; */
+.button {
+    background-color: rgb(59, 182, 125);
     border-radius: 20px;
     border: none;
     cursor: pointer;
-    padding : 10px 25px;
-    color:white;
+    padding: 10px 25px;
+    color: white;
+    font-weight: 600;
 }
-.button a{
-    color: white!important;
-
+.button a {
+    color: white !important;
+    font-weight: 600;
 }
-
-
-/* Stylisation container 1 page d'acceuil index.html */
 
 .container1{
     display: flex;
-    gap: 40px;
-    margin:10px;
-}
-
-/* Dimensionnement des images et de la div du carousel */
-.imgcaroussel{
-width: 110%;
-height: auto;
-}
-
-.carousel{
-    width: 130vw;
-}
-
-.presentation h1{
-    color:rgb(59, 182, 125);
-    font-size :3em;
-    text-align: center;
-}
-
-.presentation h2{
-    color:black;
-    font-size :1.3em;
-}
-
-.presentation p{
-    font-size: 1 em;
-}
-
-
-/* Stylisation Barrerecherche */
-.Barrerecherche{
-    display:flex;
+    flex-direction: row;
     justify-content: center;
-    margin-top: 50px;
+    align-items: center;
+    padding: 20px;
+    background-color: #F2F2F2;
 }
 
-
-input, select{
-border-style: solid;
-border-color: rgb(59, 182, 125);
-border-radius: 20px;
-padding: 5px 20px;
-box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+/* Présentation */
+.Presentation {
+    width: 50%;
+}
+.presentation h1 {
+    color: rgb(59, 182, 125);
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.presentation h2 {
+    color: black;
+    font-size: 1.5em;
+}
+.presentation p {
+    font-size: 1em;
 }
 
+/* Container2 */
+.container2 {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    background-color: #F2F2F2;
+    padding-bottom: 40px;
+}
+.container2 .text {
+    width: 50%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    margin: auto;
+}
+.container2 .image {
+    width: 50%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    padding: 20px;
+    
+}
+.container2 .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    
+}
 
+.contact{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 70px;
+    background-color:#0B480B;
+}
 
-/* Stylisation footer */
+.btn-contact {
+    background-color: #F2F2F2;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 25px;
+    color: white;
+    font-weight: 600;
+    margin-top: 20px;
+    color :#0B480B;
+}
 
-footer{
-    /* position:fixed;
-    bottom:0;
-    left:0;
-    right:0; */
+.text-contact {
+    color: white;
+    font-size: 1.2em;
+    text-align: center;
+    font-size: 1em;
+}
+/* Barre de recherche */
+.Barrerecherche {
     display: flex;
     justify-content: center;
-    gap:100px;
-    margin-top: 20px;
-    padding:20px;
-    background-color:rgb(59, 182, 125) ;
+    margin-top: 0px;
+    background-color: #F2F2F2;
+}
+input, select {
+    border-style: solid;
+    border-color: rgb(59, 182, 125);
+    border-radius: 20px;
+    padding: 5px 20px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-footer div p, a{
-    color: white!important;
+/* Footer */
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #181F1A;
+    height: 60px; /* hauteur fixe, optionnelle */
 }
 
+footer div {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
 
+footer div p {
+    margin: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color:white
+}
 
-/* Stylisation Page Vue Covoiturage */
-/* Stylisation du filtre */
-.filtre{
+footer div a {
+    color: white !important;
+    display: flex;
+    align-items: center;
+
+}
+
+/* Vue covoiturage - filtre */
+.filtre {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
 }
 
- 
+/* Responsive */
+@media (max-width: 768px) {
+    .container1 {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .Presentation, .carousel-container {
+        width: 100%;
+    }
+
+    .carousel {
+        aspect-ratio: 4 / 3;
+        max-width: none;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        height: 40px;
+        width: 40px;
+        line-height: 40px;
+    }
+
+    .carousel-control-prev {
+        left: 1rem;
+    }
+
+    .carousel-control-next {
+        right: 1rem;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .carousel-inner img {
+        max-height: 250px;
+    }
+
+    .container2 {
+        flex-direction: column;
+    }
+
+    .container2 .text, .container2 .image {
+        width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+}

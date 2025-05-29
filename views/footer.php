@@ -14,12 +14,15 @@
 
     <body>
 <footer>
-        <div>
-            <a href="" rel="">Informations légales</a> 
-        </div>
+
         <div>
             <p>© 2025 Ecoride - Tous droits réservés</p>
         </div>
+        
+        <div>
+            <a href="" rel="">Mentions légales</a> 
+        </div>
+        
 
     </footer>
     </body>
