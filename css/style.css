@@ -16,10 +16,10 @@ a {
 ul, ol {
     list-style: none;
 }
-li {
+/* li {
     padding: 0px;
     margin: 0px;
-}
+} */
 
 /* Stylisation du header */
 .header_content {
@@ -175,7 +175,19 @@ input, select {
     border-radius: 20px;
     padding: 5px 20px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    height: 40px;
+    
 }
+
+
+
+.Barrerecherche input::placeholder {
+    font-size: 1em; /* ou par exemple 16px, 18px… */
+}
+.Barrerecherche input {
+    font-size: 1.5em;
+}
+
 
 /* Footer */
 footer {
@@ -208,6 +220,8 @@ footer div a {
     align-items: center;
 
 }
+
+
 
 /* Vue covoiturage - filtre */
 .filtre {
