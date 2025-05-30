@@ -271,6 +271,168 @@ footer div a {
     list-style-type: none;
 }
 
+/* Info utilisateur depuis User_space.php*/
+.user-space {
+    background-color: #F2F2F2;
+}
+.user-info {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.user-info h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.user-info-content {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.user-photo img {
+    max-height: 300px;
+    width: auto;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+}
+
+.user-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.user-details p {
+    margin: 0;
+    font-size: 1rem;
+    color: #444;
+}
+
+.user-details strong {
+    color: #000;
+}
+
+.user-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center
+}
+
+.user-actions button {
+    margin-right: 1rem;
+}
+
+
+/* Informations voiture depuis User_space.php*/
+.voiture-info {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.voiture-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.voiture-details p {
+    margin: 0;
+    font-size: 1rem;
+    color: #444;
+}
+
+.voiture-details strong {
+    color: #000;
+}
+
+/* Covoiturage actifs en tant que chauffeur */
+.covoiturage-actif-info {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.covoiturage-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.covoiturage-details p {
+    margin: 0;
+    font-size: 1rem;
+    color: #444;
+}
+
+.covoiturage-details strong {
+    color: #000;
+}
+
+.covoiturage-buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.covoiturage-buttons2 {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+
+.covoiturage-buttons .button:hover {
+    background-color: #45a049;
+}
+
+/* Covoiturages terminés en tant que chauffeur */
+.covoiturage-termine-info {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.covoiturage-termine-info .covoiturage-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.covoiturage-termine-info .covoiturage-details p {
+    margin: 0;
+    font-size: 1rem;
+    color: #444;
+}
+
+.covoiturage-termine-info .covoiturage-details strong {
+    color: #000;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
