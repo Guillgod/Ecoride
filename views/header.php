@@ -22,39 +22,63 @@ if (session_status() == PHP_SESSION_NONE) {
     <body>
         <header>
             <div class="header_content">
-                
-                    <div class="logo">
-                        <a href="Page_accueil.php"><img src="../img/Logo.png"  alt="voiture roulant dans une forêt" width="100" height="100"></a>
-                        <p>Ecoride</p>
-                    </div>
-                    <div>
-                        <nav>
-                            <ul class="menu">
-                                <li><a  href="Page_accueil.php">Accueil</a></li>
-                                <li><a  href="carpool_list.php">Covoiturage</a></li>
-                                <li><a  href="User_space.php">Utilisateurs</a></li>
-                                <?php if(isset($_SESSION['user']) && $_SESSION['user']['compte_employee'] == 'employé'): ?>
-                                    <li><a  href="Vue_employee.php">Employé</a></li>
-                                <?php endif; ?>
-                                <li><a  href="">Contact</a></li>
-                                <li> 
-                                    <?php if(isset($_SESSION['user'])): ?>
-                                        <button  class="button"><a href="logout.php">Déconnexion</a></button>
-                                    <?php else: ?>
-                                        <button  class="button"><a href="login.php">Connexion</a></button>
-                                    <?php endif; ?>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                
-            </div>
+    <div class="logo">
+        <a href="Page_accueil.php"><img src="../img/Logo.png" alt="logo" width="100" height="100"></a>
+        <p>Ecoride</p>
+    </div>
+
+    <!-- Bouton burger -->
+    <div class="burger" onclick="toggleMenu()">&#9776;</div>
+
+    <!-- Menu principal -->
+    <nav>
+        <ul class="menu">
+            <li><a href="Page_accueil.php">Accueil</a></li>
+            <li><a href="carpool_list.php">Covoiturage</a></li>
+            <li><a href="User_space.php">Utilisateurs</a></li>
+            <?php if(isset($_SESSION['user']) && $_SESSION['user']['compte_employee'] == 'employé'): ?>
+                <li><a href="Vue_employee.php">Employé</a></li>
+            <?php endif; ?>
+            <li><a href="">Contact</a></li>
+            <li>
+                <?php if(isset($_SESSION['user'])): ?>
+                    <button class="button"><a href="logout.php">Déconnexion</a></button>
+                <?php else: ?>
+                    <button class="button"><a href="login.php">Connexion</a></button>
+                <?php endif; ?>
+            </li>
+        </ul>
+
+        <!-- Menu mobile (initialement caché) -->
+        <ul class="menu-mobile">
+            <li><a href="Page_accueil.php">Accueil</a></li>
+            <li><a href="carpool_list.php">Covoiturage</a></li>
+            <li><a href="User_space.php">Utilisateurs</a></li>
+            <?php if(isset($_SESSION['user']) && $_SESSION['user']['compte_employee'] == 'employé'): ?>
+                <li><a href="Vue_employee.php">Employé</a></li>
+            <?php endif; ?>
+            <li><a href="">Contact</a></li>
+            <li>
+                <?php if(isset($_SESSION['user'])): ?>
+                    <button class="button"><a href="logout.php">Déconnexion</a></button>
+                <?php else: ?>
+                    <button class="button"><a href="login.php">Connexion</a></button>
+                <?php endif; ?>
+            </li>
+        </ul>
+    </nav>
+</div>
         </header>
 
+        <script>
+        function toggleMenu() {
+            const mobileMenu = document.querySelector('.menu-mobile');
+            mobileMenu.classList.toggle('active');
+        }
+        </script>        
+
+
         
-
-
-        </script>
     </body>
 
 </html>

@@ -16,7 +16,7 @@
 <footer>
 
         <div>
-            <p>© 2025 Ecoride - Tous droits réservés</p>
+            <p>© 2025 Ecoride</p>
         </div>
         
         <div>

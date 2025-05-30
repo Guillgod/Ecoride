@@ -24,7 +24,7 @@ if (session_status() == PHP_SESSION_NONE) {
    <section class="Barrerecherche">    <!--  Avec maintien de l'affichage des champs rentrés par l'utilisateur -->
         <form action="../controllers/Handle_Search_Controller.php" method="post">
             <input type="hidden" name="form_type" value="Barre_de_recherche.php">
-            <ul class="menu">
+            <div class="form-recherche">
                 <li><input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="20" placeholder="Départ"  value="<?= isset($_SESSION['form_data']['lieu_depart']) ? htmlspecialchars($_SESSION['form_data']['lieu_depart']) : '' ?>"></li>
                     
                 <li><input type="text" id="lieu_arrivee" name="lieu_arrivee" required minlength="1" maxlength="50" size="20" placeholder="Destination" value="<?= isset($_SESSION['form_data']['lieu_arrivee']) ? htmlspecialchars($_SESSION['form_data']['lieu_arrivee']) : '' ?>"></li>
@@ -34,7 +34,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
                 <button class="button" type="submit">Rechercher</button>
-            </ul>
+            </div>
         </form>
     </section>
     

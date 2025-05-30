@@ -231,6 +231,46 @@ footer div a {
     align-items: center;
 }
 
+.burger {
+    display: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: white;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+/* Menu mobile caché par défaut */
+.menu-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #0B480B;
+    padding: 20px;
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    border-radius: 10px;
+    z-index: 999;
+}
+
+.form-recherche {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.Barrerecherche ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.Barrerecherche li {
+    list-style-type: none;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
@@ -281,8 +321,49 @@ footer div a {
     }
 
     footer {
+        
+        justify-content: space-between;
+        gap: 20px;
+        font-size: 10px;
+    }
+
+      .menu {
+        display: none; /* cacher menu principal */
+    }
+
+    .burger {
+        display: block; /* afficher le burger */
+    }
+
+    .header_content {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    .menu-mobile.active {
+        display: flex;
+    }
+
+    .Barrerecherche {
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+        padding: 20px;
+        }
+
+    .form-recherche {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+    }
+    
+    .Barrerecherche input::placeholder {
+        font-size: 0.8em; /* ou par exemple 16px, 18px… */
+    }
+
+    .Barrerecherche input {
+        font-size: 1em;
     }
 }
+
