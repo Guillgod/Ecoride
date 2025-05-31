@@ -233,30 +233,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
 
 
                 echo '<div class="contenus-onglets">';
-                    echo '<div id="contenu-voiture" class="contenu actif">';
-                        // Afficher les voitures gérées par l'utilisateur
-            echo '<h2>Voitures gérées</h2>';
-            $voituresAffichees=[]; //Permet de n'afficher qu'une seule fois la voiture
-                foreach ($resultats as $voiture) {
-                    $idVoiture = $voiture['id_voiture_possede_utilisateur'];
-                    if ($idVoiture !== null && !isset($voituresAffichees[$idVoiture])) {
-                        echo '<div class="voiture-info">';
-                        echo '<div class="voiture-details">';
-                        echo '<p><strong>Marque : </strong>' . htmlspecialchars($voiture['marque']) . '</p>';
-                        echo '<p><strong>Modèle : </strong>' . htmlspecialchars($voiture['modele']) . '</p>';
-                        echo '<p><strong>Immatriculation : </strong>' . htmlspecialchars($voiture['immatriculation']) . '</p>';
-                        echo '<p><strong>Nombre de places : </strong>' . htmlspecialchars($voiture['nb_place_voiture']) . '</p>';
-                        echo '<p><strong>Type de véhicule : </strong>' . htmlspecialchars($voiture['energie']) . '</p>';
-                        echo '<p><strong>Couleur : </strong>' . htmlspecialchars($voiture['couleur']) . '</p>';
-                        echo '</div>';
-                        echo '</div>';
-                        $voituresAffichees[$idVoiture]=true;;
-                    } 
-                    if (empty($voituresAffichees)) {
-                        echo '<p>Aucune voiture gérée actuellement.</p>';
-                    }
-                } 
-                    echo '</div>';
+                echo '<div id="contenu-voiture" class="contenu actif">';
+
+// Tableau pour stocker les voitures uniques
+$voituresAffichees = [];
+
+// Collecte des voitures uniques par leur ID
+foreach ($resultats as $voiture) {
+    $idVoiture = $voiture['id_voiture_possede_utilisateur'];
+    if ($idVoiture !== null && !isset($voituresAffichees[$idVoiture])) {
+        $voituresAffichees[$idVoiture] = $voiture;
+    }
+}
+
+// Affichage
+if (!empty($voituresAffichees)) {
+    echo '<h2>Voitures gérées</h2>';
+    foreach ($voituresAffichees as $voiture) {
+        echo '<div class="voiture-info">';
+        echo '<div class="voiture-details">';
+        echo '<p><strong>Marque : </strong>' . htmlspecialchars($voiture['marque']) . '</p>';
+        echo '<p><strong>Modèle : </strong>' . htmlspecialchars($voiture['modele']) . '</p>';
+        echo '<p><strong>Immatriculation : </strong>' . htmlspecialchars($voiture['immatriculation']) . '</p>';
+        echo '<p><strong>Nombre de places : </strong>' . htmlspecialchars($voiture['nb_place_voiture']) . '</p>';
+        echo '<p><strong>Type de véhicule : </strong>' . htmlspecialchars($voiture['energie']) . '</p>';
+        echo '<p><strong>Couleur : </strong>' . htmlspecialchars($voiture['couleur']) . '</p>';
+        echo '</div>';
+        echo '</div>';
+    }
+} else {
+    echo '<p>Aucune voiture gérée actuellement.</p>';
+}
+
+echo '</div>'; // fermeture de contenu-voiture
+
 
 
 
@@ -334,50 +344,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                         echo '</div>'; // fin covoiturage-actif-info
                     }
                 }
+                if (empty($idCovoituragesAffiches)) {
+                echo '<p>Vous ne participez à aucun covoiturage en tant que chauffeur.</p>';
+            }
                         echo '</div>';
+
+
+
+
+                        // Affichage des covoiturages terminés
                         echo '<div id="contenu-historiques" class="contenu">';
-                            // Affichage des covoiturages terminés
-                    if (!empty($covoituragesChauffeurTerminés)) {
-                        echo '<h2>Vos covoiturages comme chauffeur terminés</h2>';
-                        foreach ($covoituragesChauffeurTerminés as $covoiturage) {
-                            echo '<div class="covoiturage-termine-info">';
-                            echo '<div class="covoiturage-details">';
-                            echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                            // echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                            echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
-                            // echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
-                            // echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
-                            // echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
-                            echo '<p>Ce covoiturage est <strong style="color:green;">terminé</strong>.</p>';}}
 
-                            // Affichage des covoiturages terminés comme passager
-                        if (!empty($covoituragesTermines)) {
-                            echo '<h3>Vous avez participé à ces covoiturages comme passager :</h3>';
-                            foreach ($covoituragesTermines as $covoiturage) {
-                                echo '<div class="covoiturage-termine-info">';
-                                echo '<div class="covoiturage-details">';
-                                echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                                // echo '<p><strong>Lieu de départ : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
-                                // echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                                echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
-                                // echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
-                                // echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
-                                // echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
-                                // echo '<p><strong>Nombre de places disponibles : </strong>' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
-                                echo '<p><strong>Prix par personne : </strong>' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
-                                echo '<p>Ce covoiturage est <strong style="color:green;">terminé</strong>.</p>';
-                                echo '</div>';
-                                echo '</div>';
-                            }
-                        }
-                    echo '</div>';
-                    echo '</div>';
-                }
-            
+// Affichage des covoiturages terminés comme chauffeur
+if (!empty($covoituragesChauffeurTerminés)) {
+    echo '<h2>Vos covoiturages comme chauffeur terminés</h2>';
+    
+    foreach ($covoituragesChauffeurTerminés as $covoiturage) {
+        echo '<div class="covoiturage-termine-info">';
+            echo '<div class="covoiturage-details">';
+                echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
+                echo '<p>Ce covoiturage est <strong style="color:green;">terminé</strong>.</p>';
+            echo '</div>';
+        echo '</div>';
+    }
+}else {
+    echo '<p>Vous n\'avez pas de covoiturages terminés en tant que chauffeur.</p>';
+}
 
+// Affichage des covoiturages terminés comme passager
+if (!empty($covoituragesTermines)) {
+    echo '<h3>Vous avez participé à ces covoiturages comme passager :</h3>';
+    
+    foreach ($covoituragesTermines as $covoiturage) {
+        echo '<div class="covoiturage-termine-info">';
+            echo '<div class="covoiturage-details">';
+                echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
+                echo '<p><strong>Prix par personne : </strong>' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
+                echo '<p>Ce covoiturage est <strong style="color:green;">terminé</strong>.</p>';
+            echo '</div>';
+        echo '</div>';
+    }
+}else {
+    echo '<p>Vous n\'avez pas de covoiturages terminés en tant que passager.</p>';
+}
 
-
-                    echo '</div>';
+echo '</div>'; // fermeture de contenu-historiques
+            }
                 echo '</div>';
             echo '</div>';
 
@@ -402,16 +416,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
             
             
             
-            if (empty($idCovoituragesAffiches)) {
-                echo '<p>Vous ne participez à aucun covoiturage en tant que chauffeur.</p>';
-            }
+            
         
     
-        else {
-        '<p>Vous n\'êtes pas identifié. Veuillez vous connecter à votre compte</p>';
-        echo '<button class="button" onclick="window.location.href=\'login.php\'">Se connecter</button>';
-        }
-        echo '</section>'; // .user-space
+        // else {
+        // '<p>Vous n\'êtes pas identifié. Veuillez vous connecter à votre compte</p>';
+        // echo '<button class="button" onclick="window.location.href=\'login.php\'">Se connecter</button>';
+        // }
+        // echo '</section>'; // .user-space
 ?>
 
 
