@@ -276,7 +276,7 @@ footer div a {
     background-color: #F2F2F2;
 }
 .user-info {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 12px;
     padding: 1.5rem;
@@ -334,7 +334,7 @@ footer div a {
 
 /* Informations voiture depuis User_space.php*/
 .voiture-info {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 12px;
     padding: 1.5rem;
@@ -361,7 +361,7 @@ footer div a {
 
 /* Covoiturage actifs en tant que chauffeur */
 .covoiturage-actif-info {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 12px;
     padding: 1.5rem;
@@ -407,7 +407,7 @@ footer div a {
 
 /* Covoiturages terminés en tant que chauffeur */
 .covoiturage-termine-info {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 12px;
     padding: 1.5rem;
@@ -430,6 +430,32 @@ footer div a {
 
 .covoiturage-termine-info .covoiturage-details strong {
     color: #000;
+}
+
+
+/* Personnalisation des onglets de User_space.php */
+.onglets-barre {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.onglet-btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.onglet-btn.actif {
+    background-color: #4CAF50;
+    color: white;
+}
+.contenus-onglets .contenu {
+    display: none;
+}
+.contenus-onglets .contenu.actif {
+    display: block;
 }
 
 

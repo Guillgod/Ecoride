@@ -91,10 +91,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
         // exit();
     }  
 
-//Affichage des informations de l'utilisateur
-        if (is_array($resultats)&&count($resultats)>0) {
-            $chemin_photo = '../uploads/';
-            $utilisateur=$resultats[0] ;
+
+     $covoituragesChauffeurTerminés = [];
+            $covoituragesChauffeurActifs = [];
+            $idCovoituragesAffiches = [];
+
+            foreach ($resultats as $resultat) {
+                $idCovoiturage = $resultat['id_covoiturage_utilise_voiture'];
+                if ($idCovoiturage !== null && !isset($idCovoituragesAffiches[$idCovoiturage])) {
+                    if ($resultat['statut'] === 'terminé') {
+                        $covoituragesChauffeurTerminés[] = $resultat;
+                    } else {
+                        $covoituragesChauffeurActifs[] = $resultat;
+                    }
+                    $idCovoituragesAffiches[$idCovoiturage] = true;
+                }
+            }
+            $passengerCovoiturages = $userController->getPassengerCovoiturageFromDatabase($_SESSION['user']['utilisateur_id']);
+            
+
+            $covoituragesEnCours = [];
+                $covoituragesTermines = [];
+
+                // Séparer les covoiturages
+                foreach ($passengerCovoiturages as $covoiturage) {
+                    if ($covoiturage['statut'] === 'terminé' || $covoiturage['statut'] === 'en_cours') {
+                        $covoituragesTermines[] = $covoiturage;
+                    } else {
+                        $covoituragesEnCours[] = $covoiturage;
+                    }
+                }
+
+    //Affichage des informations de l'utilisateur
+            if (is_array($resultats)&&count($resultats)>0) {
+                $chemin_photo = '../uploads/';
+                $utilisateur=$resultats[0] ;
 
 
             echo '<div class="user-info">';
@@ -185,7 +216,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
             echo '</div>';
             
 
-            // Afficher les voitures gérées par l'utilisateur
+
+
+            // Affichage des onglets pour la gestion des voitures et covoiturages
+            echo '<div class="onglets-container">';
+                echo '<div class="onglets-barre">';
+                    echo '<button class="onglet-btn actif" data-cible="voiture">Ma voiture</button>';
+                    echo '<button class="onglet-btn" data-cible="passager">Covoiturage Passager</button>';
+                    echo '<button class="onglet-btn" data-cible="chauffeur">Covoiturage Chauffeur</button>';
+                    echo '<button class="onglet-btn" data-cible="historiques">Historiques</button>';
+                echo '</div>';
+
+
+
+
+
+
+                echo '<div class="contenus-onglets">';
+                    echo '<div id="contenu-voiture" class="contenu actif">';
+                        // Afficher les voitures gérées par l'utilisateur
             echo '<h2>Voitures gérées</h2>';
             $voituresAffichees=[]; //Permet de n'afficher qu'une seule fois la voiture
                 foreach ($resultats as $voiture) {
@@ -203,104 +252,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                         echo '</div>';
                         $voituresAffichees[$idVoiture]=true;;
                     } 
+                    if (empty($voituresAffichees)) {
+                        echo '<p>Aucune voiture gérée actuellement.</p>';
+                    }
                 } 
-            
-            // Afficher les covoiturages en tant que chauffeur
-            $covoituragesChauffeurTerminés = [];
-            $covoituragesChauffeurActifs = [];
-            $idCovoituragesAffiches = [];
-
-            foreach ($resultats as $resultat) {
-                $idCovoiturage = $resultat['id_covoiturage_utilise_voiture'];
-                if ($idCovoiturage !== null && !isset($idCovoituragesAffiches[$idCovoiturage])) {
-                    if ($resultat['statut'] === 'terminé') {
-                        $covoituragesChauffeurTerminés[] = $resultat;
-                    } else {
-                        $covoituragesChauffeurActifs[] = $resultat;
-                    }
-                    $idCovoituragesAffiches[$idCovoiturage] = true;
-                }
-            }
-
-            // Affichage des covoiturages actifs (prévu/en_cours)
-            if (!empty($covoituragesChauffeurActifs)) {
-                echo '<h2>Vos covoiturages comme chauffeur</h2>';
-                foreach ($covoituragesChauffeurActifs as $covoiturage) {
-                    $id = $covoiturage['id_covoiturage_utilise_voiture'];
-                    echo '<div class="covoiturage-actif-info" id="covoiturage_chauffeur'.$id.'">';
-                    echo '<div class="covoiturage-details">';
-                    echo '<p><strong>Lieu de départ : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
-                    echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                    echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
-                    echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
-                    echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
-                    echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
-                    echo '<p><strong>Nombre de places disponibles : </strong>' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
-                    echo '<p><strong>Prix par personne : </strong>' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
                     echo '</div>';
 
-                    echo '<div class="covoiturage-buttons">';
-                    if ($covoiturage['statut'] === 'prévu') {
-                        echo '<button class="button commencer-btn" data-id="' . $id . '">Commencer</button>';
-                        echo '<button class="button annuler-btn" data-id="' . $id . '">Annuler</button>';
-                    } elseif ($covoiturage['statut'] === 'en_cours') {
-                        echo '<button class="button arrive-btn" data-id="' . $id . '">Arrivé à destination</button>';
-                    }
 
-                    echo '</div>';
-                    echo '</div>'; // fin covoiturage-actif-info
-                }
-            }
 
-            // Affichage des covoiturages terminés
-            if (!empty($covoituragesChauffeurTerminés)) {
-                echo '<h2>Vos covoiturages comme chauffeur terminés</h2>';
-                foreach ($covoituragesChauffeurTerminés as $covoiturage) {
-                    echo '<div class="covoiturage-termine-info">';
-                    echo '<div class="covoiturage-details">';
-                    echo '<p><strong>Lieu de départ : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
-                    echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                    echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
-                    echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
-                    echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
-                    echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
-                    echo '<p>Ce covoiturage est <strong style="color:green;">terminé</strong>.</p>';
-                    echo '</div>';
-                    echo '</div>';
-                }
-            }
 
-            $passengerCovoiturages = $userController->getPassengerCovoiturageFromDatabase($_SESSION['user']['utilisateur_id']);
-            
 
-            // Affichage des covoiturages en tant que passager
+                    echo '<div id="contenu-passager" class="contenu">';
+                        // Affichage des covoiturages en cours comme passager
+                // Affichage des covoiturages en tant que passager
             if (!empty($passengerCovoiturages)) {
                 echo '<h2>Vos covoiturages en tant que passager</h2>';
-
-                $covoituragesEnCours = [];
-                $covoituragesTermines = [];
-
-                // Séparer les covoiturages
-                foreach ($passengerCovoiturages as $covoiturage) {
-                    if ($covoiturage['statut'] === 'terminé' || $covoiturage['statut'] === 'en_cours') {
-                        $covoituragesTermines[] = $covoiturage;
-                    } else {
-                        $covoituragesEnCours[] = $covoiturage;
-                    }
-                }
-
-                // Affichage des covoiturages en cours comme passager
-                if (!empty($covoituragesEnCours)) {
+            } else {
+                echo '<p>Vous ne participez à aucun covoiturage en tant que passager.</p>';
+            }
+                
+                        if (!empty($covoituragesEnCours)) {
                     echo '<h3>Vous participez actuellement à ces covoiturages :</h3>';
                     foreach ($covoituragesEnCours as $covoiturage) {
                         echo '<div class="covoiturage-actif-info" >';
                         echo '<div class="covoiturage-details">';
-                        echo '<p><strong>Lieu de départ : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
-                        echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                        echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
-                        echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
-                        echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
-                        echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
+                        echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                        // echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                        echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . ' à ' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
+                        // echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
+                        // echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
+                        echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . ' à ' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
+                        // echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
+                        // echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
                         echo '<p><strong>Nombre de places disponibles : </strong>' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
                         echo '<p><strong>Prix par personne : </strong>' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
                         echo '</div>';
@@ -312,37 +295,117 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                         echo '</div>'; // fin covoiturage-actif-info
                     }
                 }
+                    echo '</div>';
 
-                // Affichage des covoiturages terminés comme passager
-                if (!empty($covoituragesTermines)) {
-                    echo '<h3>Vous avez participé à ces covoiturages :</h3>';
-                    foreach ($covoituragesTermines as $covoiturage) {
-                        echo '<div class="covoiturage-termine-info">';
+
+
+
+
+
+                    echo '<div id="contenu-chauffeur" class="contenu">';
+                        // Affichage des covoiturages actifs (prévu/en_cours)
+                        // Afficher les covoiturages en tant que chauffeur
+           
+                if (!empty($covoituragesChauffeurActifs)) {
+                    echo '<h2>Vos covoiturages comme chauffeur</h2>';
+                    foreach ($covoituragesChauffeurActifs as $covoiturage) {
+                        $id = $covoiturage['id_covoiturage_utilise_voiture'];
+                        echo '<div class="covoiturage-actif-info" id="covoiturage_chauffeur'.$id.'">';
                         echo '<div class="covoiturage-details">';
-                        echo '<p><strong>Lieu de départ : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
-                        echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
-                        echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
-                        echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
-                        echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
-                        echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
+                        echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                        // echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                        echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . ' à ' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
+                        // echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
+                        echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . ' à ' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
+                        // echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
                         echo '<p><strong>Nombre de places disponibles : </strong>' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
                         echo '<p><strong>Prix par personne : </strong>' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
                         echo '</div>';
+
+                        echo '<div class="covoiturage-buttons">';
+                        if ($covoiturage['statut'] === 'prévu') {
+                            echo '<button class="button commencer-btn" data-id="' . $id . '">Commencer</button>';
+                            echo '<button class="button annuler-btn" data-id="' . $id . '">Annuler</button>';
+                        } elseif ($covoiturage['statut'] === 'en_cours') {
+                            echo '<button class="button arrive-btn" data-id="' . $id . '">Arrivé à destination</button>';
+                        }
+
                         echo '</div>';
+                        echo '</div>'; // fin covoiturage-actif-info
                     }
                 }
+                        echo '</div>';
+                        echo '<div id="contenu-historiques" class="contenu">';
+                            // Affichage des covoiturages terminés
+                    if (!empty($covoituragesChauffeurTerminés)) {
+                        echo '<h2>Vos covoiturages comme chauffeur terminés</h2>';
+                        foreach ($covoituragesChauffeurTerminés as $covoiturage) {
+                            echo '<div class="covoiturage-termine-info">';
+                            echo '<div class="covoiturage-details">';
+                            echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                            // echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                            echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
+                            // echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
+                            // echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
+                            // echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
+                            echo '<p>Ce covoiturage est <strong style="color:green;">terminé</strong>.</p>';}}
 
-            } else {
-                echo '<p>Vous ne participez à aucun covoiturage en tant que passager.</p>';
-            }
-            if (empty($voituresAffichees)) {
-                echo '<p>Aucune voiture gérée actuellement.</p>';
-            }
+                            // Affichage des covoiturages terminés comme passager
+                        if (!empty($covoituragesTermines)) {
+                            echo '<h3>Vous avez participé à ces covoiturages comme passager :</h3>';
+                            foreach ($covoituragesTermines as $covoiturage) {
+                                echo '<div class="covoiturage-termine-info">';
+                                echo '<div class="covoiturage-details">';
+                                echo '<p><strong>Trajet : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . ' - ' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                                // echo '<p><strong>Lieu de départ : </strong>' . htmlspecialchars($covoiturage['lieu_depart']) . '</p>';
+                                // echo '<p><strong>Lieu d\'arrivée : </strong>' . htmlspecialchars($covoiturage['lieu_arrivee']) . '</p>';
+                                echo '<p><strong>Date de départ : </strong>' . htmlspecialchars($covoiturage['date_depart']) . '</p>';
+                                // echo '<p><strong>Heure de départ : </strong>' . htmlspecialchars($covoiturage['heure_depart']) . '</p>';
+                                // echo '<p><strong>Date d\'arrivée : </strong>' . htmlspecialchars($covoiturage['date_arrivee']) . '</p>';
+                                // echo '<p><strong>Heure d\'arrivée : </strong>' . htmlspecialchars($covoiturage['heure_arrivee']) . '</p>';
+                                // echo '<p><strong>Nombre de places disponibles : </strong>' . htmlspecialchars($covoiturage['nb_place_dispo']) . '</p>';
+                                echo '<p><strong>Prix par personne : </strong>' . htmlspecialchars($covoiturage['prix_personne']) . '</p>';
+                                echo '<p>Ce covoiturage est <strong style="color:green;">terminé</strong>.</p>';
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                        }
+                    echo '</div>';
+                    echo '</div>';
+                }
+            
+
+
+
+                    echo '</div>';
+                echo '</div>';
+            echo '</div>';
+
+
+
+
+
+
+
+
+
+            
+            
+            
+            
+
+            
+
+            
+            
+
+            
+            
             
             if (empty($idCovoituragesAffiches)) {
                 echo '<p>Vous ne participez à aucun covoiturage en tant que chauffeur.</p>';
             }
-        }
+        
     
         else {
         '<p>Vous n\'êtes pas identifié. Veuillez vous connecter à votre compte</p>';
@@ -480,6 +543,25 @@ document.querySelectorAll(".annuler2-btn").forEach(function (btn) {
         }
     });
 });
+
+
+document.querySelectorAll('.onglet-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // Retirer l’état actif de tous les boutons
+        document.querySelectorAll('.onglet-btn').forEach(btn => btn.classList.remove('actif'));
+
+        // Cacher tous les contenus
+        document.querySelectorAll('.contenu').forEach(div => div.classList.remove('actif'));
+
+        // Activer le bouton cliqué
+        button.classList.add('actif');
+
+        // Afficher le contenu correspondant
+        const cible = button.getAttribute('data-cible');
+        document.getElementById('contenu-' + cible).classList.add('actif');
+    });
+});
+
 </script>
 
 </body>
