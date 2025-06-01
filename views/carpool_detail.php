@@ -32,11 +32,16 @@
         $nb_place_dispo = $carpoolDetails['nb_place_dispo'];
         
         // Affichage des détails du covoiturage
-
+        echo '<section>';
         if ($carpoolDetails) {
             $chemin_photo = '../uploads/';
-            echo '<div>';
+            echo '<div class="user-info">';
+            echo '<div class="user-info-content">';
+            echo '<div class="user-photo">';
             echo '<img src="' . htmlspecialchars($chemin_photo . $carpoolDetails['photo']) . '" alt="Photo de ' . htmlspecialchars($carpoolDetails['pseudo']) . '" width="auto" height="300">';
+            echo '</div>';
+
+            echo '<div class="user-details">';
             echo '<p>Pseudo du chauffeur :' . htmlspecialchars($carpoolDetails['pseudo']) . '</p>';
             echo '<p>Note du chauffeur :' .  $carpoolDetails['note'] . '</p>';
             echo '<p>Nb de place :' .  $carpoolDetails['nb_place_dispo'] . '</p>';
@@ -48,17 +53,20 @@
             echo '<p>Fumeurs acceptés ? :' . htmlspecialchars($carpoolDetails['fumeur']) . '</p>';
             echo '<p>Animaux acceptés ? :' . htmlspecialchars($carpoolDetails['animal']) . '</p>';
             echo '<p>Préférences conducteurs:' . htmlspecialchars($carpoolDetails['preferences']) . '</p>';
-            echo '</div>';
+            echo '</div>'; // .user-details
+            echo '</div>'; // .user-info-content
         } else {
             echo '<p>Aucun identifiant de covoiturage spécifié.</p>';
         }
-
+        
+        echo '<div class="user-actions">';
         // Vérifie si l'utilisateur est connecté
         if (isset($_SESSION['user']['utilisateur_id'])) {
-            echo 'ID utilisateur : ' . $_SESSION['user']['utilisateur_id']; // Débogage : Affiche l'ID de l'utilisateur
+            
             $utilisateur_id = $_SESSION['user']['utilisateur_id']; // Récupère l'ID de l'utilisateur de la session
 
             // Si le formulaire a été soumis et que l'utilisateur n'a pas encore participé
+
             if (isset($_POST['participer'])) {
                 if($carpoolDetails['prix_personne'] > $_SESSION['user']['credit']){
                     echo '<p>Vous n\'avez pas assez de crédits pour participer à ce covoiturage.</p>';
@@ -66,7 +74,7 @@
                 }
                 $controller = new Creation_Carpool_Controller($modelCreateCarpool);
                 $result = $controller->participerCarpool($utilisateur_id, $covoiturage_id);
-                 
+                
 
                 
                 //AJOUTER Fonction payCarpool pour payer le covoiturage et diminuer le crédit de l'utilisateur connecté. Stocker cette valeur dans Paiement_en_cours de la base de données.la base de données
@@ -105,6 +113,10 @@
     } else {
         echo '<p>ID du covoiturage manquant dans l\'URL.</p>';
     }
+    echo '</div>'; // .user-actions
+                  echo '</div>'; // .user-info
+    echo '</section>';
+    require_once 'footer.php';
     ?>
 
     </body>

@@ -13,7 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link href="../css/style.css" rel="stylesheet">
 </head>
 <body>
-
+<section>
 <?php
 require_once 'header.php';
 require_once 'Barre_de_recherche.php';
@@ -104,21 +104,21 @@ if (isset($_SESSION['resultats'])) {
                 }
             } else {
                 echo '<p>Aucun covoiturage trouvé à cette date exacte.</p>';
-                if (!empty($resultats_proches)) {
-                    echo '<p>Voulez-vous voir les covoiturages avec une date proche ?</p>';
-                    echo '<button class="button" id="btn_oui" onclick="afficherCovoituragesProches()">OUI</button>';
-                    echo '<button class="button" id="btn_non" onclick="cacherBoutons()">NON</button>';
-                }
+                // if (!empty($resultats_proches)) {
+                //     echo '<p>Voulez-vous voir les covoiturages avec une date proche ?</p>';
+                //     echo '<button class="button" id="btn_oui" onclick="afficherCovoituragesProches()">OUI</button>';
+                //     echo '<button class="button" id="btn_non" onclick="cacherBoutons()">NON</button>';
+                // }
             }
 
             // Affichage des covoiturages proches
             if (!empty($resultats_proches)) {
-                echo '<div id="covoiturages_proches" style="display:none;">';
+                // echo '<div id="covoiturages_proches" style="display:none;">';
                 echo '<h2>Covoiturages avec une date proche :</h2>';
                 foreach ($resultats_proches as $ligne) {
                     afficherCovoiturage($ligne);
                 }
-                echo '</div>';
+                // echo '</div>';
             }
         }
     } else {
@@ -130,28 +130,38 @@ if (isset($_SESSION['resultats'])) {
 unset($_SESSION['recherche_effectuee']);
 
 function afficherCovoiturage($ligne) {
+    echo '<div class="user-info">';
+    echo '<div class="user-info-content">';
     $chemin_photo = '../uploads/';
-    echo '<div>';
+    echo '<div class="user-photo">';
     echo '<img src="' . htmlspecialchars($chemin_photo . $ligne['photo']) . '" alt="Photo de ' . htmlspecialchars($ligne['pseudo']) . '" width="auto" height="300">';
-    echo '<p> Pseudo du chauffeur : ' . htmlspecialchars($ligne['pseudo']) . '</p>';
-    echo '<p> Note du chauffeur : ' . htmlspecialchars($ligne['note']) . '</p>';
-    echo '<p> Nb de places disponible: ' . htmlspecialchars($ligne['nb_place_dispo']) . '</p>';
-    echo '<p> Prix par personne : ' . htmlspecialchars($ligne['prix_personne']) . '</p>';
-    echo '<p> Date de départ : ' . htmlspecialchars($ligne['date_depart']) . '</p>';
-    echo '<p> Heure de départ : ' . htmlspecialchars($ligne['heure_depart']) . '</p>';
-    echo '<p> Heure d\'arrivée : ' . htmlspecialchars($ligne['heure_arrivee']) . '</p>';
-    echo '<p> Energie du véhicule : ' . htmlspecialchars($ligne['energie']) . '</p>';
+    echo '</div>';
+    
+    echo '<div class="user-details">';
+    echo '<p><strong> Pseudo du chauffeur : </strong>' . htmlspecialchars($ligne['pseudo']) . '</p>';
+    echo '<p><strong> Note du chauffeur : </strong>' . htmlspecialchars($ligne['note']) . '</p>';
+    echo '<p><strong> Nb de places disponible: </strong>' . htmlspecialchars($ligne['nb_place_dispo']) . '</p>';
+    echo '<p><strong> Prix par personne : </strong>' . htmlspecialchars($ligne['prix_personne']) . '</p>';
+    echo '<p><strong> Date de départ : </strong>' . htmlspecialchars($ligne['date_depart']) . '</p>';
+    echo '<p><strong> Heure de départ : </strong>' . htmlspecialchars($ligne['heure_depart']) . '</p>';
+    echo '<p><strong> Heure d\'arrivée : </strong>' . htmlspecialchars($ligne['heure_arrivee']) . '</p>';
+    echo '<p><strong> Energie du véhicule : </strong>' . htmlspecialchars($ligne['energie']) . '</p>';
+    echo '</div>'; // .user-details
+    echo '</div>'; // .user-info-content
+
+
+    echo '<div class="user-actions">';
     if(isset($_SESSION['user'])){
         echo '<button class="button"><a href="carpool_detail.php?covoiturage_id=' . $ligne['covoiturage_id'] . '">Détails</a></button>';
     }else{
         echo '<button class="button"><a href="login.php">Connectez-vous !</a></button>';
     }
-    
     echo '</div>';
+    echo '</div>'; // .user-info
 }
 ?>
 
-<script>
+<!-- <script>
     function afficherCovoituragesProches() {
         document.getElementById("covoiturages_proches").style.display = "block";
         document.getElementById("btn_oui").style.display = "none"; // Cache le bouton "OUI"
@@ -162,7 +172,7 @@ function afficherCovoiturage($ligne) {
         document.getElementById("btn_oui").style.display = "none";
         document.getElementById("btn_non").style.display = "none";
     }
-</script>
-
+</script> -->
+</section>
 </body>
 </html>
