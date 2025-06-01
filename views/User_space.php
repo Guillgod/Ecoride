@@ -4,11 +4,14 @@ session_start(); // Démarrer la session
 require_once 'header.php'; // Afficher le header
 
 if (!isset($_SESSION['user'])) {
-    echo '<p style="color:red;">Vous devez être connecté pour accéder à votre espace utilisateur.</p>';
+    echo '<section>';
+    echo '<p class="ajustement" style="color:red;">Vous devez être connecté pour accéder à votre espace utilisateur.</p>';
     
     // Bouton "Se connecter"
+    echo '<div class="button-container">';
     echo '<button class="button" onclick="window.location.href=\'login.php\'">Se connecter</button>';
-    
+    echo '</div>';
+    echo '</section>';
     // Arrêter le reste de la page
     return;
 }
@@ -228,6 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                     echo '<button class="onglet-btn" data-cible="chauffeur">Covoiturage Chauffeur</button>';
                     echo '<button class="onglet-btn" data-cible="historiques">Historiques</button>';
                 echo '</div>';
+                echo '<hr class="onglet-separator">';
 
 
 

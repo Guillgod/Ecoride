@@ -38,6 +38,7 @@ ul, ol {
     margin: 0px;
 } */
 
+h1,h2 {padding: 15px;}
 /* Stylisation du header */
 .header_content {
     background-color: #0B480B;
@@ -195,9 +196,10 @@ ul, ol {
 
 
 input, select {
-    border-style: solid;
-    border-color: rgb(59, 182, 125);
-    border-radius: 20px;
+    padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
     padding: 5px 20px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
     height: 40px;
@@ -519,7 +521,7 @@ footer div a {
 .onglets-barre {
     display: flex;
     /* gap: 10px; */
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 .onglet-btn {
     padding: 10px 20px;
@@ -539,7 +541,14 @@ footer div a {
 .contenus-onglets .contenu.actif {
     display: block;
 }
-
+.onglet-separator {
+    border: none;
+    height: 1px;
+    background-color: #474747; /* Gris clair */
+    width: 100%;
+    margin: 0;
+    margin-bottom: 30px; /* Espace entre les onglets et le contenu */;
+}
 /* Personnalisation de la rubrique avis */
 
 .avis-box {
@@ -614,32 +623,59 @@ footer div a {
 }
 
 /* Personnalisation du formulaire Modify-informations */
-.Modify-information{
-    display:flex;
-    flex-direction: column;
-}
+/* Centrage vertical dans les colonnes */
 
-.dispo-modify-information {
+
+.colonne {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-right :400px;
-    margin-bottom: 20px;
-    gap:20px;
+    flex-direction: column;
+    align-items: center;
 }
 
-.Modify-information h2,label{
-    margin:0.2rem auto;
-    
+/* Espacement uniforme et centrage label + input */
+.champ-modif {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
 }
+
+/* Labels centrés */
+.champ-modif label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Inputs et textarea centrés */
+.champ-modif input,
+.champ-modif select,
+.champ-modif textarea {
+    text-align: center;
+    width: 250px;
+}
+
 
 /* Personnalisation de la checkbox de la page ModifyInformation */
 
 .checkbox-wrapper {
-    margin-bottom: 20px; /* Ajuste la valeur selon ton besoin visuel */
-     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
 }
+
 .custom-checkbox {
+    display: inline-flex; /* important */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-left: 35px;
+    font-size: 16px;
+    width: auto; /* <- Ajouté */
+}
+/* .custom-checkbox {
     position: relative;
     padding-left: 35px;
     cursor: pointer;
@@ -647,7 +683,13 @@ footer div a {
     user-select: none;
     display: inline-flex;
     align-items: center;
-}
+} */
+
+
+
+
+
+
 
 .custom-checkbox input[type="checkbox"] {
     position: absolute;
@@ -698,9 +740,22 @@ footer div a {
     transform: rotate(45deg);
 }
 
-/* Marge gauche uniforme */
-.left-margin {
-    margin-left: 30px; /* ajuste à ton besoin, ex : 30px ou 50px */
+
+
+/* centrer le bouton et la checkbox de modify-information */
+.center-horizontal {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
+
+.center-horizontal button {
+    width: auto !important;
+    max-width: 200px;
+    padding: 10px 20px;
+    text-align: center;
 }
 
 
@@ -797,6 +852,23 @@ footer div a {
   white-space: normal; /* autorise retour à la ligne */
 }
 
+.ajustement {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    font-size: 17px;
+}
+.ajustement2 {
+    padding-left: 20px;
+    display: flex;
+     
+    font-size: 17px;
+}
+.ajustement3 {
+    padding-left: 20px;
+    display: flex;
+     
+}
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {

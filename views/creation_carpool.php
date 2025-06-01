@@ -22,7 +22,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
  
 ?>
 
-    
+    <section>
  
     <h2>Renseignez votre trajet</h2>
     <div class="form-voiture-container">
@@ -31,7 +31,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
     <input type="hidden" name="form_type" value="creation_carpool.php">
     
     <div class="champ-voiture">
-        <h3>Renseignez votre adresse de départ :</h3>
+        <h3>Renseignez les informations du départ :</h3>
         <label for="adresse_depart">Adresse de départ :</label>
         <input type="text" name="adresse_depart" required>
         <br>
@@ -43,7 +43,6 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
     </div>
     
     <div class="champ-voiture">
-        <h3>Renseignez votre date de départ</h3>
         <label for="date_depart">Date de départ :</label>
         <input type="date" name="date_depart" required>
         <br>
@@ -55,7 +54,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
     </div>
     
     <div class="champ-voiture">
-        <h3>Renseignez votre adresse d'arrivée :</h3>
+        <h3>Renseignez les informations de l'arrivée :</h3>
 
         <label for="adresse_arrivee">Adresse d'arrivée :</label>
         <input type="text" name="adresse_arrivee" required>
@@ -68,7 +67,6 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
     </div>
     
     <div class="champ-voiture">
-        <h3>Renseignez votre date d'arrivée :</h3>
         <label for="date_arrivee">Date d'arrivée :</label>
         <input type="date" name="date_arrivee" required>
         <br>
@@ -80,7 +78,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
     </div>
     
     <div class="champ-voiture">
-        <h3>Fixez votre prix. 2 crédits seront prélevé pour garantir le fonctionnement de la plate-forme Ecoride &#x1F609;</h3>
+        <h3>Fixez votre prix. 2 crédits seront prélevés pour garantir le fonctionnement de la plate-forme Ecoride &#x1F609;</h3>
         <label for="prix_personne">Prix du trajet par passager :</label>
         <input type="int" name="prix_personne" required>
         <br>
@@ -135,7 +133,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
 
 
 
-
+</section>
 
 </body>
 </html>

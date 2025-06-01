@@ -73,7 +73,7 @@ if (isset($_SESSION['resultats'])) {
     });
 
     // Débogage: Afficher le nombre de résultats après application des filtres
-    echo '<p>Nombre de résultats : ' . count($resultats) . '</p>';
+    echo '<p class="ajustement2">Nombre de résultats : ' . count($resultats) . '</p>';
 
     // Récupération de la date de départ recherchée
     $date_recherchee = $_SESSION['date_depart_recherchee'];
@@ -98,12 +98,12 @@ if (isset($_SESSION['resultats'])) {
         } else {
             // Affichage des résultats exacts
             if (!empty($resultats_exacts)) {
-                echo '<h3>Résultats exacts :</h3>';
+                echo '<h3 class="ajustement3">Résultats exacts :</h3>';
                 foreach ($resultats_exacts as $ligne) {
                     afficherCovoiturage($ligne);
                 }
             } else {
-                echo '<p>Aucun covoiturage trouvé à cette date exacte.</p>';
+                echo '<p class="ajustement2">Aucun covoiturage trouvé à cette date exacte.</p>';
                 // if (!empty($resultats_proches)) {
                 //     echo '<p>Voulez-vous voir les covoiturages avec une date proche ?</p>';
                 //     echo '<button class="button" id="btn_oui" onclick="afficherCovoituragesProches()">OUI</button>';
