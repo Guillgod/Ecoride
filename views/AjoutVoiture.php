@@ -10,6 +10,7 @@
         <?php
         require_once 'header.php';
         ?>
+        <section>
         <h1>Ajouter une voiture</h1>
          
         <p>Veuillez remplir le formulaire ci-dessous pour ajouter une voiture.</p>
@@ -46,12 +47,14 @@
         }
         
         ?>
+        <div class="button-container">
         <button type="submit" class="button">Enregistrer</button>
-
+        </div>
     </form>
 
+     
 
-
-
+        </section>
+        
     </body>
 </html>

@@ -22,54 +22,70 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
  
 ?>
 
-    <body>
+    
  
     <h2>Renseignez votre trajet</h2>
- 
+    <div class="form-voiture-container">
     <form method="POST" action="creation_carpool.php">
-    
+     
     <input type="hidden" name="form_type" value="creation_carpool.php">
-        <p>Renseignez votre adresse de départ :</p>
-
+    
+    <div class="champ-voiture">
+        <h3>Renseignez votre adresse de départ :</h3>
         <label for="adresse_depart">Adresse de départ :</label>
         <input type="text" name="adresse_depart" required>
         <br>
+    </div>
+    <div class="champ-voiture">
         <label for="lieu_depart">Ville :</label>
         <input type="text" name="lieu_depart" required>
         <br>
-        
-        <p>Renseignez votre date de départ</p>
+    </div>
+    
+    <div class="champ-voiture">
+        <h3>Renseignez votre date de départ</h3>
         <label for="date_depart">Date de départ :</label>
         <input type="date" name="date_depart" required>
         <br>
-
+    </div>
+    <div class="champ-voiture">
         <label for="heure_depart">Heure de départ :</label>
         <input type="time" name="heure_depart" required>
         <br>
-
-        <p>Renseignez votre adresse d'arrivée :</p>
+    </div>
+    
+    <div class="champ-voiture">
+        <h3>Renseignez votre adresse d'arrivée :</h3>
 
         <label for="adresse_arrivee">Adresse d'arrivée :</label>
         <input type="text" name="adresse_arrivee" required>
         <br>
+    </div>
+    <div class="champ-voiture">
         <label for="lieu_arrivee">Ville :</label>
         <input type="text" name="lieu_arrivee" required>
         <br>
-
-        <p>Renseignez votre date d'arrivée :</p>
+    </div>
+    
+    <div class="champ-voiture">
+        <h3>Renseignez votre date d'arrivée :</h3>
         <label for="date_arrivee">Date d'arrivée :</label>
         <input type="date" name="date_arrivee" required>
         <br>
-
+    </div>
+    <div class="champ-voiture">
         <label for="heure_arrivee">Heure d'arrivée':</label>
         <input type="time" name="heure_arrivee" required>
         <br>
-
-        <p>Fixez votre prix. Considérez que 2 crédits seront prélevé sur votre prix pour garantir le fonctionnement de la plate-forme Ecoride &#x1F609;</p>
+    </div>
+    
+    <div class="champ-voiture">
+        <h3>Fixez votre prix. 2 crédits seront prélevé pour garantir le fonctionnement de la plate-forme Ecoride &#x1F609;</h3>
         <label for="prix_personne">Prix du trajet par passager :</label>
         <input type="int" name="prix_personne" required>
         <br>
-
+    </div>
+    <div class="champ-voiture">
         <label for="voiture_id">Choisir une voiture :</label>
         <select name="voiture_id" required>
             <option value="">--Sélectionnez une voiture--</option>
@@ -81,11 +97,14 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
             <?php endforeach; ?>
         </select>
         <br>
-
-        <input type="submit" value="Créer le trajet">
+    </div>
+    
+        <div class="button-container">
+            <button type="submit" class="button">Créer le trajet</button>
+        </div>
     </form>
+</div>
 
- 
 
     
     <?php

@@ -12,16 +12,17 @@ class ModelCreateCar
     }
 
 
-    public function createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation,$marque )  
+    public function createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation,$marque, $nb_place_voiture)  
     
     {
-        $stmt = $this->db->prepare("INSERT INTO voiture (modele, immatriculation, energie, couleur, date_premiere_immatriculation,marque) VALUES (:modele, :immatriculation, :energie, :couleur, :date_premiere_immatriculation,:marque )");  
+        $stmt = $this->db->prepare("INSERT INTO voiture (modele, immatriculation, energie, couleur, date_premiere_immatriculation,marque,nb_place_voiture) VALUES (:modele, :immatriculation, :energie, :couleur, :date_premiere_immatriculation,:marque,:nb_place_voiture )");  
         $stmt->bindValue(':modele', $modele);
         $stmt->bindValue(':immatriculation', $immatriculation);
         $stmt->bindValue(':energie', $energie);
         $stmt->bindValue(':couleur', $couleur);
         $stmt->bindValue(':date_premiere_immatriculation', $date_premiere_immatriculation);
         $stmt->bindValue(':marque', $marque);
+        $stmt->bindValue(':nb_place_voiture', $nb_place_voiture);
          
          
 

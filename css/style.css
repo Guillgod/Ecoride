@@ -613,7 +613,190 @@ footer div a {
     margin-bottom: 20px;
 }
 
- 
+/* Personnalisation du formulaire Modify-informations */
+.Modify-information{
+    display:flex;
+    flex-direction: column;
+}
+
+.dispo-modify-information {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-right :400px;
+    margin-bottom: 20px;
+    gap:20px;
+}
+
+.Modify-information h2,label{
+    margin:0.2rem auto;
+    
+}
+
+/* Personnalisation de la checkbox de la page ModifyInformation */
+
+.checkbox-wrapper {
+    margin-bottom: 20px; /* Ajuste la valeur selon ton besoin visuel */
+     
+}
+.custom-checkbox {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.custom-checkbox .checkmark {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border: 2px solid #bbb;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.custom-checkbox:hover .checkmark {
+    background-color: #ccc;
+}
+
+.custom-checkbox input:checked + .checkmark {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.custom-checkbox .checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox input:checked + .checkmark::after {
+    display: block;
+}
+
+.custom-checkbox .checkmark::after {
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Marge gauche uniforme */
+.left-margin {
+    margin-left: 30px; /* ajuste à ton besoin, ex : 30px ou 50px */
+}
+
+
+/* Stylisé le formulaire Ajout voiture */
+#form-voiture {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre le formulaire */
+  margin-top: 20px;
+}
+
+#form-voiture .champ-voiture {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligne les labels à gauche */
+  width: 300px;
+  margin-bottom: 12px; /* Espacement entre les champs */
+}
+
+#form-voiture .champ-voiture label {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+#form-voiture .champ-voiture input,
+#form-voiture .champ-voiture select,
+#form-voiture .champ-voiture textarea {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/*Personnalisation du formulaire creationvoiture depuis AjoutVoiture.php*/
+/* Garde la structure du container */
+.form-voiture-container {
+  display: flex;
+  flex-direction: column; /* colonne, pour que h3 prennent toute la largeur */
+  align-items: center;    /* centre horizontalement les enfants */
+  gap: 10px;              /* espace entre les blocs */
+  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;       /* limite la largeur max pour un bon rendu */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* chaque champ reste en colonne */
+.champ-voiture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+}
+
+/* Le h3 reste à sa place normale, en dehors de champ-voiture, donc pas touché */
+
+/* Label et inputs prennent toute la largeur et texte centré */
+/* Labels et inputs centrés */
+.champ-voiture label,
+.champ-voiture input,
+.champ-voiture select {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Input & select styles */
+.champ-voiture input,
+.champ-voiture select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Button centré */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Style pour h3 hors du champ-voiture, aligné à gauche par défaut */
+/* H3 qui s'étendent en full width dans le container, centrés */
+.form-voiture-container h3 {
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  white-space: normal; /* autorise retour à la ligne */
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
@@ -728,7 +911,12 @@ footer div a {
         font-size: 1em;
     }
 
-    
+    .dispo-modify-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px;
+    }
      
     
     
