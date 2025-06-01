@@ -72,8 +72,7 @@ if (isset($_SESSION['resultats'])) {
         return true;
     });
 
-    // Débogage: Afficher le nombre de résultats après application des filtres
-    echo '<p class="ajustement2">Nombre de résultats : ' . count($resultats) . '</p>';
+    
 
     // Récupération de la date de départ recherchée
     $date_recherchee = $_SESSION['date_depart_recherchee'];
@@ -95,15 +94,21 @@ if (isset($_SESSION['resultats'])) {
         // Vérifier si les résultats exacts et proches sont vides
         if (empty($resultats_exacts) && empty($resultats_proches)) {
             echo '<p>Aucun trajet ne correspond à votre recherche avec ces filtres.</p>';
+            
         } else {
             // Affichage des résultats exacts
             if (!empty($resultats_exacts)) {
+                echo '<p class="ajustement2">Nombre de résultats exacts : ' . count($resultats) . '</p>';
                 echo '<h3 class="ajustement3">Résultats exacts :</h3>';
+                // Débogage: Afficher le nombre de résultats après application des filtres
+                
                 foreach ($resultats_exacts as $ligne) {
                     afficherCovoiturage($ligne);
                 }
             } else {
                 echo '<p class="ajustement2">Aucun covoiturage trouvé à cette date exacte.</p>';
+                // Débogage: Afficher le nombre de résultats après application des filtres
+                echo '<p class="ajustement2">Nombre de résultats proches : ' . count($resultats) . '</p>';
                 // if (!empty($resultats_proches)) {
                 //     echo '<p>Voulez-vous voir les covoiturages avec une date proche ?</p>';
                 //     echo '<button class="button" id="btn_oui" onclick="afficherCovoituragesProches()">OUI</button>';
@@ -124,7 +129,8 @@ if (isset($_SESSION['resultats'])) {
     } else {
         // Si aucun résultat dans la session après filtrage
          
-        echo '<p>Aucun covoiturage trouvé entre ces villes avec les filtres appliqués.</p>';
+        echo '<p class="ajustement2">Aucun covoiturage trouvé entre ces villes.</p>';// Débogage: Afficher le nombre de résultats après application des filtres
+        echo '<p class="ajustement2">Nombre de résultats : ' . count($resultats) . '</p>';
     }
 }
 unset($_SESSION['recherche_effectuee']);

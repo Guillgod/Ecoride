@@ -268,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                             echo '</div>';
                         }
                     } else {
-                        echo '<p>Aucune voiture gérée actuellement.</p>';
+                        echo '<p class="ajustement2">Aucune voiture gérée actuellement.</p>';
                     }
 
                 echo '</div>'; // fermeture de contenu-voiture
@@ -284,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                     if (!empty($passengerCovoiturages)) {
                         echo '<h2>Vos covoiturages en tant que passager</h2>';
                     } else {
-                        echo '<p>Vous ne participez à aucun covoiturage en tant que passager.</p>';
+                        echo '<p class="ajustement2">Vous ne participez à aucun covoiturage en tant que passager.</p>';
                     }
                         
                     if (!empty($covoituragesEnCours)) {
@@ -346,7 +346,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                     }
                 }
                 if (empty($idCovoituragesAffiches)) {
-                echo '<p>Vous ne participez à aucun covoiturage en tant que chauffeur.</p>';
+                echo '<p class="ajustement2">Vous ne participez à aucun covoiturage en tant que chauffeur.</p>';
             }
                         echo '</div>';
 
@@ -370,7 +370,7 @@ if (!empty($covoituragesChauffeurTerminés)) {
         echo '</div>';
     }
 }else {
-    echo '<p>Vous n\'avez pas de covoiturages terminés en tant que chauffeur.</p>';
+    echo '<p class="ajustement2">Vous n\'avez pas de covoiturages terminés en tant que chauffeur.</p>';
 }
 
 // Affichage des covoiturages terminés comme passager
@@ -388,7 +388,7 @@ if (!empty($covoituragesTermines)) {
         echo '</div>';
     }
 }else {
-    echo '<p>Vous n\'avez pas de covoiturages terminés en tant que passager.</p>';
+    echo '<p class="ajustement2">Vous n\'avez pas de covoiturages terminés en tant que passager.</p>';
 }
 
 echo '</div>'; // fermeture de contenu-historiques
