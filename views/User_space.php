@@ -169,8 +169,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                 echo '</div>';
             }
             if ($utilisateur['role'] == 'chauffeur' || $utilisateur['role'] == 'passager&chauffeur') {
+                echo '<div class="button-container">';
                 echo '<button class="button" onclick="window.location.href=\'creation_carpool.php\'">Créer un covoiturage</button>';
                 echo '<button class="button" onclick="window.location.href=\'AjoutVoiture.php\'">Ajoutez une voiture</button>';
+                
+                echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
+                echo '</div>';
             }
             
             echo '</div>';

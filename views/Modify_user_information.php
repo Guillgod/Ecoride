@@ -116,6 +116,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </form>
 </div> <!-- .dispo-modify-information -->
+
+<?php
+require_once 'footer.php';
+?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const roleSelect = document.getElementById('role');
