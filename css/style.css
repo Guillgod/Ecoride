@@ -8,6 +8,23 @@
     font: inherit;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+html, body {
+    height: 100%; /* Important pour que le body prenne toute la hauteur */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 100% de la hauteur de la fenêtre */
+}
+
+section {
+    flex: 1; /* Prend tout l’espace restant verticalement */
+    background-color: #F2F2F2;
+}
 a {
     cursor: pointer;
     text-decoration: none !important;
@@ -165,10 +182,18 @@ ul, ol {
 /* Barre de recherche */
 .Barrerecherche {
     display: flex;
-    justify-content: center;
+    flex-direction: column;  /* <- ajoute ça pour empiler en colonne */
+    align-items: center;  
     margin-top: 0px;
     background-color: #F2F2F2;
 }
+
+.Barrerecherche h2 {
+    margin-bottom: 5px;  /* réduit l’espace sous le titre */
+    margin-top: 20px;    /* tu peux garder ou ajuster si besoin */
+}
+
+
 input, select {
     border-style: solid;
     border-color: rgb(59, 182, 125);
@@ -179,15 +204,78 @@ input, select {
     
 }
 
+.form-recherche li {
+    margin-top: 5px;  /* ou moins, selon besoin */
+    margin-bottom: 5px; /* espace entre les champs */
+    list-style: none;   /* pour enlever la puce */
+}
+
 
 
 .Barrerecherche input::placeholder {
     font-size: 1em; /* ou par exemple 16px, 18px… */
 }
 .Barrerecherche input {
-    font-size: 1.5em;
+    font-size: 1em;
 }
 
+/* Cacher la case native */
+#toggleFilters {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Styliser le label qui vient juste après la checkbox */
+label[for="toggleFilters"] {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 28px; /* espace pour le carré custom */
+    font-size: 1em;
+}
+
+/* Le carré de la case à cocher (avant le texte du label) */
+label[for="toggleFilters"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3BB67D; /* vert */
+    background-color: white;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Afficher la coche blanche quand cochée */
+#toggleFilters:checked + label[for="toggleFilters"]::after {
+    content: "✓";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Fond vert quand cochée */
+#toggleFilters:checked + label[for="toggleFilters"]::before {
+    background-color: #3BB67D;
+    border-color: #3BB67D;
+}
+
+
+
+.titre-centrer {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px; /* espace sous le titre */
+}
 
 /* Footer */
 footer {
@@ -223,13 +311,6 @@ footer div a {
 
 
 
-/* Vue covoiturage - filtre */
-.filtre {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-}
 
 .burger {
     display: none;
@@ -268,6 +349,7 @@ footer div a {
     margin: 0;
 }
 .Barrerecherche li {
+    margin: 10px;
     list-style-type: none;
 }
 
@@ -525,6 +607,13 @@ footer div a {
 .avis-buttons .button:hover {
     background-color: #45a049;
 }
+
+/* Depuis l'espace Vue_Employee.php gère l'espace entre les avis à valider*/
+.covoiturage-actif-info {
+    margin-bottom: 20px;
+}
+
+ 
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
@@ -602,7 +691,7 @@ footer div a {
         flex-direction: column;
         align-items: center;
         padding: 20px;
-        }
+    }
 
     .form-recherche {
         flex-direction: column;
@@ -611,13 +700,38 @@ footer div a {
         width: 100%;
         gap: 15px;
     }
-    
+
+    /* Réappliquer les marges pour garder cohérence responsive */
+    .Barrerecherche .titre-centrer {
+        margin-bottom: 10px;
+    }
+
+    .Barrerecherche h2 {
+        margin-bottom: 5px;
+        margin-top: 20px;
+    }
+
+    .form-recherche li {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .form-recherche li:first-child {
+        margin-top: 0;
+    }
+
     .Barrerecherche input::placeholder {
-        font-size: 0.8em; /* ou par exemple 16px, 18px… */
+        font-size: 0.8em;
     }
 
     .Barrerecherche input {
         font-size: 1em;
     }
+
+    
+     
+    
+    
+    
 }
 

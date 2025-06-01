@@ -20,8 +20,11 @@ if (session_status() == PHP_SESSION_NONE) {
 
     <body>
 
-
-   <section class="Barrerecherche">    <!--  Avec maintien de l'affichage des champs rentrés par l'utilisateur -->
+    
+    <section class="Barrerecherche">
+        <div class="titre-centrer">
+            <h2>Votre trajet :</h2>
+        </div>   <!--  Avec maintien de l'affichage des champs rentrés par l'utilisateur -->
         <form action="../controllers/Handle_Search_Controller.php" method="post">
             <input type="hidden" name="form_type" value="Barre_de_recherche.php">
             <div class="form-recherche">

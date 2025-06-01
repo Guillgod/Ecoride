@@ -393,6 +393,7 @@ echo '</div>'; // fermeture de contenu-historiques
             echo '</div>';
 
 echo '</section>'; // Fermeture de la section user-space
+require_once 'footer.php'; // Afficher le footer
 ?>
 
 
