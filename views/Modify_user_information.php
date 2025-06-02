@@ -28,7 +28,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $AddedCar=$modelCreateUser-> addCarToUser($userData['utilisateur_id'], $carController->getLastInsertId());
     }
 
-
     header('Location: User_space.php');
     exit;
 }// On prend le premier résultat, car on s'attend à un seul utilisateur par email
@@ -97,7 +96,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
 
-
+       
         <!-- En-dessous des colonnes -->
          
         <div id="ajout-vehicule-container" style="display: none;" class="checkbox-wrapper ">
@@ -113,7 +112,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="center-horizontal" id="form-voiture"></div>
         <div class="button-container">
         <button type="submit" class="button">Enregistrer</button>
+
         </div>
+
+        
     </form>
 </div> <!-- .dispo-modify-information -->
 
@@ -159,6 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialisation lors du chargement de la page
     updateAjoutVehiculeVisibility();
 });
+
+
 </script>
 </div> <!-- .Modify-information -->
 </section>

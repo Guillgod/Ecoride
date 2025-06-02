@@ -63,4 +63,5 @@ public function checkIfCarAlreadyJoinedThisUser($utilisateur_id, $voiture_id) {
 
     return $stmt->rowCount() > 0; // Si la voitureest déjà déclarée par l'utilisateur
 }
+
 }

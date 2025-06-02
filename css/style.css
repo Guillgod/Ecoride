@@ -25,10 +25,12 @@ section {
     flex: 1; /* Prend tout l’espace restant verticalement */
     background-color: #F2F2F2;
 }
-a {
+.menu a {
     cursor: pointer;
     text-decoration: none !important;
-    color: white !important;
+    font-weight: 600;
+    color :white !important;
+     
 }
 ul, ol {
     list-style: none;
@@ -74,10 +76,8 @@ h1,h2 {padding: 15px;}
     margin: 10px;
     padding: 10px;
 }
-.menu a {
-    color: white !important;
-    font-weight: 600;
-}
+
+
 
 .button {
     background-color: rgb(59, 182, 125);
@@ -87,7 +87,25 @@ h1,h2 {padding: 15px;}
     padding: 10px 25px;
     color: white;
     font-weight: 600;
+    transition: all 0.2s ease;
 }
+
+.button:hover{
+    /* Changement de couleur au survol */
+background-color: #45a049;
+}
+
+.button:active{
+    background-color: #584d4d!important;
+    transform: scale(0.98); 
+}
+
+.button.clicked {
+            background-color: #584d4d !important;
+            /* background-color: #2c3e50 ; */
+  transform: scale(0.97);
+        }
+
 .button a {
     color: white !important;
     font-weight: 600;
@@ -172,6 +190,11 @@ h1,h2 {padding: 15px;}
     font-weight: 600;
     margin-top: 20px;
     color :#0B480B;
+}
+
+.btn-contact:hover {
+    background-color: #45a049;
+    color: white;
 }
 
 .text-contact {
@@ -366,6 +389,16 @@ footer div a {
     padding: 1.5rem;
     margin: 2rem auto;
     max-width: 1000px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.user-info2 {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 500px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
@@ -839,6 +872,7 @@ footer div a {
   justify-content: center;
   margin-top: 20px;
   width: 100%;
+  margin-bottom : 10px;
 }
 
 /* Style pour h3 hors du champ-voiture, aligné à gauche par défaut */
@@ -869,6 +903,27 @@ footer div a {
     display: flex;
      
 }
+
+.champ-voiture a {
+    color: #3BB67D !important; /* Couleur du lien */
+    text-decoration: none; /* Enlève le soulignement */
+}
+
+.champ-voiture a:hover {
+    color: #45a049;
+    text-decoration: underline; /* Ajoute un soulignement au survol */
+}
+
+.button a{
+    color: white !important; /* Couleur du lien dans le bouton */
+    text-decoration: none; /* Enlève le soulignement */
+}
+
+.button a:hover{
+    color: white !important; /* Couleur du lien dans le bouton */
+    text-decoration: underline; /* Enlève le soulignement */
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {

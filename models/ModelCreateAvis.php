@@ -176,6 +176,21 @@ public function createAvis($id_covoiturage_validé, $id_chauffeur_validé, $comm
         echo "Erreur : " . $e->getMessage();
     }
     }
+
+    public function getAvisDriver($id_covoiturage_en_cours)
+    {
+        $stmt = $this->db->prepare(
+        "SELECT * FROM covoiturage
+        JOIN voiture_utilise_covoiturage ON voiture_utilise_covoiturage.id_covoiturage_utilise_voiture = covoiturage.covoiturage_id
+        JOIN utilisateur_possede_voiture ON utilisateur_possede_voiture.id_voiture_possede_utilisateur = voiture_utilise_covoiturage.id_voiture_utilise_covoiturage
+        JOIN utilisateur ON utilisateur_possede_voiture.id_utilisateur_possede_voiture = utilisateur.utilisateur_id
+        JOIN avis ON avis.id_chauffeur_validé = utilisateur_possede_voiture.id_utilisateur_possede_voiture
+        JOIN utilisateur AS passager ON passager.utilisateur_id = avis.id_utilisateur_validé
+        WHERE covoiturage.covoiturage_id = :id_covoiturage_en_cours");
+        $stmt->bindValue(':id_covoiturage_en_cours', $id_covoiturage_en_cours);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
-// Revoir la méthode 6.1 pour créditer uniquement la dernière ligne insérée dans la table gain_plateforme
+

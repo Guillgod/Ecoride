@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                         echo ' Vous pouvez donner votre avis sur le chauffeur <strong>' .
                             ucfirst(htmlspecialchars($covoiturage['pseudo'])) . '</strong>.</p>';
 
-                        echo '<form method="POST" action="User_space.php">';
+                        echo '<form method="POST"  onsubmit="return handleSubmit(this)">';
                         echo '<input type="hidden" name="id_covoiturage" value="' . htmlspecialchars($covoiturage['covoiturage_id']) . '">';
                         echo '<input type="hidden" name="id_chauffeur" value="' . htmlspecialchars($covoiturage['id_utilisateur_possede_voiture']) . '">';
 
@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                         echo '<textarea name="commentaire_en_cours" rows="4" cols="50" required></textarea>';
 
                         echo '<div class="avis-buttons">';
-                        echo '<button type="submit" name="soumettre_avis" class="button">Soumettre l\'avis</button>';
+                        echo '<button class="button" type="submit" name="soumettre_avis" >Soumettre l\'avis</button>';
                         echo '<button type="submit" name="soumettre_avis_employe" class="button">Soumettre l\'avis à l\'employé</button>';
                         echo '</div>';
                         
@@ -310,7 +310,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                                 echo '</div>';
                                     
                                 echo '<div class="covoiturage-buttons2">';
-                                    echo '<button class="button annuler2-btn" data-id="' . $covoiturage['covoiturage_id'] . '" data-user="' . $_SESSION['user']['utilisateur_id'] . '">Annuler</button>';
+                                    echo '<button class="button annuler2-btn" onclick="changeColor(this)" data-id="' . $covoiturage['covoiturage_id'] . '" data-user="' . $_SESSION['user']['utilisateur_id'] . '">Annuler</button>';
                                 echo '</div>';
                                 
                             echo '</div>'; // fin covoiturage-actif-info
@@ -345,10 +345,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
 
                         echo '<div class="covoiturage-buttons">';
                         if ($covoiturage['statut'] === 'prévu') {
-                            echo '<button class="button commencer-btn" data-id="' . $id . '">Commencer</button>';
-                            echo '<button class="button annuler-btn" data-id="' . $id . '">Annuler</button>';
+                            echo '<button class="button commencer-btn" onclick="changeColor(this)" data-id="' . $id . '">Commencer</button>';
+                            echo '<button class="button annuler-btn" onclick="changeColor(this)" data-id="' . $id . '">Annuler</button>';
                         } elseif ($covoiturage['statut'] === 'en_cours') {
-                            echo '<button class="button arrive-btn" data-id="' . $id . '">Arrivé à destination</button>';
+                            echo '<button class="button arrive-btn" onclick="changeColor(this)" data-id="' . $id . '">Arrivé à destination</button>';
                         }
 
                         echo '</div>';
@@ -557,6 +557,21 @@ document.querySelectorAll('.onglet-btn').forEach(button => {
         document.getElementById('contenu-' + cible).classList.add('actif');
     });
 });
+
+
+        function changeColor(button) {
+            button.classList.add("clicked");
+        }
+    function handleSubmit(form) {
+    const submitButtons = form.querySelectorAll('button[type="submit"]');
+    submitButtons.forEach(btn => {
+        btn.classList.add('button-clicked');
+    });
+
+    // attendre 200ms avant de soumettre
+    setTimeout(() => form.submit(), 200);
+    return false; // empêche le submit immédiat
+}
 
 </script>
 

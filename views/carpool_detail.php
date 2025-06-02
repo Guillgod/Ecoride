@@ -18,12 +18,18 @@
     require '../models/ModelPayment.php';
     require '../controllers/Payment_Controller.php';
     require '../controllers/Creation_User_Controller.php';
+    require '../models/ModelCreateAvis.php';
+    require '../controllers/Creation_Avis_Controller.php';
     
     if (isset($_GET['covoiturage_id'])) {
         $covoiturage_id = $_GET['covoiturage_id'];
         $modelCreateCarpool = new ModelCreateCarpool();
         $controllerAffichageCarpoolDetail = new Creation_Carpool_Controller($modelCreateCarpool);
         $carpoolDetails = $controllerAffichageCarpoolDetail->getCarpoolDetailsResult($covoiturage_id);
+        $modelCreateAvis = new ModelCreateAvis();
+        $controllerGetAvis = new Creation_Avis_Controller($modelCreateAvis);
+
+        $getAvis = $controllerGetAvis->getAvisDriverResult($covoiturage_id);
         $modelPayment = new ModelPayment();
         $controllerPayment = new Payment_Controller($modelPayment);
         $id_chauffeur = $carpoolDetails['utilisateur_id'];
@@ -33,6 +39,7 @@
         
         // Affichage des détails du covoiturage
         echo '<section>';
+        echo '<h2>Détail du covoiturage</h2>';
         if ($carpoolDetails) {
             $chemin_photo = '../uploads/';
             echo '<div class="user-info">';
@@ -116,8 +123,34 @@
     echo '</div>'; // .user-actions
                   echo '</div>'; // .user-info
     echo '</section>';
-    require_once 'footer.php';
-    ?>
+    
+    
+
+    //Affichage des avis liés au chauffeur  
+    echo '<section>';
+    echo '<h2>Avis sur le chauffeur</h2>';
+    echo '<p class="ajustement2">' . count($getAvis) . ' avis trouvé(s)</p>';
+        if (!empty($getAvis)) {
+            
+            echo '<div class="user-info">';
+
+            foreach ($getAvis as $avis) {
+                echo '<div class="user-info-content">';
+                echo '<div class="user-details">';
+                echo '<p><strong>Pseudo du passager : </strong>' . htmlspecialchars($avis['pseudo']) . '</p>';
+                echo '<p><strong>Note : </strong>' . htmlspecialchars($avis['note_validé']) . '</p>';
+                echo '<p><strong>Commentaire : </strong>' . htmlspecialchars($avis['commentaire_validé']) . '</p>';
+                echo '</div>'; // .user-details
+                echo '</div>'; // .user-info-content
+                echo '<hr>'; // Séparateur entre les avis
+            }
+            
+        } else {
+            echo '<p>Aucun avis disponible.</p>';
+        }
+        echo '</div>'; // .user-info
+        require_once 'footer.php';
+        ?>
 
     </body>
 </html>

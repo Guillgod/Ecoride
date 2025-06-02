@@ -45,8 +45,14 @@ public function getFinishedCarpoolFromDatabase()
         $id_utilisateur_validé = $_SESSION['user']['utilisateur_id']; // Récupérer l'ID de l'utilisateur connecté
             // Call the model method to create the user
             return $aviscreated = $this->modelCreateAvis->createAvis($id_covoiturage, $id_chauffeur, $commentaire, $note, $id_utilisateur_validé ); 
-             
         
+    }
+
+    public function getAvisDriverResult($covoiturage_id)
+    {
+            
+        return $this->modelCreateAvis->getAvisDriver($covoiturage_id); // Appel de la méthode pour récupérer les avis du chauffeur
+    
     }
 }
 

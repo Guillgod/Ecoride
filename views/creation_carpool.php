@@ -134,6 +134,8 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
 
 
 </section>
-
+<?php
+require_once 'footer.php';
+?>
 </body>
 </html>

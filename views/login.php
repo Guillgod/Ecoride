@@ -13,22 +13,28 @@
     </head>
     <body>
     
-    
-
-
-    <h1>Connexion</h1>
+    <section>
+    <div class="user-info2">
+    <div class="form-voiture-container">
+    <h2>Connexion</h2>
  
     <form method="POST" action="login.php">
     <input type="hidden" name="form_type" value="login.php">
+        <div class="champ-voiture">
         <label for="email">Nom d'utilisateur:</label>
         <input type="text" name="email" required>
         <br>
+        </div>
+        <div class="champ-voiture">
         <label for="password">Mot de passe:</label>
         <input type="password" name="password" required>
         <br>
-        <input type="submit" value="Se connecter">
+        </div>
+        <div class="button-container">
+        <input class="button" type="submit"  value="Se connecter">
+        </div>
     </form>
-
+    
     <?php
     require_once '../models/ModelUser.php';
     require_once '../controllers/UserController.php';
@@ -39,10 +45,13 @@
     $controllerUser->login();
 ?>
 
-    <p>Pas encore inscrit ? <a href="creation_user.php">Inscrivez-vous ici</a></p>
-    <p><a href="Page_accueil.php" !color="green">Retour à l'accueil</a></p>
-
+    <div class="champ-voiture">
+    <p>Pas encore inscrit ?</p>
+     <a  href="creation_user.php">Inscrivez-vous ici</a>
+    </div>
     </form>
-
+    <div class="form-voiture-container"></div>
+    </div>
+    </section>
 </body>
 </html>
