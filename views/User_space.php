@@ -298,7 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                     }
                         
                     if (!empty($covoituragesEnCours)) {
-                        echo '<h3>Vous participez actuellement à ces covoiturages :</h3>';
+                        echo '<h3 class="ajustement2">Vous participez actuellement à ces covoiturages :</h3>';
                         foreach ($covoituragesEnCours as $covoiturage) {
                             echo '<div class="covoiturage-actif-info" >';
                                 echo '<div class="covoiturage-details">';
@@ -329,6 +329,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
            
                 if (!empty($covoituragesChauffeurActifs)) {
                     echo '<h2>Vos covoiturages comme chauffeur</h2>';
+                    echo '<h3 class="ajustement2">Vous participez actuellement à ces covoiturages :</h3>';
                     foreach ($covoituragesChauffeurActifs as $covoiturage) {
                         $id = $covoiturage['id_covoiturage_utilise_voiture'];
                         echo '<div class="covoiturage-actif-info" id="covoiturage_chauffeur'.$id.'">';
@@ -368,7 +369,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
 
 // Affichage des covoiturages terminés comme chauffeur
 if (!empty($covoituragesChauffeurTerminés)) {
-    echo '<h2>Vos covoiturages comme chauffeur terminés</h2>';
+    echo '<h3 class="ajustement3">Vos covoiturages comme chauffeur terminés</h3>';
     
     foreach ($covoituragesChauffeurTerminés as $covoiturage) {
         echo '<div class="covoiturage-termine-info">';
@@ -385,7 +386,7 @@ if (!empty($covoituragesChauffeurTerminés)) {
 
 // Affichage des covoiturages terminés comme passager
 if (!empty($covoituragesTermines)) {
-    echo '<h3>Vous avez participé à ces covoiturages comme passager :</h3>';
+    echo '<h3 class="ajustement3">Vous avez participé à ces covoiturages comme passager :</h3>';
     
     foreach ($covoituragesTermines as $covoiturage) {
         echo '<div class="covoiturage-termine-info">';

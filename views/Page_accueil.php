@@ -78,7 +78,7 @@
         </div>
 
         <div>
-             <button type="button" class="btn-contact" onclick="window.location.href='contact.php'">Nous contacter</button>
+             <button type="button" class="btn-contact" onclick="window.location.href='Vue_contact.php'">Nous contacter</button>
         </div>
     </section>
     

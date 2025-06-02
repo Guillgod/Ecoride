@@ -7,7 +7,9 @@
         <link href="../css/style.css" rel="stylesheet">
     </head>
     <body>
-    
+    <?php 
+    require_once '../views/header.php';
+    ?>
     <section>
     <div class="form-admin">
   
@@ -27,12 +29,14 @@
       </div>
 
       <div class="button-container">
-        <button class="button" type="submit">Afficher</button>
+        <button class="button" type="submit">Envoyer</button>
       </div>
     </form>
   </div>
 </div>
     </section>
-
+     <?php
+    require_once '../views/footer.php';
+    ?>
     </body>
-</html>>
+</html>

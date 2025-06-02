@@ -39,7 +39,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php if(isset($_SESSION['user']) && $_SESSION['user']['compte_employee'] == 'employé'): ?>
                 <li><a href="Vue_employee.php">Employé</a></li>
             <?php endif; ?>
-            <li><a href="">Contact</a></li>
+            <li><a href="Vue_contact.php">Contact</a></li>
             <li>
                 <?php if(isset($_SESSION['user'])): ?>
                     <button class="button"><a href="logout.php">Déconnexion</a></button>
@@ -62,7 +62,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <?php if(isset($_SESSION['user'])): ?>
                     <button class="button"><a href="logout.php">Déconnexion</a></button>
                 <?php else: ?>
-                    <button class="button"><a href="login.php">Connexion</a></button>
+                    <button  class="button"><a href="login.php">Connexion</a></button>
                 <?php endif; ?>
             </li>
         </ul>
