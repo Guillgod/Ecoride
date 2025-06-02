@@ -36,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsuspend'])) {
 <!-- Affichage du 1er graphique nb covoiturage par mois  -->
     <section>
        <h1>Statistiques</h1> 
-        <h2>Covoiturages par jour - Mois  </h2>
+         
             <?php foreach ($data as $row): ?>
-            <p><?= $row['jour'] ?> : <?= $row['total'] ?> covoiturages</p>
+            
             <?php endforeach; 
             
     $prevMonth = $month - 1;
@@ -59,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsuspend'])) {
 <div style="display: flex; flex-direction: column; align-items: center; margin: 30px 0;">
     <!-- Flèches et titre centrés -->
     <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
-        <a href="?year=<?= $prevYear ?>&month=<?= $prevMonth ?>" style="font-size: 24px;">⬅️</a>
+        <a href="?year=<?= $prevYear ?>&month=<?= $prevMonth ?>" class="arrow-button" >&#x1F808;</a>
         <h2 style="margin: 0;">Covoiturages par jour - <?= sprintf("%02d", $month) ?>/<?= $year ?></h2>
-        <a href="?year=<?= $nextYear ?>&month=<?= $nextMonth ?>" style="font-size: 24px;">➡️</a>
+        <a href="?year=<?= $nextYear ?>&month=<?= $nextMonth ?>" class="arrow-button">&#x1F80A;</a>
     </div>
 
     <!-- Graphique centré -->
@@ -146,11 +146,11 @@ if ($nextCreditMonth > 12) {
         <h3 style="text-align: center; margin-top: 20px;">
     Total des crédits gagnés par la plateforme : <?= $creditGraph['totalCredits'] ?? 0 ?> crédits
 </h3>
-<h2>Nb de crédits par jour - <?= sprintf("%02d", $creditGraph['month']) ?>/<?= $creditGraph['year'] ?></h2>
+ 
 <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 30px 0;">
-    <a href="?year=<?= $prevCreditYear ?>&month=<?= $prevCreditMonth ?>" style="font-size: 24px;">⬅️</a>
+    <a href="?year=<?= $prevCreditYear ?>&month=<?= $prevCreditMonth ?>" class="arrow-button">&#x1F808;</a>
     <h2>Nb de crédits par jour - <?= sprintf("%02d", $creditMonth) ?>/<?= $creditYear ?></h2>
-    <a href="?year=<?= $nextCreditYear ?>&month=<?= $nextCreditMonth ?>" style="font-size: 24px;">➡️</a>
+    <a href="?year=<?= $nextCreditYear ?>&month=<?= $nextCreditMonth ?>" class="arrow-button">&#x1F80A;</a>
 </div>
 <div style="max-width: 800px; margin: 0 auto;">
     <canvas id="creditChart"></canvas>
@@ -203,12 +203,24 @@ if ($nextCreditMonth > 12) {
     </section>
 
     <section>
-        <h2>Supendre un compte</h2>
-        <form action="" method="post">
-            <label for="email">Email de l'utilisateur :</label>
-            <input type="email" id="email" name="email" required>
-            <button class='button' type="submit">Afficher</button>
-        </form>
+        
+        
+        <!-- <div class="form-admin"> -->
+        <div class="form-admin">
+            <h2 class="ajustement3">Supendre un compte utilisateur</h2>
+            <div class="form-admin-content">
+                
+                <form action="" method="post">
+                    <div class="form-fields">
+                    <label for="email">Email de l'utilisateur :</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="button-container">
+                    <button class='button' type="submit">Afficher</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        <!-- </div> -->
 <?php
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
@@ -216,7 +228,7 @@ if ($nextCreditMonth > 12) {
             $email = $_POST['email'];
             $userInfo = $controller->getAnAccount($email);
             if ($userInfo) {
-                echo "<h3>Informations sur l'utilisateur :</h3>";
+                echo '<div class="form-admin-content">';
                 echo "<p>Email: " . htmlspecialchars($userInfo['email']) . "</p>";
                 echo "<p>Nom: " . htmlspecialchars($userInfo['nom']) . "</p>";
                 echo "<p>Prénom: " . htmlspecialchars($userInfo['prenom']) . "</p>";
@@ -225,14 +237,17 @@ if ($nextCreditMonth > 12) {
 
                 if ($userInfo['parametre'] == 'valide') {
                     
-                    // echo "<form action='suspendre_compte.php' method='post'>";
-                    // echo "<input type='hidden' name='email' value='" . htmlspecialchars($userInfo['email']) . "'>";
-                    // echo "<button class='button' type='submit'>Suspendre le compte</button>";
-                    // echo "</form>";
-                    echo "<form action='' method='post'>";
+                 
+                echo "<form action='' method='post'>";
                 echo "<input type='hidden' name='suspend_email' value='" . htmlspecialchars($userInfo['email']) . "'>";
+                echo '<div class="button-container">';
                 echo '<button type="submit" name="suspend" class="button" onclick="return confirm(\'Confirmer la suspension de ce compte ?\');">Suspendre</button>';
-                echo '</form>';}
+                echo '</div>';
+                
+                echo '</form>';
+                echo '</div>';
+                }
+                
 
                 
                 
@@ -241,16 +256,19 @@ if ($nextCreditMonth > 12) {
                     echo "<p style='color: red;'>Compte suspendu</p>";
                     echo "<form method='post' action=''>";
                     echo "<input type='hidden' name='email' value='" . htmlspecialchars($userInfo['email']) . "'>";
+                    echo '<div class="button-container">';
                     echo "<button type='submit' name='unsuspend' class='button'>Lever la suspension</button>";
+                    echo "</div>";
                     echo "</form>";
+                    echo "</div>";
                 }
-            }
+            };
         }
         ?>
 
     
         
-    </section>
+    
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['suspend_email'])) {
     $emailToSuspend = $_POST['suspend_email'];
@@ -263,6 +281,10 @@ if ($nextCreditMonth > 12) {
     }
 }
     ?>
+</section>
 
+<?php
+require_once '../views/footer.php';
+?>
 </body>
 </html>

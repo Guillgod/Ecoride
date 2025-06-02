@@ -559,19 +559,18 @@ document.querySelectorAll('.onglet-btn').forEach(button => {
 });
 
 
-        function changeColor(button) {
-            button.classList.add("clicked");
-        }
-    function handleSubmit(form) {
-    const submitButtons = form.querySelectorAll('button[type="submit"]');
-    submitButtons.forEach(btn => {
-        btn.classList.add('button-clicked');
-    });
+        document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".avis-buttons .button");
 
-    // attendre 200ms avant de soumettre
-    setTimeout(() => form.submit(), 200);
-    return false; // empêche le submit immédiat
-}
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            // Supprimer la classe 'clicked' des autres boutons
+            buttons.forEach(btn => btn.classList.remove("clicked"));
+            // Ajouter la classe au bouton cliqué
+            this.classList.add("clicked");
+        });
+    });
+});
 
 </script>
 
