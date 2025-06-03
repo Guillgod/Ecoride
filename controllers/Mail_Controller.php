@@ -16,5 +16,20 @@ class MailController {
 
         return mail($to, $subject, $message, $headers);
     }
+
+    public static function sendContactEmail($email, $name, $prenom, $Message) {
+        $to = "guill.job@hotmail.fr"; // Adresse de destination à modifier en fonction
+        $subject = "Nouveau message de contact";
+        $body = "
+            <p>Vous avez reçu un nouveau message via le formulaire de contact :</p>
+            <p><strong>Coorodonnées :</strong> $name $prenom $email</p>
+            <p><strong>Message :</strong> $Message</p>";
+
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+        $headers .= "From: $email\r\n";
+
+        return mail($to, $subject, $body, $headers);
+    }
 }
 ?>
