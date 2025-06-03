@@ -14,7 +14,7 @@ class ModelUser {
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if($user && ($user['password'] === $password)) {
+        if ($user && password_verify($password, $user['password'])) {
             return $user;
         }
         return false;

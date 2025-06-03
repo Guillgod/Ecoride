@@ -18,7 +18,7 @@ class Creation_user_controller
             $nom = $_POST['nom'];
             $prenom = $_POST['prenom'];
             $email = $_POST['email'];
-            $password = $_POST['password'];
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $telephone = $_POST['telephone'];
             $adresse = $_POST['adresse'];
             $date_naissance = $_POST['date_naissance'];
