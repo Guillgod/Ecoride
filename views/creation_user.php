@@ -9,7 +9,7 @@
         <link href="../css/style.css" rel="stylesheet">
     </head>
     <body>
-
+    <section>
     <?php
     require_once 'header.php';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,7 +20,7 @@
     $controllerCreateUser->createUserInDatabase();
     }
     ?>
-    <section>
+    
     <h1 >Renseignez vos informations</h1>
     <div class="form-voiture-container"> 
     <form method="POST" action="creation_user.php" enctype="multipart/form-data">
