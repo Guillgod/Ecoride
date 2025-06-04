@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../css/style.css" rel="stylesheet">
     </head>
-
+<section> 
 <?php
 require_once 'header.php';
 require_once '../controllers/creation_carpool_controller.php';
@@ -20,9 +20,36 @@ $modelCreateCarpool = new ModelCreateCarpool();
 $voitures =$modelCreateCarpool->getUserCars($_SESSION['user']['utilisateur_id']);
 $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
  
-?>
+ 
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type']) && $_POST['form_type'] === 'creation_carpool.php') {
+        $adresse_depart = $_POST['adresse_depart'];
+        $lieu_depart = $_POST['lieu_depart'];
+        $date_depart = $_POST['date_depart'];
+        $heure_depart = $_POST['heure_depart'];
+        $adresse_arrivee = $_POST['adresse_arrivee'];
+        $lieu_arrivee = $_POST['lieu_arrivee'];
+        $date_arrivee = $_POST['date_arrivee'];
+        $heure_arrivee = $_POST['heure_arrivee'];
+        $prix_personne = $_POST['prix_personne'];
+        if ($prix_personne < 2) {
+    // Option : stocker un message d'erreur dans la session ou afficher directement :
+    echo "<script>alert('Erreur : Le prix par personne doit être au minimum de 2 crédits.'); window.history.back();</script>";
+    exit;
+    }
+        $result=$controllerCreateCarpool->createCarpoolInDatabase();
 
-    <section>
+        if($result) {
+            echo "<p style='color: green;'>Trajet créé avec succès.</p>";
+        } else {
+            echo "<p style='color: red;'>Le trajet n'a pas pu être créé.</p>";
+        }
+    }
+    
+    ?>
+
+ 
+
+    
  
     <h2>Renseignez votre trajet</h2>
     <div class="form-voiture-container">
@@ -80,7 +107,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
     <div class="champ-voiture">
         <h3>Fixez votre prix. 2 crédits seront prélevés pour garantir le fonctionnement de la plate-forme Ecoride &#x1F609;</h3>
         <label for="prix_personne">Prix du trajet par passager :</label>
-        <input type="int" name="prix_personne" required>
+        <input type="number" name="prix_personne" min="2" required>
         <br>
     </div>
     <div class="champ-voiture">
@@ -105,29 +132,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
 
 
     
-    <?php
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_type']) && $_POST['form_type'] === 'creation_carpool.php') {
-        $adresse_depart = $_POST['adresse_depart'];
-        $lieu_depart = $_POST['lieu_depart'];
-        $date_depart = $_POST['date_depart'];
-        $heure_depart = $_POST['heure_depart'];
-        $adresse_arrivee = $_POST['adresse_arrivee'];
-        $lieu_arrivee = $_POST['lieu_arrivee'];
-        $date_arrivee = $_POST['date_arrivee'];
-        $heure_arrivee = $_POST['heure_arrivee'];
-        $prix_personne = $_POST['prix_personne'];
-        
-        $result=$controllerCreateCarpool->createCarpoolInDatabase();
-
-        if($result) {
-            echo "<p>Trajet créé avec succès.</p>";
-        } else {
-            echo "<p>Le trajet n'a pas pu être créé.</p>";
-        }
-    }
     
-    ?>
-
 
 
 
@@ -137,5 +142,15 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
 <?php
 require_once 'footer.php';
 ?>
+
+<script>
+document.querySelector("form").addEventListener("submit", function(event) {
+    const prix = parseFloat(document.querySelector("input[name='prix_personne']").value);
+    if (prix < 2) {
+        event.preventDefault(); // bloque l’envoi
+        alert("Le prix par personne doit être au minimum de 2 crédits.");
+    }
+});
+</script>
 </body>
 </html>
