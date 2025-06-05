@@ -42,9 +42,10 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="Vue_contact.php">Contact</a></li>
             <li>
                 <?php if(isset($_SESSION['user'])): ?>
-                    <button class="button"><a href="logout.php">Déconnexion</a></button>
+                    <button type="button" class="button" onclick="window.location.href='logout.php'"><a href="logout.php">Déconnexion</a></button>
+                    <!-- <button type="button" class="btn-contact" onclick="window.location.href='Vue_contact.php'">Nous contacter</button> -->
                 <?php else: ?>
-                    <button class="button"><a href="login.php">Connexion</a></button>
+                    <button type="button" class="button" onclick="window.location.href='login.php'"><a href="login.php">Connexion</a></button>
                 <?php endif; ?>
             </li>
         </ul>
@@ -60,9 +61,9 @@ if (session_status() == PHP_SESSION_NONE) {
             <li><a href="">Contact</a></li>
             <li>
                 <?php if(isset($_SESSION['user'])): ?>
-                    <button class="button"><a href="logout.php">Déconnexion</a></button>
+                    <button type="button" class="button" onclick="window.location.href='logout.php'"><a href="logout.php">Déconnexion</a></button>
                 <?php else: ?>
-                    <button  class="button"><a href="login.php">Connexion</a></button>
+                    <button type="button" class="button" onclick="window.location.href='login.php'"><a href="login.php">Connexion</a></button>
                 <?php endif; ?>
             </li>
         </ul>
