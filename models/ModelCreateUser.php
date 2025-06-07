@@ -64,4 +64,11 @@ public function checkIfCarAlreadyJoinedThisUser($utilisateur_id, $voiture_id) {
     return $stmt->rowCount() > 0; // Si la voitureest déjà déclarée par l'utilisateur
 }
 
+public function emailExists($email): bool {
+    $stmt = $this->db->prepare("SELECT COUNT(*) FROM utilisateur WHERE email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
+}
+
 }

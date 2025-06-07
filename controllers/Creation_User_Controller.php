@@ -36,6 +36,13 @@ class Creation_user_controller
             }
     
             if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
+                
+                
+                // Vérification de l'e-mail existante
+            if ($this->modelCreateUser->emailExists($email)) {
+                echo "<p style='color:red;'>Cette adresse e-mail est déjà utilisée.</p>";
+                return; // Stop la création
+            }
                 // Créer l'utilisateur
                 $userCreated = $this->modelCreateUser->createUser(
                     $nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo, $role,$preferences,$fumeur,$animal);
@@ -79,3 +86,4 @@ class Creation_user_controller
         }
     }
 }
+

@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="champ-voiture">
         <label for="email">E-mail :</label>
-        <input type="text" name="email" required>
+        <input type="text" name="email" id="email" required>
+        <p id="email-feedback" style="margin: 0;"></p>
     </div>
     <div class="champ-voiture">
         <label for="password">Mot de passe:</label>
@@ -191,6 +192,36 @@ form.addEventListener("submit", function(event) {
             passwordInput.focus();
         }, 100);
     }
+});
+
+//Vérifie que l'email n'est pas déjà utilisé
+document.addEventListener('DOMContentLoaded', function () {
+    const emailInput = document.getElementById('email');
+    const emailFeedback = document.getElementById('email-feedback');
+
+    emailInput.addEventListener('input', function () {
+    const email = emailInput.value;
+
+    if (email.length > 3) {
+        fetch(`../controllers/check_email.php?email=${encodeURIComponent(email)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    emailFeedback.textContent = "❌ Cette adresse e-mail est déjà utilisée.";
+                    emailFeedback.style.color = "red";
+                } else {
+                    emailFeedback.textContent = "✅ Adresse e-mail disponible.";
+                    emailFeedback.style.color = "green";
+                }
+            })
+            .catch(error => {
+                console.error('Erreur de vérification e-mail :', error);
+                emailFeedback.textContent = "";
+            });
+    } else {
+        emailFeedback.textContent = "";
+    }
+    });
 });
 </script>
 </body>
