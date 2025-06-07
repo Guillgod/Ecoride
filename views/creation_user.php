@@ -144,6 +144,7 @@ const conditions = {
 
 passwordInput.addEventListener("input", updatePasswordConditions);
 confirmPasswordInput.addEventListener("input", validatePasswordsMatch);
+passwordInput.addEventListener("input", validatePasswordsMatch); 
 
 function updatePasswordConditions() {
     const value = passwordInput.value;
@@ -152,6 +153,8 @@ function updatePasswordConditions() {
     updateCondition(conditions.uppercase, /[A-Z]/.test(value));
     updateCondition(conditions.special, /[!@#$%^&*?]/.test(value));
     updateCondition(conditions.number, /\d/.test(value));
+
+    validatePasswordsMatch();
 }
 
 function updateCondition(element, isValid) {
