@@ -21,7 +21,7 @@
     <form method="POST" action="login.php">
     <input type="hidden" name="form_type" value="login.php">
         <div class="champ-voiture">
-        <label for="email">Nom d'utilisateur:</label>
+        <label for="email">Adresse email :</label>
         <input type="text" name="email" required>
         <br>
         </div>

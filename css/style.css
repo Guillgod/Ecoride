@@ -1061,6 +1061,15 @@ footer div a {
     font-size: 2em;
      
 }
+
+/* Personnalisation du bouton création de compte utilisateur selon critères du mot de passe */
+
+.invalid {
+    color: red;
+}
+.valid {
+    color: green;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
