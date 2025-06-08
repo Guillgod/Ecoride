@@ -61,10 +61,12 @@ class Creation_user_controller
                         $couleur = $_POST['couleur'];
                         $date_premiere_immatriculation = $_POST['date_premiere_immatriculation'];
                         $marque = $_POST['marque'];
+                        $nb_place_voiture = $_POST['nb_place_voiture']; // Valeur par défaut si non spécifiée
                         $modelCreateCar = new ModelCreateCar();
                         $controllerCar = new Creation_Car_Controller($modelCreateCar);
+
     
-                        $carCreated = $modelCreateCar->createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque, $userId);
+                        $carCreated = $modelCreateCar->createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque, $nb_place_voiture);
                         
                         if ($carCreated) {
                              $lastCarId = $modelCreateCar->getLastInsertId(); // Méthode à ajouter dans ModelCreateCar si elle n’existe pas
