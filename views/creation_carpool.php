@@ -99,7 +99,7 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
         <br>
     </div>
     <div class="champ-voiture">
-        <label for="heure_arrivee">Heure d'arrivée':</label>
+        <label for="heure_arrivee">Heure d'arrivée estimée:</label>
         <input type="time" name="heure_arrivee" required>
         <br>
     </div>

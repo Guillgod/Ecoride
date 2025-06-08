@@ -61,13 +61,14 @@ class Creation_user_controller
                         $couleur = $_POST['couleur'];
                         $date_premiere_immatriculation = $_POST['date_premiere_immatriculation'];
                         $marque = $_POST['marque'];
-    
                         $modelCreateCar = new ModelCreateCar();
                         $controllerCar = new Creation_Car_Controller($modelCreateCar);
     
                         $carCreated = $modelCreateCar->createCar($modele, $immatriculation, $energie, $couleur, $date_premiere_immatriculation, $marque, $userId);
-    
+                        
                         if ($carCreated) {
+                             $lastCarId = $modelCreateCar->getLastInsertId(); // Méthode à ajouter dans ModelCreateCar si elle n’existe pas
+                            $AddedCar = $this->modelCreateUser->addCarToUser($userId, $lastCarId);
                             echo "Votre compte utilisateur et votre voiture ont été créés avec succès !";
                         } else {
                             echo "Votre compte utilisateur a été créé, mais il y a eu une erreur lors de la création de la voiture.";

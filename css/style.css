@@ -439,8 +439,8 @@ footer div a {
 }
 
 .user-photo img {
-    max-height: 300px;
-    width: auto;
+    height: auto;
+    max-width: 250px;
     border-radius: 10px;
     border: 1px solid #aaa;
 }
@@ -1065,11 +1065,22 @@ footer div a {
 /* Personnalisation du bouton création de compte utilisateur selon critères du mot de passe */
 
 .invalid {
-    color: red;
+    color: black;
 }
 .valid {
     color: green;
 }
+
+.champ-voiture li {
+    font-size: 12px;
+    
+}
+
+#email-feedback {
+    font-size: 12px;
+    
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
@@ -1213,6 +1224,10 @@ footer div a {
     }
     
     
+    .user-photo img {
+        max-width: 150px;
+    }
     
+     
 }
 

@@ -26,7 +26,8 @@ class Creation_Carpool_Controller
             $heure_arrivee = $_POST['heure_arrivee'];
             $prix_personne = $_POST['prix_personne'];
             $voiture_id = $_POST['voiture_id'];
-            $nb_place_dispo = $this->modelCreateCarpool->getNbPlaceVoiture($voiture_id);
+            $nb_place_dispo2 = $this->modelCreateCarpool->getNbPlaceVoiture($voiture_id);
+            $nb_place_dispo = $nb_place_dispo2 - 1; // On enlève une place pour le conducteur
             if (strtotime($date_arrivee)<strtotime($date_depart)){
                 echo "La date d'arrivée doit être supérieure à la date de départ";
                 return false;
