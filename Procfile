@@ -1,1 +1,1 @@
-web: heroku-php-apache2 Ecoride/
+web: heroku-php-apache2
