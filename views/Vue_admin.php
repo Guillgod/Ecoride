@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsuspend'])) {
 ?>
 
 
-
+<?php if(isset($_SESSION['user']) && $_SESSION['user']['compte_employee'] == 'admin'): ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -281,6 +281,7 @@ if ($nextCreditMonth > 12) {
     }
 }
     ?>
+<?php endif; ?>
 </section>
 
 <?php
