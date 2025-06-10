@@ -1,5 +1,6 @@
 <?php
 //Model de création d'utilisateur
+require_once 'Database.php'; // Inclusion du fichier de connexion
 class ModelCreateUser
 {
     private PDO $db;
@@ -7,7 +8,7 @@ class ModelCreateUser
 
     public function __construct()
     {
-        $this->db = new PDO('mysql:host=localhost;dbname=ecoride', 'root', '');
+        $this->db = Database::connect(); // Connexion centralisée
        
     }
 

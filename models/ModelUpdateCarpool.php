@@ -6,7 +6,7 @@ class ModelUpdateCarpool {
     private $db;
 
     public function __construct() {
-        $this->db = Database::getConnection();
+        $this->db = Database::connect();
     }
 
     public function updateEtatCovoiturage($covoiturage_id, $etat) {

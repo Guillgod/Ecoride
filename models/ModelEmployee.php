@@ -1,12 +1,13 @@
 <?php
 /// Modèle permettant de charger les avis soumis par les passagers et qui doivent être validés par l'employé
+require_once 'Database.php'; // Inclusion du fichier de connexion
 class ModelEmployee
 {
     private PDO $db;
     
     public function __construct()
     {
-        $this->db = new PDO('mysql:host=localhost;dbname=ecoride', 'root', '');
+        $this->db = Database::connect(); // Connexion centralisée
        
     }
 

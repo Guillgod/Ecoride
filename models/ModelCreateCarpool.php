@@ -1,12 +1,13 @@
 <?php
 /// Modèle de création de covoiturage
+require_once 'Database.php'; // Inclusion du fichier de connexion
 class ModelCreateCarpool
 {
     private PDO $db;
     
     public function __construct()
     {
-        $this->db = new PDO('mysql:host=localhost;dbname=ecoride', 'root', '');
+        $this->db = Database::connect(); // Connexion centralisée
        
     }
 

@@ -1,11 +1,12 @@
 <?php
 //Modèle de connexion d'utilisateur
+require_once 'Database.php'; // Inclusion du fichier de connexion
 class ModelUser {
     private PDO $db;
 
     
     public function __construct() {
-        $this->db = new PDO('mysql:host=localhost;dbname=ecoride', 'root', '');
+        $this->db = Database::connect(); // Connexion centralisée
     }
     
     public function  authenticate($email, $password) {

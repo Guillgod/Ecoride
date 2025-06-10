@@ -1,5 +1,6 @@
 <?php
 //Modèle de création de voiture
+require_once 'Database.php'; // Inclusion du fichier de connexion
 class ModelCreateCar
 {
     private PDO $db;
@@ -7,7 +8,7 @@ class ModelCreateCar
 
     public function __construct()
     {
-        $this->db = new PDO('mysql:host=localhost;dbname=ecoride', 'root', '');
+        $this->db = Database::connect(); // Connexion centralisée
        
     }
 
