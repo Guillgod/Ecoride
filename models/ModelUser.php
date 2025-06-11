@@ -90,9 +90,8 @@ class ModelUser {
     
         // Bind de la photo seulement si fournie
         if ($photo !== null) {
-            $stmt->bindValue(':photo', $photo);
+        $stmt->bindValue(':photo', $photo, PDO::PARAM_LOB);
         }
-    
         return $stmt->execute();
     }
 

@@ -84,19 +84,10 @@ class UserController {
             $fumeur = $_POST['fumeur'];  
             $animal = $_POST['animal'];  
 
-            $photo =null;
-            if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-            
-            $photo = $_FILES['photo']['name'];
-            $target_dir = '../uploads/';
-            $target_file = $target_dir . basename($photo);
-    
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0755, true);
-            }
-    
-            move_uploaded_file($_FILES['photo']['tmp_name'], $target_file);
-        }
+            $photo = null;
+if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+    $photo = file_get_contents($_FILES['photo']['tmp_name']); // ← contenu binaire à stocker en BDD
+}
                 // Créer l'utilisateur mis à jour
                 $userUpdated = $this->modeluser->updateUser($pseudo, $nom, $prenom, $email, $telephone, $adresse, $date_naissance, $photo, $role,$userId,$preferences,$fumeur,$animal);
     
