@@ -1110,12 +1110,9 @@ textarea {
     margin: 5px 0
 }
 
-.form-recherche-content-button{
-    display: flex;
-    flex-direction: column;
-    align-items:flex-end;
-    justify-content:flex-end;
-    padding: 10px;
+.form-recherche-content-button,
+.form-recherche-content {
+  height: 80px; /* identique à la hauteur combinée label + input */
 }
 
 /* Responsive */
