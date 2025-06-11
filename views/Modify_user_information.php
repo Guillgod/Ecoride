@@ -68,9 +68,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Colonne 2 -->
             <div class="colonne">
             <div class="champ-voiture">
-                <div class="user-photo">
-                <img src="../controllers/display_photo.php?id=<?= htmlspecialchars($userData['utilisateur_id']) ?>" alt="Photo actuelle" width="150" height="150">
-                </div>
+                 
                 <label><strong>Photo :</strong> <input type="file" name="photo"></label><br>
                 <label><strong>Préférences :</strong></label><br>
                 <textarea name="preferences" rows="5" cols="50"><?= htmlspecialchars($userData['preferences']) ?></textarea><br>
