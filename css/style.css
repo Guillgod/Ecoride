@@ -1251,7 +1251,8 @@ footer div a {
 }
 .champ-voiture textarea {
     
-    max-width: 400px; /* Limite la largeur du textarea */
+    width:100%;
+    max-width: 300px; /* Limite la largeur du textarea */
     height: 100px; /* Hauteur fixe pour le textarea */
     }
 }
