@@ -26,7 +26,7 @@ class ModelCreateUser
         $stmt->bindValue(':adresse', $adresse);
         $stmt->bindValue(':date_naissance', $date_naissance); 
         $stmt->bindValue(':pseudo', $pseudo);
-        $stmt->bindValue(':photo', $photo);
+        $stmt->bindValue(':photo', $photo, PDO::PARAM_LOB); // important pour les fichiers binaires
         $stmt->bindValue(':role', $role); // Rôle par défaut
         $stmt->bindValue(':credit', 20); // Crédit par défaut
         $stmt->bindValue(':preferences', $preferences); // Préférences par défaut

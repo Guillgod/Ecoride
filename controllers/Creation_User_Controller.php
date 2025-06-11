@@ -24,9 +24,13 @@ class Creation_user_controller
             $date_naissance = $_POST['date_naissance'];
             $pseudo = $_POST['pseudo'];
             $role = $_POST['role'];
-            $photo = $_FILES['photo']['name'];
-            $target_dir = '../uploads/';
-            $target_file = $target_dir . basename($photo);
+
+            
+            // $photo = $_FILES['photo']['name'];
+            // $target_dir = '../uploads/';
+            // $target_file = $target_dir . basename($photo);
+
+
             $preferences = $_POST['preferences'];
             $fumeur = $_POST['fumeur'];
             $animal = $_POST['animal'];
@@ -35,7 +39,8 @@ class Creation_user_controller
                 mkdir($target_dir, 0755, true);
             }
     
-            if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
+            if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $photoContent = file_get_contents($_FILES['photo']['tmp_name']);
                 
                 
                 // Vérification de l'e-mail existante
@@ -45,7 +50,7 @@ class Creation_user_controller
             }
                 // Créer l'utilisateur
                 $userCreated = $this->modelCreateUser->createUser(
-                    $nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photo, $role,$preferences,$fumeur,$animal);
+                    $nom, $prenom, $email, $password, $telephone, $adresse, $date_naissance, $pseudo, $photoContent, $role,$preferences,$fumeur,$animal);
     
                 if ($userCreated) {
                     // Récupérer l'identifiant de l'utilisateur

@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
 
             // PHOTO
             echo '<div class="user-photo">';
-            echo '<img src="../uploads/' . htmlspecialchars($utilisateur['photo']) . '" alt="Photo de ' . htmlspecialchars($utilisateur['pseudo']) . '" width="auto" height="300">';
+            echo '<img src="display_photo.php?id=' . htmlspecialchars($utilisateur['utilisateur_id']) . '" alt="Photo de ' . htmlspecialchars($utilisateur['pseudo']) . '" width="auto" height="300">';
             echo '</div>'; 
             
             echo '<div class="user-details">';
