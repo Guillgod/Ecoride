@@ -58,7 +58,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php if(isset($_SESSION['user']) && $_SESSION['user']['compte_employee'] == 'employé'): ?>
                 <li><a href="Vue_employee.php">Employé</a></li>
             <?php endif; ?>
-            <li><a href="">Contact</a></li>
+            <li><a href="Vue_contact.php">Contact</a></li>
             <li>
                 <?php if(isset($_SESSION['user'])): ?>
                     <button type="button" class="button" onclick="window.location.href='logout.php'"><a href="logout.php">Déconnexion</a></button>

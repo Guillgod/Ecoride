@@ -1228,6 +1228,19 @@ footer div a {
         max-width: 150px;
     }
     
+    /* Button mis en colonne */
+.button-container {
+  display: flex;
+    flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  margin-bottom : 10px;
+}
+
+.button{
+    font-size: 0.8em; /* Réduire la taille de la police pour les petits écrans */
+}
      
 }
 
