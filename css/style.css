@@ -1113,7 +1113,7 @@ textarea {
 .form-recherche-content-button{
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items:flex-end;
     justify-content:flex-end;
     padding: 10px;
 }
