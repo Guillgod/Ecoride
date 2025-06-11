@@ -47,8 +47,9 @@ if (session_status() == PHP_SESSION_NONE) {
                 <input type="date" id="date_depart" name="date_depart" required minlength="4" maxlength="8" size="10"  value="<?= isset($_SESSION['form_data']['date_depart']) ? htmlspecialchars($_SESSION['form_data']['date_depart']) : '' ?>">
                 </div>
 
-
+                <div class="form-recherche-content-button">
                 <button class="button" type="submit">Rechercher</button>
+                </div>
             </div>
         </form>
     </section>
