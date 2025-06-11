@@ -12,7 +12,7 @@
 require_once 'header.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require '../models/ModelCreateUser.php';
-    require '../controllers/Creation_User_controller.php';
+    require '../controllers/Creation_User_Controller.php';
     $modelCreateUser = new ModelCreateUser();
     $controllerCreateUser = new Creation_user_controller($modelCreateUser);
     $controllerCreateUser->createUserInDatabase();
