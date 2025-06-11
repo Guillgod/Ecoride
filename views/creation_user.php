@@ -73,7 +73,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="champ-voiture">
         <label for="photo">Photo :</label>
-        <input type="file" name="photo" required>
+        <input type="file" name="photo" accept="image/*" required id="photo">
+            <script>
+            document.getElementById('photo').addEventListener('change', function () {
+                if (this.files[0].size > 2000000) {
+                    alert("Le fichier est trop lourd. Merci de choisir une image de moins de 2 Mo.");
+                    this.value = ""; // Réinitialise le champ
+                }
+            });
+            </script>
+
     </div>
     <div class="champ-voiture">
         <label for="role">Rôle :</label>
