@@ -1106,7 +1106,7 @@ textarea {
     align-items: flex-start;
     justify-content: center;
     padding: 0px;
-    gap: 5px;
+    gap: 10px;
     margin: 5px 0
 }
 /* Responsive */
