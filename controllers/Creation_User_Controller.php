@@ -34,46 +34,10 @@ class Creation_user_controller
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
-
-
-
-
-            if (isset($_FILES['photo'])) {
-            echo '<pre>';
-            print_r($_FILES['photo']);
-            echo '</pre>';
-            }
-
-
-
-
-
+    
             if (move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
                 
-                                            $uploadErrors = [
-                                                0 => 'Aucune erreur',
-                                                1 => 'Le fichier dépasse la taille maximale autorisée par php.ini',
-                                                2 => 'Le fichier dépasse la taille maximale spécifiée dans le formulaire HTML',
-                                                3 => 'Le fichier n\'a été que partiellement téléchargé',
-                                                4 => 'Aucun fichier n\'a été téléchargé',
-                                                6 => 'Dossier temporaire manquant',
-                                                7 => 'Échec de l\'écriture du fichier sur le disque',
-                                                8 => 'Téléchargement stoppé par une extension PHP',
-                                            ];
-
-                                            if ($_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
-                                                $code = $_FILES['photo']['error'];
-                                                echo "<p style='color:red;'>Erreur d'upload : " . $uploadErrors[$code] . " (code $code)</p>";
-                                                return;
-                                            }
-
-
-
-
-
-
-
-
+                
                 // Vérification de l'e-mail existante
             if ($this->modelCreateUser->emailExists($email)) {
                 echo "<p style='color:red;'>Cette adresse e-mail est déjà utilisée.</p>";
@@ -118,11 +82,7 @@ class Creation_user_controller
                     echo "Échec de la création de l'utilisateur.";
                 }
             } else {
-                if (!move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
-    echo "Erreur lors du téléchargement de la photo :<br>";
-    print_r(error_get_last());
-    print_r($_FILES['photo']);
-}
+                echo "Erreur lors du téléchargement de la photo.";
             }
         } else {
             echo "Échec à la création du compte.";
