@@ -138,9 +138,8 @@ unset($_SESSION['recherche_effectuee']);
 function afficherCovoiturage($ligne) {
     echo '<div class="user-info">';
     echo '<div class="user-info-content">';
-    $chemin_photo = '../uploads/';
     echo '<div class="user-photo">';
-    echo '<img src="../controllers/display_photo.php?id=' . htmlspecialchars($ligne['photo']) . '" alt="Photo du chauffeur" width="auto" height="300">';
+    echo '<img src="../controllers/display_photo.php?id=' . htmlspecialchars($ligne['utilisateur_id']) . '" alt="Photo du chauffeur" width="auto" height="300">';
     echo '</div>';
     
     echo '<div class="user-details">';
