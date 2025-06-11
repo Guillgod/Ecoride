@@ -41,11 +41,11 @@
         echo '<section>';
         echo '<h2>Détail du covoiturage</h2>';
         if ($carpoolDetails) {
-            $chemin_photo = '../uploads/';
+            
             echo '<div class="user-info">';
             echo '<div class="user-info-content">';
             echo '<div class="user-photo">';
-            echo '<img src="' . htmlspecialchars($chemin_photo . $carpoolDetails['photo']) . '" alt="Photo de ' . htmlspecialchars($carpoolDetails['pseudo']) . '" width="auto" height="300">';
+            echo '<img src="../controllers/display_photo.php?id=' . htmlspecialchars($ligne['utilisateur_id']) . '" alt="Photo du chauffeur" width="auto" height="300">';
             echo '</div>';
 
             echo '<div class="user-details">';
