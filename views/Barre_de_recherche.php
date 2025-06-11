@@ -28,15 +28,15 @@ if (session_status() == PHP_SESSION_NONE) {
         <form action="../controllers/Handle_Search_Controller.php" method="post">
             <input type="hidden" name="form_type" value="Barre_de_recherche.php">
             <div class="form-recherche">
-                <div class="champ-voiture">
+                
                 <li><input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="20" placeholder="Départ"  value="<?= isset($_SESSION['form_data']['lieu_depart']) ? htmlspecialchars($_SESSION['form_data']['lieu_depart']) : '' ?>"></li>
-                </div>
-                <div class="champ-voiture">
+                
+                
                 <li><input type="text" id="lieu_arrivee" name="lieu_arrivee" required minlength="1" maxlength="50" size="20" placeholder="Destination" value="<?= isset($_SESSION['form_data']['lieu_arrivee']) ? htmlspecialchars($_SESSION['form_data']['lieu_arrivee']) : '' ?>"></li>
-                </div>    
-                <div class="champ-voiture">
+                    
+                
                 <li><input type="date" id="date_depart" name="date_depart" required minlength="4" maxlength="8" size="10" placeholder="Date" value="<?= isset($_SESSION['form_data']['date_depart']) ? htmlspecialchars($_SESSION['form_data']['date_depart']) : '' ?>"></li>
-                </div>       
+                       
 
 
                 <button class="button" type="submit">Rechercher</button>
