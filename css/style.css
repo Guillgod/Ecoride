@@ -1273,6 +1273,10 @@ textarea {
     max-width: 300px; /* Limite la largeur du textarea */
     height: 100px; /* Hauteur fixe pour le textarea */
     }
-
+.Barrerecherche input[type="date"] {
+    min-width: 150px;
+    width: 100%;
+    max-width: 250px;
+}
     
 }
