@@ -82,7 +82,11 @@ class Creation_user_controller
                     echo "Échec de la création de l'utilisateur.";
                 }
             } else {
-                echo "Erreur lors du téléchargement de la photo.";
+                if (!move_uploaded_file($_FILES['photo']['tmp_name'], $target_file)) {
+    echo "Erreur lors du téléchargement de la photo :<br>";
+    print_r(error_get_last());
+    print_r($_FILES['photo']);
+}
             }
         } else {
             echo "Échec à la création du compte.";
