@@ -1115,7 +1115,7 @@ textarea {
   align-items: flex-start; /* ← important : aligne en haut */
   justify-content: center;
   padding-top: 22px; /* ← ajustement visuel */
-  height: 70px;
+  height: 60px;
 }
 
 /* Responsive */
