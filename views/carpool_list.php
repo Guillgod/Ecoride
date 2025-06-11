@@ -140,7 +140,7 @@ function afficherCovoiturage($ligne) {
     echo '<div class="user-info-content">';
     $chemin_photo = '../uploads/';
     echo '<div class="user-photo">';
-    echo '<img src="' . htmlspecialchars($chemin_photo . $ligne['photo']) . '" alt="Photo de ' . htmlspecialchars($ligne['pseudo']) . '" width="auto" height="300">';
+    echo '<img src="../controllers/display_photo.php?id=' . htmlspecialchars($ligne['photo']) . '" alt="Photo du chauffeur" width="auto" height="300">';
     echo '</div>';
     
     echo '<div class="user-details">';
