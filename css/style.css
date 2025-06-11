@@ -1250,8 +1250,8 @@ footer div a {
     gap: 5px; /* Espace entre les onglets */
 }
 .champ-voiture textarea {
-    width: 100%;
-    max-width: 300px; /* Limite la largeur du textarea */
+    
+    max-width: 700px; /* Limite la largeur du textarea */
     height: 100px; /* Hauteur fixe pour le textarea */
     }
 }
