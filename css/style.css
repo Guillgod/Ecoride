@@ -883,7 +883,7 @@ footer div a {
 
 /* Input & select styles */
 .champ-voiture input,
-.champ-voiture select {
+.champ-voiture select{
   padding: 8px;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -1251,6 +1251,7 @@ footer div a {
 }
 .champ-voiture textarea {
     width: 100%;
-    max-width: 200px; /* Limite la largeur du textarea */
-    height: 100px; /* Hauteur fixe pour le textarea */}
+    max-width: 300px; /* Limite la largeur du textarea */
+    height: 100px; /* Hauteur fixe pour le textarea */
+    }
 }
