@@ -1242,6 +1242,12 @@ footer div a {
 .button{
     font-size: 0.8em; /* Réduire la taille de la police pour les petits écrans */
 }
-     
+
+.onglets-container {
+    display: flex;
+    flex-direction: column; /* Passe en colonne pour les petits écrans */
+    align-items: center; /* Centre les onglets */
+    gap: 5px; /* Espace entre les onglets */
 }
 
+}
