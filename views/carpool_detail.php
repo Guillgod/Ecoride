@@ -45,7 +45,7 @@
             echo '<div class="user-info">';
             echo '<div class="user-info-content">';
             echo '<div class="user-photo">';
-            echo '<img src="../controllers/display_photo.php?id=<?= htmlspecialchars($id_chauffeur) ?>" alt="Photo du chauffeur" width="auto" height="300">';
+            echo '<img src="../controllers/display_photo.php?id=' . htmlspecialchars($id_chauffeur) . '" alt="Photo du chauffeur" width="auto" height="300">';
             echo '</div>';
 
             echo '<div class="user-details">';
