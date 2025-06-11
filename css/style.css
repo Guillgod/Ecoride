@@ -1103,10 +1103,11 @@ textarea {
 .form-recherche-content{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 20px;
+    padding: 0px;
     gap: 5px;
+    margin: 5px 0
 }
 /* Responsive */
 @media (max-width: 768px) {

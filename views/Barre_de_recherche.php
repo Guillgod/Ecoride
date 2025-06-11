@@ -30,21 +30,21 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="form-recherche">
                 <div class="form-recherche-content">
                     
-                <li><label for="lieu_depart">Départ :</label>
-                <li><input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="20" placeholder="Paris"  value="<?= isset($_SESSION['form_data']['lieu_depart']) ? htmlspecialchars($_SESSION['form_data']['lieu_depart']) : '' ?>"></li>
+                <label for="lieu_depart">Départ :</label>
+                <input type="text" id="lieu_depart" name="lieu_depart" required minlength="1" maxlength="50" size="20" placeholder="Paris"  value="<?= isset($_SESSION['form_data']['lieu_depart']) ? htmlspecialchars($_SESSION['form_data']['lieu_depart']) : '' ?>">
                 
                 </div>
 
                 <div class="form-recherche-content">
                     
-                <li><label for="lieu_arrivée">Destination :</label>
-                <li><input type="text" id="lieu_arrivee" name="lieu_arrivee" required minlength="1" maxlength="50" size="20" placeholder="Lyon" value="<?= isset($_SESSION['form_data']['lieu_arrivee']) ? htmlspecialchars($_SESSION['form_data']['lieu_arrivee']) : '' ?>"></li>
+                <label for="lieu_arrivée">Destination :</label>
+                <input type="text" id="lieu_arrivee" name="lieu_arrivee" required minlength="1" maxlength="50" size="20" placeholder="Lyon" value="<?= isset($_SESSION['form_data']['lieu_arrivee']) ? htmlspecialchars($_SESSION['form_data']['lieu_arrivee']) : '' ?>">
                 </div>
                 
                 <div class="form-recherche-content">
                     
-                <li><label for="date_depart">Date :</label>
-                <li><input type="date" id="date_depart" name="date_depart" required minlength="4" maxlength="8" size="10"  value="<?= isset($_SESSION['form_data']['date_depart']) ? htmlspecialchars($_SESSION['form_data']['date_depart']) : '' ?>"></li>
+                <label for="date_depart">Date :</label>
+                <input type="date" id="date_depart" name="date_depart" required minlength="4" maxlength="8" size="10"  value="<?= isset($_SESSION['form_data']['date_depart']) ? htmlspecialchars($_SESSION['form_data']['date_depart']) : '' ?>">
                 </div>
 
 
