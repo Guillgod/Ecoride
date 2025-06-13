@@ -1135,7 +1135,10 @@ textarea {
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
-    
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+
     color: red;
     font-size: 1.4em;
     cursor: pointer;
