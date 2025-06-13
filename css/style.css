@@ -1118,6 +1118,12 @@ textarea {
   height: 60px;
 }
 
+.form-recherche-content select,
+.form-recherche-content input {
+    width: 100%;
+    max-width: 250px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
@@ -1297,5 +1303,12 @@ textarea {
     width: 100%;
     max-width: 250px;
 }
-    
+.form-recherche-content select,
+.form-recherche-content input {
+    width: 100%;
+    max-width: 250px;
+}
+
+
+
 }
