@@ -1131,17 +1131,20 @@ textarea {
 }
 
 .reset-time {
-    background: none;
+   background: none;
     border: none;
+    outline: none;
+    box-shadow: none;
     color: red;
     font-size: 1.4em;
     cursor: pointer;
-    line-height: 1;
-    padding: 0;
-    margin: 0;
-    height: 40px; /* pour qu’elle ait la même hauteur que l’input */
     display: flex;
     align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 30px;
+    margin-left: 5px;
+    padding: 0;
 }
 
 
