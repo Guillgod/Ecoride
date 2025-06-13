@@ -14,7 +14,7 @@
 
     
         
-        
+         
 <section class="Barrerecherche">
 
     <!-- Checkbox pour afficher/cacher les filtres -->
@@ -32,6 +32,7 @@
 
         <form class="Barrerecherche" method="get" action="carpool_list.php">
             <div class="form-recherche">
+                <div class="form-recherche-content">
                 <li>
                     <label for="vehicletype">Type de véhicule:</label>
                     <select name="Ecologique" id="Ecologique">
@@ -40,15 +41,21 @@
                         <option value="Thermique" <?= (isset($_GET['Ecologique']) && $_GET['Ecologique'] === 'Thermique') ? 'selected' : '' ?>>Diesel/Essence</option>
                     </select>
                 </li>
+                </div>
+                <div class="form-recherche-content">
                 <li>
                     <label for="Prixmax">Prix max (€):</label>
                     <input type="number" id="Prixmax" style="width: 120px;"  name="Prixmax" minlength="1" maxlength="5" size="30" placeholder="Prix" value="<?= htmlspecialchars($_GET['Prixmax'] ?? '') ?>">
                 </li>
+                </div>
+                <div class="form-recherche-content">
                 <li>
                     <label for="Dureemax">Durée max du trajet :</label>
                     <input type="time" id="Dureemax" name="Dureemax"   minlength="1" maxlength="50" size="30" placeholder="Entrez la durée max" value="<?= htmlspecialchars($_GET['Dureemax'] ?? '') ?>">
-                    <button type="button" onclick="document.getElementById('Dureemax').value = ''" style="background: none; border: none; color: red; font-size: 1.2em; cursor: pointer; margin-left: 5px;">🗑️</button>
+                    <button type="button" onclick="document.getElementById('Dureemax').value = ''" style="background: none; border: none; color: red; font-size: 1.2em; cursor: pointer; margin-left: 5px;">❌</button>
                 </li>
+                </div>
+                <div class="form-recherche-content">
                 <li>
                     <label for="Notemin">Note minimale :</label>
                     <select name="Notemin" id="Notemin">
@@ -60,7 +67,10 @@
                         <option value="5" <?= (isset($_GET['Notemin']) && $_GET['Notemin'] === '5') ? 'selected' : '' ?>>5</option>
                     </select>
                 </li>
+                </div>
+                <div class="form-recherche-content-button">
                 <button class="button" type="submit">Appliquer</button>
+                </div>
             </div>
         </form>
 

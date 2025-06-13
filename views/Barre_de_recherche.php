@@ -19,7 +19,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
     <body>
-
+ 
     
     <section class="Barrerecherche">
         <div class="titre-centrer">
