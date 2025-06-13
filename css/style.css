@@ -1151,6 +1151,13 @@ textarea {
     width: 30px;
     margin-left: 5px;
     padding: 0;
+    outline: none !important;
+}
+.reset-time:focus,
+.reset-time:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 
