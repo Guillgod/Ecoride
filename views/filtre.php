@@ -49,12 +49,19 @@
                 
                 </div>
                 <div class="form-recherche-content">
+                    <label for="Dureemax">Durée max du trajet :</label>
+                    <div class="duree-wrapper">
+                        <input type="time" id="Dureemax" name="Dureemax" minlength="1" maxlength="50" size="30" placeholder="Entrez la durée max" value="<?= htmlspecialchars($_GET['Dureemax'] ?? '') ?>">
+                        <button type="button" onclick="document.getElementById('Dureemax').value = ''" class="reset-time">❌</button>
+                    </div>
+                </div>
+                <!-- <div class="form-recherche-content">
                 
                     <label for="Dureemax">Durée max du trajet :</label>
                     <input type="time" id="Dureemax" name="Dureemax"   minlength="1" maxlength="50" size="30" placeholder="Entrez la durée max" value="<?= htmlspecialchars($_GET['Dureemax'] ?? '') ?>">
                     <button type="button" onclick="document.getElementById('Dureemax').value = ''" style="background: none; border: none; color: red; font-size: 1.2em; cursor: pointer; margin-left: 5px;">❌</button>
                 
-                </div>
+                </div> -->
                 <div class="form-recherche-content">
                 
                     <label for="Notemin">Note minimale :</label>

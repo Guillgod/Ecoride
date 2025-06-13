@@ -1124,6 +1124,27 @@ textarea {
     max-width: 250px;
 }
 
+.duree-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* espace entre input et croix */
+}
+
+.reset-time {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 1.4em;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
+    height: 40px; /* pour qu’elle ait la même hauteur que l’input */
+    display: flex;
+    align-items: center;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .container1 {
