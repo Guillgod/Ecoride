@@ -11,22 +11,30 @@ class MailController {
      * Configure et retourne une instance PHPMailer prête à envoyer via Gmail SMTP.
      */
     private static function getMailer(): PHPMailer {
-        $mail = new PHPMailer(true);
-        // Mode SMTP
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = getenv('GMAIL_USER');       // défini sur Heroku
-        $mail->Password   = getenv('GMAIL_PASS');       // mot de passe d’application
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
-        $mail->CharSet    = 'UTF-8';
-        // Expéditeur
-        // GMAIL_FROM = "EcoRide <contact@ecoride.com>"
-        list($fromName, $fromEmail) = preg_split('/[<>]/', getenv('GMAIL_FROM'), -1, PREG_SPLIT_NO_EMPTY);
-        $mail->setFrom(trim($fromEmail), trim($fromName));
-        return $mail;
+    $mail = new PHPMailer(true);
+    // SMTP…
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = getenv('GMAIL_USER');
+    $mail->Password   = getenv('GMAIL_PASS');
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+    $mail->CharSet    = 'UTF-8';
+
+    // — Fallback sur GMAIL_FROM si non défini —
+    $from = getenv('GMAIL_FROM') ?: 'EcoRide <contact@ecoride.com>';
+    if (preg_match('/^(.+)<(.+)>$/', $from, $m)) {
+        $name  = trim($m[1]);
+        $email = trim($m[2]);
+    } else {
+        $name  = 'EcoRide';
+        $email = $from;
     }
+    $mail->setFrom($email, $name);
+
+    return $mail;
+}
 
     /**
      * Envoie une invitation à laisser un avis après covoiturage.
