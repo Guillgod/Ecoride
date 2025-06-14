@@ -1,22 +1,19 @@
 <?php
-require_once '../controllers/Mail_Controller.php'; // Assure-toi que le chemin est correct
+require_once __DIR__.'/../vendor/autoload.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = $_POST['Nom'] ?? '';
+use App\Controllers\MailController;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nom    = $_POST['Nom']    ?? '';
     $prenom = $_POST['Prenom'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $message = $_POST['Message'] ?? '';
+    $email  = $_POST['email']  ?? '';
+    $msg    = $_POST['Message']?? '';
 
-    // Appelle la fonction d'envoi d'email
-    $emailEnvoye = MailController::sendContactEmail($email, $nom, $prenom, $message);
-
-    // Optionnel : message de confirmation ou redirection
-    if ($emailEnvoye) {
-        echo "<script>alert('Votre message a été envoyé avec succès.');</script>";
-    } else {
-        echo "<script>alert('Échec de l’envoi du message.');</script>";
-    }
-    
+    $ok = MailController::sendContactEmail($email, $nom, $prenom, $msg);
+    echo "<script>alert(" . ($ok
+        ? "'Votre message a été envoyé avec succès.'"
+        : "'Échec de l’envoi du message.'"
+    ) . ");</script>";
 }
 ?>
 
