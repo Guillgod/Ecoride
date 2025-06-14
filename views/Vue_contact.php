@@ -1,16 +1,19 @@
 <?php
-require_once __DIR__.'/../vendor/autoload.php';
+// 1) On charge l’autoloader généré par Composer
+require_once __DIR__ . '/../vendor/autoload.php';
 
+// 2) On importe notre contrôleur
 use App\Controllers\MailController;
 
+// 3) On traite le formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom    = $_POST['Nom']    ?? '';
-    $prenom = $_POST['Prenom'] ?? '';
-    $email  = $_POST['email']  ?? '';
-    $msg    = $_POST['Message']?? '';
+    $nom    = $_POST['Nom']     ?? '';
+    $prenom = $_POST['Prenom']  ?? '';
+    $email  = $_POST['email']   ?? '';
+    $msg    = $_POST['Message'] ?? '';
 
-    $ok = MailController::sendContactEmail($email, $nom, $prenom, $msg);
-    echo "<script>alert(" . ($ok
+    $success = MailController::sendContactEmail($email, $nom, $prenom, $msg);
+    echo "<script>alert(" . ($success
         ? "'Votre message a été envoyé avec succès.'"
         : "'Échec de l’envoi du message.'"
     ) . ");</script>";
