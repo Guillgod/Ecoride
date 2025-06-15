@@ -76,12 +76,16 @@ class Creation_user_controller
                         if ($carCreated) {
                              $lastCarId = $modelCreateCar->getLastInsertId(); // Méthode à ajouter dans ModelCreateCar si elle n’existe pas
                             $AddedCar = $this->modelCreateUser->addCarToUser($userId, $lastCarId);
-                            echo "Votre compte utilisateur et votre voiture ont été créés avec succès !";
+                            echo '<div class="alert-large">
+                            Votre compte utilisateur et votre voiture ont été créés avec succès !
+                            </div>';
                         } else {
                             echo "Votre compte utilisateur a été créé, mais il y a eu une erreur lors de la création de la voiture.";
                         }
                     } else {
-                        echo "Votre compte utilisateur a été créé avec succès !";
+                        echo '<div class="alert-large">
+                        Votre compte utilisateur a été créé avec succès !
+                        </div>';
                     }
                 } else {
                     echo "Échec de la création de l'utilisateur.";

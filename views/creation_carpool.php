@@ -46,7 +46,8 @@ $controllerCreateCarpool = new Creation_Carpool_Controller($modelCreateCarpool);
         $result=$controllerCreateCarpool->createCarpoolInDatabase();
 
         if($result) {
-            echo "<p style='color: green;'>Trajet créé avec succès.</p>";
+            
+            echo '<div class="alert-large"> <p>Trajet créé avec succès.</p></div>';
         } else {
             echo "<p style='color: red;'>Le trajet n'a pas pu être créé.</p>";
         }
