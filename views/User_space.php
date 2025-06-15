@@ -346,8 +346,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
 
                         echo '<div class="covoiturage-buttons">';
                         if ($covoiturage['statut'] === 'prévu') {
-                            echo '<button class="button commencer-btn" onclick="changeColor(this)" data-id="' . $id . '">Commencer</button>';
-                            echo '<button class="button annuler-btn" onclick="changeColor(this)" data-id="' . $id . '">Annuler</button>';
+    echo '<button class="button commencer-btn" data-id="' . $id . '">Commencer</button>';
+    echo '<button class="button annuler-btn"   data-id="' . $id . '">Annuler</button>';
+
                         } elseif ($covoiturage['statut'] === 'en_cours') {
                             echo '<button class="button arrive-btn" onclick="changeColor(this)" data-id="' . $id . '">Arrivé à destination</button>';
                         }
