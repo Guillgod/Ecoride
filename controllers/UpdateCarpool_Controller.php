@@ -1,8 +1,11 @@
 <?php
+// controllers/UpdateCarpool_Controller.php
 
-// controllers/CarpoolController.php
-require_once '../models/ModelUpdateCarpool.php';
-require_once '../controllers/Mail_Controller.php';
+// 1) On charge l’autoloader Composer (qui connait App\Controllers\MailController)
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Controllers\MailController;       // 2) On importe la classe
+require_once __DIR__ . '/../models/ModelUpdateCarpool.php';
 
 class UpdateCarpool_Controller  {
     private $model;
