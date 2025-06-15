@@ -293,11 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                 // Affichage des covoiturages en tant que passager
                     if (!empty($passengerCovoiturages)) {
                         echo '<h2>Vos covoiturages en tant que passager</h2>';
-                    } else {
-                        echo '<p class="ajustement2">Vous ne participez à aucun covoiturage en tant que passager.</p>';
-                    }
-                        
-                    if (!empty($covoituragesEnCours)) {
+                        if (!empty($covoituragesEnCours)) {
                         echo '<h3 class="ajustement2">Vous participez actuellement à ces covoiturages :</h3>';
                         foreach ($covoituragesEnCours as $covoiturage) {
                             echo '<div class="covoiturage-actif-info" >';
@@ -316,6 +312,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                             echo '</div>'; // fin covoiturage-actif-info
                         }
                     }
+                    } else {
+                        echo '<p class="ajustement2">Vous ne participez à aucun covoiturage en tant que passager.</p>';
+                    }
+                        
+                    
                 echo '</div>'; // fermeture de contenu-passager
 
 
@@ -326,7 +327,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
                     echo '<div id="contenu-chauffeur" class="contenu">';
                         // Affichage des covoiturages actifs (prévu/en_cours)
                         // Afficher les covoiturages en tant que chauffeur
-           
                 if (!empty($covoituragesChauffeurActifs)) {
                     echo '<h2>Vos covoiturages comme chauffeur</h2>';
                     echo '<h3 class="ajustement2">Vous participez actuellement à ces covoiturages :</h3>';
