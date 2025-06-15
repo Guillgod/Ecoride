@@ -1,23 +1,13 @@
 <?php
-require_once '../models/ModelUpdateCarpool.php';
-require_once 'UpdateCarpool_Controller.php';
-require_once '../models/ModelPayment.php';
-require_once 'Payment_Controller.php';
+require_once __DIR__ . '/../vendor/autoload.php';         // charge PHPMailer et vos classes
+require_once __DIR__ . '/../models/ModelUpdateCarpool.php';
+require_once __DIR__ . '/../models/ModelPayment.php';
+require_once __DIR__ . '/UpdateCarpool_Controller.php';
+require_once __DIR__ . '/Payment_Controller.php';
 
-function envoyerEmailAnnulation($email, $prenom, $lieu_depart, $lieu_arrivee, $date_depart, $heure_depart) {
-    $sujet = "Annulation du covoiturage";
-    $message = "Bonjour $prenom,\n\n";
-    $message .= "Nous vous informons que le covoiturage prévu de $lieu_depart à $lieu_arrivee le $date_depart à $heure_depart a été annulé par le chauffeur.\n";
-    $message .= "Un remboursement de votre paiement a été effectué sur votre compte.\n\n";
-    $message .= "Merci de votre compréhension.\n";
-    $message .= "L'équipe Ecoride";
+use App\Controllers\MailController; 
 
-    $headers = "From: contact@ecoride.com" . "\r\n" .
-               "Reply-To: contact@ecoride.com" . "\r\n" .
-               "Content-Type: text/plain; charset=UTF-8";
 
-    mail($email, $sujet, $message, $headers);
-}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_covoiturage'])) {
@@ -36,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_covoiturage'])) {
     if ($model->deleteCarpool($id)) {
     foreach ($passagers as $passager) {
         $modelPaymentController->increaseCreditPassenger($passager['utilisateur_id'], $prix_personne);
-        envoyerEmailAnnulation(
+        MailController::sendCancellationEmail(
             $passager['email'],
             $passager['prenom'],
             $covoiturage['lieu_depart'],

@@ -93,4 +93,38 @@ class MailController {
             return false;
         }
     }
+    
+     public static function sendCancellationEmail(
+        string $toEmail,
+        string $prenom,
+        string $lieuDepart,
+        string $lieuArrivee,
+        string $dateDepart,
+        string $heureDepart
+    ): bool {
+        $mail = self::getMailer();
+        try {
+            $mail->addAddress($toEmail, $prenom);
+            $mail->Subject = "Annulation de votre covoiturage";
+            $mail->isHTML(true);
+
+            $mail->Body = "
+                <p>Bonjour {$prenom},</p>
+                <p>
+                  Nous vous informons que le covoiturage prévu de 
+                  <strong>{$lieuDepart}</strong> à <strong>{$lieuArrivee}</strong> 
+                  le <strong>{$dateDepart}</strong> à <strong>{$heureDepart}</strong> 
+                  a été annulé par le chauffeur.
+                </p>
+                <p>Un remboursement a été effectué sur votre compte.</p>
+                <p>Merci de votre compréhension.</p>
+                <p>L'équipe <strong>EcoRide</strong></p>
+            ";
+
+            return (bool)$mail->send();
+        } catch (Exception $e) {
+            error_log("PHPMailer (annulation) error: {$mail->ErrorInfo}");
+            return false;
+        }
+    }
 }
