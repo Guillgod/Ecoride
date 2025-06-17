@@ -122,7 +122,7 @@
     }
     echo '</div>'; // .user-actions
                   echo '</div>'; // .user-info
-    echo '</section>';
+    
     
     
 
@@ -149,7 +149,9 @@
             echo '<p>Aucun avis disponible.</p>';
         }
         echo '</div>'; // .user-info
+        echo '</section>';
         require_once 'footer.php';
+        
         ?>
 
     </body>
