@@ -162,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['commentaire_en_cours'
             echo '<div class="user-actions">';
             if ($utilisateur['role'] == 'passager'  ) {
                 echo '<div>';
-                echo '<p class="ajustement3">Vous n\'êtes pas chauffeur, vous ne pouvez pas créer de covoiturage. Veuillez modifier votre rôle.</p>';
+                echo '<p class="ajustement3">Si vous souhaitez créer un covoiturage, vous devez modifier votre rôle.</p>';
                 echo '<div class="button-container">';
                 echo '<button class="button" onclick="window.location.href=\'Modify_user_information.php \'">Modifier vos informations</button>';
                 echo '</div>';
