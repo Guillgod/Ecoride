@@ -99,7 +99,7 @@
                     $decreaseNbSeatOfCarpool=$controller->decreaseNb_Seat_Carpool_In_Database($covoiturage_id, $nb_place_dispo);
                     // Empêche la duplication du bouton après l'inscription
                     unset($_POST['participer']);
-                    echo '<p>Vous avez bien rejoint ce covoiturage !</p>';
+                    echo '<p style="color:green;">Vous avez bien rejoint ce covoiturage !</p>';
                 } else {
                     echo '<p>Vous avez déjà rejoint ce covoiturage.</p>';
                 }
